@@ -8,6 +8,16 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    proxy: {
+      '/api': {
+        target: {
+          host: 'backend',
+          protocol: 'http',
+          port: 5000
+        },
+        ignorePath: true
+      }
+    }
   }
 };
