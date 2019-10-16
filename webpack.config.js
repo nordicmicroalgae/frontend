@@ -13,13 +13,12 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    host: getenv('NORDICMICROALGAE_FRONTEND_HOST', '127.0.0.1'),
     proxy: {
       '/api': {
         target: {
-          host: getenv('NORDICMICROALGAE_BACKEND_HOST', '127.0.0.1'),
+          host: getenv('WDS_PROXY_API_HOST', '127.0.0.1'),
           protocol: 'http',
-          port: getenv('NORDICMICROALGAE_BACKEND_PORT', '5000')
+          port: getenv('WDS_PROXY_API_PORT', '5000')
         },
         ignorePath: true
       }
