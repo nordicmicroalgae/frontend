@@ -22,6 +22,10 @@ module.exports = {
         },
         ignorePath: true
       }
+    },
+    overlay: {
+      errors: true,
+      warnings: true
     }
   }
 };
