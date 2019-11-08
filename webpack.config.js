@@ -16,7 +16,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'nµa frontend'
+      title: 'nµa frontend',
+      template: path.resolve(__dirname, 'src', 'index.html')
     })
   ],
   devServer: {
