@@ -17,7 +17,11 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'nµa frontend',
-      template: path.resolve(__dirname, 'src', 'index.html')
+      template: path.resolve(__dirname, 'src', 'index.html'),
+      minify: {
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true
+      }
     })
   ],
   devServer: {
