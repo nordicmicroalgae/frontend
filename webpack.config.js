@@ -1,5 +1,7 @@
 const path = require('path');
 const process = require('process');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 function getenv(name, defaultValue) {
   return process.env[name] || defaultValue;
@@ -11,6 +13,12 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'nµa frontend'
+    })
+  ],
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     proxy: {
