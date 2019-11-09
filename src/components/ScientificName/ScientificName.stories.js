@@ -3,6 +3,6 @@ import ScientificName from './';
 
 export default { title: 'Scientific Name' };
 
-export const withName = () => (
+export const basic = () => (
   <ScientificName>Dinophysis acuta</ScientificName>
 );
