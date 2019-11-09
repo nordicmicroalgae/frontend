@@ -1,5 +1,5 @@
 import React from 'react';
-import ScientificName from './components/ScientificName';
+import ScientificName from './ScientificName';
 
 export default { title: 'Scientific Name' };
 
