@@ -1,0 +1,16 @@
+.current-name {
+  text-decoration: none;
+}
+
+.current-name::before {
+  content: '(';
+}
+
+.current-name::after {
+  content: ')';
+}
+
+.synonym-name {
+  text-decoration: line-through;
+  color: #ff4420;
+}
