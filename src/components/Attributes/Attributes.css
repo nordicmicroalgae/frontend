@@ -1,0 +1,50 @@
+dl.attributes {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 50em;
+}
+
+dt.attribute-name {
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  text-align: right;
+  font-weight: bold;
+}
+
+dd.attribute-value {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: 75%;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+}
+
+dt.attribute-name,
+dt.attribute-name + dd.attribute-value {
+  margin-top: 2em;
+}
+
+dt.attribute-name:first-child,
+dt.attribute-name:first-child + dd.attribute-value {
+  margin-top: 0;
+}
+
+dd.attribute-value + dd.attribute-value {
+  margin-top: 0.5em;
+  width: 100%;
+}
+
+dd.attribute-value::before {
+  content: " ";
+  margin-right: 2em;
+}
+
+dd.attribute-value + dd.attribute-value::before {
+  width: 25%;
+}
