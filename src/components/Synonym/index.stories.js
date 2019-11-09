@@ -1,5 +1,5 @@
 import React from 'react';
-import Synonym from './Synonym';
+import Synonym from './';
 
 export default { title: 'Synonym Name' };
 
