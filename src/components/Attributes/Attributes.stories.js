@@ -3,7 +3,7 @@ import Attributes from './';
 
 export default { title: 'Attributes' };
 
-export const withItems = () => (
+export const basic = () => (
   <Attributes
     list={[
       {
