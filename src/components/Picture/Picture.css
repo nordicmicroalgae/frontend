@@ -28,3 +28,20 @@
   font-size: 1rem;
   font-weight: bold;
 }
+
+.picture-source > img {
+  animation-duration: 0.25s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-name: image-appearence;
+  animation-delay: 0s;
+}
+
+@keyframes image-appearence {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
