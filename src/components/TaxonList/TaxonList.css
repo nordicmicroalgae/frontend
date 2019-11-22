@@ -1,0 +1,76 @@
+.taxon-list,
+.taxon-list-grouped {
+  max-width: 50rem;
+}
+
+.taxon-list-navigation {
+  float: right;
+  position: sticky;
+  top: 2rem;
+  margin-top: 2rem;
+  width: 1.5rem;
+  z-index: 20000;
+  text-align: center;
+  background: rgba(250, 250, 250, 0.75);
+}
+
+.taxon-list-navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taxon-list-navigation-item::after {
+  content: '·';
+  display: block;
+}
+
+.taxon-list-navigation-item:last-child::after {
+  content: ' ';
+}
+
+.taxon-list-navigation-item button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #0a84ff;
+}
+
+.taxon-list-group-title {
+  position: sticky;
+  top: 0;
+  background: rgba(240, 240, 240, 0.85);
+  border-bottom: 1px solid #ccc;
+  z-index: 10000;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 2px;
+  padding: 0.25rem 0.5rem;
+}
+
+.taxon-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.taxon-list-item {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.taxon-list-item-thumbnail .picture {
+  margin: 0;
+}
+
+.taxon-list-item-title {
+  margin: auto 1rem;
+  font-size: 1rem;
+  font-weight: normal;
+}
