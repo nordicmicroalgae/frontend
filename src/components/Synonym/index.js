@@ -1,2 +1,2 @@
-import './Synonym.css';
+import './Synonym.scss';
 export { default } from './Synonym.js';

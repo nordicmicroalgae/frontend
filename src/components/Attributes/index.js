@@ -1,2 +1,2 @@
-import './Attributes.css';
+import './Attributes.scss';
 export { default } from './Attributes.js';

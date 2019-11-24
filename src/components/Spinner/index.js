@@ -1,2 +1,2 @@
-import './Spinner.css';
+import './Spinner.scss';
 export { default } from './Spinner.js';

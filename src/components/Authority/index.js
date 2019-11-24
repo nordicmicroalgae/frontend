@@ -1,2 +1,2 @@
-import './Authority.css';
+import './Authority.scss';
 export { default } from './Authority.js';
