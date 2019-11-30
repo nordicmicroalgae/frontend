@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 
 
 const propTypes = {
-  color: PropTypes.string
+  color: PropTypes.string,
+  size: PropTypes.oneOf([16, 32, 64, 128])
 };
 
 const defaultProps = {
-  color: '#000'
+  color: '#000',
+  size: 32
 };
 
-const Logo = ({ color }) => (
-  <svg viewBox="0 0 80 110" width="80" height="110">
-    <path d="M 0 110 L 0 0 L 20 0 L 20 70 L 60 70 L 60 0 L 80 0 L 80 80 L 20 80 L 20 110 L 0 110 Z" fill={color} />
+const Logo = ({ color, size }) => (
+  <svg viewBox="0 0 11 16" width={Math.round(size * 11 / 16)} height={size}>
+    <path d="M 0 16 L 0 0 L 3 0 L 3 10 L 8 10 L 8 0 L 11 0 L 11 12 L 3 12 L 3 16 L 0 16 Z" fill={color} />
   </svg>
 );
 
