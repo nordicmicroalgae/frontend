@@ -20,13 +20,19 @@
   list-style: none;
 }
 
-.taxon-list-navigation-item::after {
-  content: '·';
-  display: block;
+.taxon-list-navigation-item {
+  margin: 0.25rem 0;
 }
 
-.taxon-list-navigation-item:last-child::after {
-  content: ' ';
+@media(min-height: 65rem) {
+  .taxon-list-navigation-item::after {
+    content: '·';
+    display: block;
+  }
+
+  .taxon-list-navigation-item:last-child::after {
+    content: ' ';
+  }
 }
 
 .taxon-list-navigation-item button {
