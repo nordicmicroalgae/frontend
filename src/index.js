@@ -1,7 +1,9 @@
-console.log('This is the nµa frontend project!');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
 
-fetch('/api/').then(response => {
-  response.json().then(data => console.log(
-    `Recieved from backend: ${data.text}`
-  ));
-});
+
+ReactDOM.render(
+  <App />,
+  document.querySelector('#root')
+);

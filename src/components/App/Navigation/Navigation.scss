@@ -1,0 +1,128 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  height: 32px;
+  color: #fff;
+  background: #000;
+
+  #navigation-home {
+    display: block;
+    margin: 0 auto;
+    width: 22px;
+    height: 32px;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      background: #333;
+    }
+  }
+
+  > ul {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #000;
+
+    li {
+      margin: 0 32px;
+    }
+
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      display: block;
+      padding: 16px 0;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+  }
+
+  .subnavigation {
+    & > ul {
+      background: #222;
+
+      a {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.navigation {
+  > .navigation-toggle > .navigation-toggle-close,
+  > .navigation-toggle > .navigation-toggle-open {
+    position: relative;
+    float: left;
+    padding: 8px;
+    width: 16px;
+    height: 16px;
+
+    &:hover {
+      background: #333;
+      border-radius: 4px;
+    }
+  }
+  > .navigation-toggle > .navigation-toggle-open .navigation-toggle-bar {
+    display: block;
+    margin: 0 0 4px;
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    &:last-child {
+      margin: 0;
+    }
+  }
+  > .navigation-toggle > .navigation-toggle-close .navigation-toggle-bar {
+    position: absolute;
+    top: 14px;
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    &:first-child {
+      transform: rotate(45deg);
+    }
+    &:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.subnavigation {
+  > .navigation-toggle {
+    position: relative;
+    display: block;
+
+    .navigation-toggle-open,
+    .navigation-toggle-close {
+      padding: 1rem 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 48px;
+      background: #222;
+    }
+  }
+}
+
+.navigation, .subnavigation {
+  &.navigation-open > .navigation-toggle > .navigation-toggle-open,
+  &.navigation-closed > .navigation-toggle > .navigation-toggle-close,
+  &.navigation-closed > ul {
+    display: none;
+  }
+}
