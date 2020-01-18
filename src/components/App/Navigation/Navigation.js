@@ -140,9 +140,9 @@ const Navigation = () => {
                 <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
               </svg>
             </a>
-            <a href="#">
+            <NavLink to="/gallery/">
               Galleries
-            </a>
+            </NavLink>
           </span>
           <ul>
             <li>
