@@ -10,12 +10,18 @@ const Navigation = () => {
 
   const handleClickClose = (ev) => {
     ev.preventDefault();
-    setIsOpen({ ...isOpen, [ev.target.dataset.id]: false });
+    const targetId = (
+      ev.target.dataset.id || ev.target.parentElement.dataset.id
+    );
+    setIsOpen({ ...isOpen, [targetId]: false });
   };
 
   const handleClickOpen = (ev) => {
     ev.preventDefault();
-    setIsOpen({ ...isOpen, [ev.target.dataset.id]: true });
+    const targetId = (
+      ev.target.dataset.id || ev.target.parentElement.dataset.id
+    );
+    setIsOpen({ ...isOpen, [targetId]: true });
   };
 
   const getNavigationClassName = (id = 'root') => {
