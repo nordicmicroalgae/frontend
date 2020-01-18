@@ -72,59 +72,59 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <NavLink to="/">
+              <NavLink exact to="/">
                 Introduction
               </NavLink>
             </li>
             <li>
-              <NavLink to="/latest-images/">
+              <NavLink exact to="/latest-images/">
                 Latest Images
               </NavLink>
             </li>
             <li>
-              <NavLink to="/hall-of-fame/">
+              <NavLink exact to="/hall-of-fame/">
                 Hall of fame
               </NavLink>
             </li>
             <li>
-              <NavLink to="/how-to-contribute/">
+              <NavLink exact to="/how-to-contribute/">
                 How to contribute
               </NavLink>
             </li>
             <li>
-              <NavLink to="/partners/">
+              <NavLink exact to="/partners/">
                 Partners
               </NavLink>
             </li>
             <li>
-              <NavLink to="/nomp/">
+              <NavLink exact to="/nomp/">
                 NOMP
               </NavLink>
             </li>
             <li>
-              <NavLink to="/helcom-peg/">
+              <NavLink exact to="/helcom-peg/">
                 HELCOM-PEG
               </NavLink>
             </li>
             <li>
-              <NavLink to="/links/">
+              <NavLink exact to="/links/">
                 Links
               </NavLink>
             </li>
             <li>
-              <NavLink to="/literature/">
+              <NavLink exact to="/literature/">
                 Literature
                </NavLink>
             </li>
           </ul>
         </li>
         <li>
-          <NavLink to="/quic-view/">
+          <NavLink exact to="/quic-view/">
             Quick view
           </NavLink>
         </li>
         <li>
-          <NavLink to="/taxon-tree/">
+          <NavLink exact to="/taxon-tree/">
             Taxon tree
           </NavLink>
         </li>
@@ -146,84 +146,84 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <NavLink to="/gallery/helcom-peg/">
+              <NavLink exact to="/gallery/helcom-peg/">
                 HELCOM-PEG
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/nomp/">
+              <NavLink exact to="/gallery/nomp/">
                 NOMP
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/kuylenstierna/">
+              <NavLink exact to="/gallery/kuylenstierna/">
                 Kuylenstierna
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/skagerrak-kattegat/">
+              <NavLink exact to="/gallery/skagerrak-kattegat/">
                 Skagerrak-Kattegat
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/norwegian-sea/">
+              <NavLink exact to="/gallery/norwegian-sea/">
                 Norwegian Sea
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/freshwater/">
+              <NavLink exact to="/gallery/freshwater/">
                 Freshwater
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/swedish-benthic-freshwater-diatoms/">
+              <NavLink exact to="/gallery/swedish-benthic-freshwater-diatoms/">
                 Swedish benthic freshwater diatoms
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/diatom-resting-stages/">
+              <NavLink exact to="/gallery/diatom-resting-stages/">
                 Diatom resting stages
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/dinoflagellate-cysts/">
+              <NavLink exact to="/gallery/dinoflagellate-cysts/">
                 Dinoflagellate cysts
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/other-resting-stages/">
+              <NavLink exact to="/gallery/other-resting-stages/">
                 Other resting stages
               </NavLink>
             </li>
             <li>
-              <NavLink to="/gallery/marine-research-institute-iceland/">
+              <NavLink exact to="/gallery/marine-research-institute-iceland/">
                 Marine Research Institute - Iceland
               </NavLink>
             </li>
           </ul>
         </li>
         <li>
-          <NavLink to="/checklists/">
+          <NavLink exact to="/checklists/">
             Checklists
           </NavLink>
         </li>
         <li>
-          <NavLink to="/tools/">
+          <NavLink exact to="/tools/">
             Tools
           </NavLink>
         </li>
         <li>
-          <NavLink to="/contact/">
+          <NavLink exact to="/contact/">
             Contact
           </NavLink>
         </li>
         <li>
-          <NavLink to="/about/">
+          <NavLink exact to="/about/">
             About
           </NavLink>
         </li>
         <li>
-          <NavLink to="/help/">
+          <NavLink exact to="/help/">
             Help
           </NavLink>
         </li>
