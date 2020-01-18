@@ -20,6 +20,8 @@
     text-decoration: none;
     &.active, &:hover {
       color: #ff7f00;
+    }
+    &:hover {
       background: #333;
     }
   }
