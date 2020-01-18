@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../../Logo';
 
 const Navigation = () => {
@@ -49,9 +50,9 @@ const Navigation = () => {
           <span className="navigation-toggle-bar" />
         </a>
       </span>
-      <a id="navigation-home" href="#">
+      <Link id="navigation-home" to="/">
         <Logo size={32} theme="light" />
-      </a>
+      </Link>
       <ul>
         <li className={getNavigationClassName('home')}>
           <span className="navigation-toggle">
@@ -71,61 +72,61 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <a href="#">
+              <Link to="/">
                 Introduction
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/latest-images/">
                 Latest Images
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/hall-of-fame/">
                 Hall of fame
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/how-to-contribute/">
                 How to contribute
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/partners/">
                 Partners
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/nomp/">
                 NOMP
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/helcom-peg/">
                 HELCOM-PEG
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/links/">
                 Links
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/literature/">
                 Literature
-              </a>
+               </Link>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#">
+          <Link to="/quic-view/">
             Quick view
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/taxon-tree/">
             Taxon tree
-          </a>
+          </Link>
         </li>
         <li className={getNavigationClassName('galleries')}>
           <span className="navigation-toggle">
@@ -145,86 +146,86 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <a href="#">
+              <Link to="/gallery/helcom-peg/">
                 HELCOM-PEG
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/nomp/">
                 NOMP
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/kuylenstierna/">
                 Kuylenstierna
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/skagerrak-kattegat/">
                 Skagerrak-Kattegat
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/norwegian-sea/">
                 Norwegian Sea
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/freshwater/">
                 Freshwater
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/swedish-benthic-freshwater-diatoms/">
                 Swedish benthic freshwater diatoms
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/diatom-resting-stages/">
                 Diatom resting stages
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/dinoflagellate-cysts/">
                 Dinoflagellate cysts
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/other-resting-stages/">
                 Other resting stages
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/gallery/marine-research-institute-iceland/">
                 Marine Research Institute - Iceland
-              </a>
+              </Link>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#">
+          <Link to="/checklists/">
             Checklists
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/tools/">
             Tools
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/contact/">
             Contact
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/about/">
             About
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="/help/">
             Help
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
