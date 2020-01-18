@@ -18,7 +18,7 @@
   a {
     color: #fff;
     text-decoration: none;
-    &:hover {
+    &.active, &:hover {
       color: #ff7f00;
       background: #333;
     }
