@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../Logo';
 
 const Navigation = () => {
@@ -72,61 +72,61 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <Link to="/">
+              <NavLink to="/">
                 Introduction
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/latest-images/">
+              <NavLink to="/latest-images/">
                 Latest Images
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/hall-of-fame/">
+              <NavLink to="/hall-of-fame/">
                 Hall of fame
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/how-to-contribute/">
+              <NavLink to="/how-to-contribute/">
                 How to contribute
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/partners/">
+              <NavLink to="/partners/">
                 Partners
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/nomp/">
+              <NavLink to="/nomp/">
                 NOMP
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/helcom-peg/">
+              <NavLink to="/helcom-peg/">
                 HELCOM-PEG
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/links/">
+              <NavLink to="/links/">
                 Links
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/literature/">
+              <NavLink to="/literature/">
                 Literature
-               </Link>
+               </NavLink>
             </li>
           </ul>
         </li>
         <li>
-          <Link to="/quic-view/">
+          <NavLink to="/quic-view/">
             Quick view
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/taxon-tree/">
+          <NavLink to="/taxon-tree/">
             Taxon tree
-          </Link>
+          </NavLink>
         </li>
         <li className={getNavigationClassName('galleries')}>
           <span className="navigation-toggle">
@@ -146,86 +146,86 @@ const Navigation = () => {
           </span>
           <ul>
             <li>
-              <Link to="/gallery/helcom-peg/">
+              <NavLink to="/gallery/helcom-peg/">
                 HELCOM-PEG
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/nomp/">
+              <NavLink to="/gallery/nomp/">
                 NOMP
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/kuylenstierna/">
+              <NavLink to="/gallery/kuylenstierna/">
                 Kuylenstierna
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/skagerrak-kattegat/">
+              <NavLink to="/gallery/skagerrak-kattegat/">
                 Skagerrak-Kattegat
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/norwegian-sea/">
+              <NavLink to="/gallery/norwegian-sea/">
                 Norwegian Sea
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/freshwater/">
+              <NavLink to="/gallery/freshwater/">
                 Freshwater
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/swedish-benthic-freshwater-diatoms/">
+              <NavLink to="/gallery/swedish-benthic-freshwater-diatoms/">
                 Swedish benthic freshwater diatoms
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/diatom-resting-stages/">
+              <NavLink to="/gallery/diatom-resting-stages/">
                 Diatom resting stages
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/dinoflagellate-cysts/">
+              <NavLink to="/gallery/dinoflagellate-cysts/">
                 Dinoflagellate cysts
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/other-resting-stages/">
+              <NavLink to="/gallery/other-resting-stages/">
                 Other resting stages
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/gallery/marine-research-institute-iceland/">
+              <NavLink to="/gallery/marine-research-institute-iceland/">
                 Marine Research Institute - Iceland
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </li>
         <li>
-          <Link to="/checklists/">
+          <NavLink to="/checklists/">
             Checklists
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/tools/">
+          <NavLink to="/tools/">
             Tools
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/contact/">
+          <NavLink to="/contact/">
             Contact
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/about/">
+          <NavLink to="/about/">
             About
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/help/">
+          <NavLink to="/help/">
             Help
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
