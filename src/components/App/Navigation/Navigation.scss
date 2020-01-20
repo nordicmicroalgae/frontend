@@ -18,11 +18,9 @@
   a {
     color: #fff;
     text-decoration: none;
+    transition: all 0.5s ease-in;
     &.active, &:hover {
       color: #ff7f00;
-    }
-    &:hover {
-      background: #333;
     }
   }
 
