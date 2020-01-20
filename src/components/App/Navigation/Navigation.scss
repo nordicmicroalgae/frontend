@@ -25,6 +25,7 @@
   a {
     color: #fff;
     text-decoration: none;
+    text-transform: uppercase;
     transition: all 0.5s ease-in;
     &.active, &:hover {
       color: #ff7f00;
@@ -65,6 +66,7 @@
 
       a {
         border-bottom: none;
+        text-transform: none;
       }
     }
   }
