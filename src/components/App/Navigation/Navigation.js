@@ -3,11 +3,13 @@ import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../Logo';
 
 const Navigation = () => {
-  let [ isOpen, setIsOpen ] = useState({
+  const initialOpenState = {
     root: false,
     home: false,
     galleries: false
-  });
+  };
+
+  let [ isOpen, setIsOpen ] = useState({ ...initialOpenState });
 
   const handleClickClose = (ev) => {
     ev.preventDefault();
@@ -25,6 +27,15 @@ const Navigation = () => {
     setIsOpen({ ...isOpen, [targetId]: true });
   };
 
+  const handleClick = (ev) => {
+    const shouldClose = (
+      ev.target.nodeName == 'A' && !ev.target.className.includes('toggle')
+    );
+    if (shouldClose) {
+      setIsOpen({ ...initialOpenState });
+    }
+  };
+
   const getNavigationClassName = (id = 'root') => {
     const classNames = [ id == 'root' ? 'navigation' : 'subnavigation'];
 
@@ -38,7 +49,7 @@ const Navigation = () => {
   }
 
   return (
-    <nav className={getNavigationClassName()} role="navigation">
+    <nav className={getNavigationClassName()} role="navigation" onClick={handleClick}>
       <span className="navigation-toggle">
         <a className="navigation-toggle-open" href="#" data-id="root" role="button" onClick={handleClickOpen} aria-label="Open menu">
           <span className="navigation-toggle-bar" />
