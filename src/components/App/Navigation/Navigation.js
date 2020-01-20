@@ -49,6 +49,7 @@ const Navigation = () => {
   }
 
   return (
+    <div className="navigation-container">
     <nav className={getNavigationClassName()} role="navigation" onClick={handleClick}>
       <span className="navigation-toggle">
         <a className="navigation-toggle-open" href="#" data-id="root" role="button" onClick={handleClickOpen} aria-label="Open menu">
@@ -240,6 +241,7 @@ const Navigation = () => {
         </li>
       </ul>
     </nav>
+    </div>
   );
 };
 
