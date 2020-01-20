@@ -130,7 +130,7 @@ const Navigation = () => {
           </ul>
         </li>
         <li>
-          <NavLink exact to="/quic-view/">
+          <NavLink exact to="/quick-view/">
             Quick view
           </NavLink>
         </li>
