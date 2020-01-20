@@ -12,6 +12,7 @@
 }
 
 .navigation {
+  font-size: 0.875rem;
   margin: 0 auto;
   max-width: map-get($breakpoints, "xl");
 
@@ -173,7 +174,7 @@
         top: 0;
         right: 0;
         margin: 0 0.4rem 0 0;
-        padding: 0.5rem 0;
+        padding: 0.4rem 0;
         width: auto;
         background: none;
       }
