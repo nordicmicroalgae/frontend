@@ -1,3 +1,5 @@
+@import "../../utils/variables";
+
 .navigation {
   position: fixed;
   top: 0;
@@ -125,5 +127,56 @@
   &.navigation-closed > .navigation-toggle > .navigation-toggle-close,
   &.navigation-closed > ul {
     display: none;
+  }
+}
+
+@media(min-width: map-get($breakpoints, "xl")) {
+  .navigation {
+    #navigation-home {
+      float: left;
+      margin: 0 1rem 0 0;
+    }
+    > ul {
+      position: static;
+      > li {
+        display: inline-block;
+        margin: 0;
+      }
+      a {
+        padding: 0.4rem 1rem;
+        background: none;
+        border-bottom: none;
+        text-align: left;
+      }
+    }
+    > .navigation-toggle {
+      display: none;
+    }
+    &.navigation-closed > ul {
+      display: block;
+    }
+  }
+
+  .subnavigation {
+    > .navigation-toggle {
+      padding-right: 24px;
+      .navigation-toggle-open,
+      .navigation-toggle-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0 0.4rem 0 0;
+        padding: 0.5rem 0;
+        width: auto;
+        background: none;
+      }
+    }
+    > ul {
+      position: absolute;
+      top: 56px;
+      a {
+        padding: 1rem 2rem;
+      }
+    }
   }
 }
