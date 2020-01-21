@@ -58,13 +58,13 @@
       display: block;
       padding: 16px 0;
       text-align: center;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid $gray-5;
     }
   }
 
   .subnavigation {
     & > ul {
-      background: #222;
+      background: $gray-6;
 
       a {
         border-bottom: none;
@@ -84,7 +84,7 @@
     height: 16px;
 
     &:hover {
-      background: #333;
+      background: $gray-5;
       border-radius: 4px;
     }
   }
