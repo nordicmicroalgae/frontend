@@ -1,10 +1,12 @@
+@import "../utils/colors";
+
 .spinner {
   display: inline-block;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 5px solid #ddd;
-  border-right-color: #aaa;
+  border: 5px solid $gray-2;
+  border-right-color: $gray-4;
   animation: spinner 0.8s linear 0s infinite;
 }
 
