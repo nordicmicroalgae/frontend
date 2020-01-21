@@ -1,3 +1,4 @@
+@import "../../utils/colors";
 @import "../../utils/variables";
 
 .navigation-container {
@@ -7,8 +8,8 @@
   right: 0;
   padding: 12px;
   height: 32px;
-  color: #fff;
-  background: #000;
+  color: $white;
+  background: $black;
 }
 
 .navigation {
@@ -29,7 +30,7 @@
     text-transform: uppercase;
     transition: color 0.5s ease-in;
     &.active, &:hover {
-      color: #ff7f00;
+      color: $orange;
     }
   }
 
@@ -40,7 +41,7 @@
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #000;
+    background: $black;
 
     > li {
       margin: 0 32px;
@@ -92,7 +93,7 @@
     margin: 0 0 4px;
     width: 16px;
     height: 2px;
-    background: #fff;
+    background: $white;
     &:last-child {
       margin: 0;
     }
@@ -102,7 +103,7 @@
     top: 14px;
     width: 16px;
     height: 2px;
-    background: #fff;
+    background: $white;
     &:first-child {
       transform: rotate(45deg);
     }
