@@ -1,12 +1,14 @@
+@import "../utils/colors";
+
 .logo {
   display: inline-block;
   fill: currentcolor;
 }
 
 .logo-dark {
-  color: #000;
+  color: $black;
 }
 
 .logo-light {
-  color: #fff;
+  color: $white;
 }
