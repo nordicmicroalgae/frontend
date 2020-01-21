@@ -1,3 +1,5 @@
+@import "../utils/colors";
+
 .taxon-list,
 .taxon-list-grouped {
   max-width: 50rem;
@@ -11,7 +13,7 @@
   width: 1.5rem;
   z-index: 20000;
   text-align: center;
-  background: rgba(250, 250, 250, 0.75);
+  background: rgba($gray-0, .75);
 }
 
 .taxon-list-navigation ul {
@@ -45,14 +47,14 @@
   border: none;
   background: none;
   cursor: pointer;
-  color: #0a84ff;
+  color: $blue;
 }
 
 .taxon-list-group-title {
   position: sticky;
   top: 0;
-  background: rgba(240, 240, 240, 0.85);
-  border-bottom: 1px solid #ccc;
+  background: rgba($gray-1, .85);
+  border-bottom: 1px solid $gray-3;
   z-index: 10000;
   font-size: 1rem;
   font-weight: bold;
@@ -68,7 +70,7 @@
 
 .taxon-list-item {
   display: flex;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $gray-3;
 }
 
 .taxon-list-item-thumbnail .picture {
