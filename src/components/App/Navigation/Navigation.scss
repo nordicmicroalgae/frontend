@@ -177,18 +177,26 @@
     }
     a.active ~ .subnavigation-container {
       display: block;
-    }
-    ul {
       position: fixed;
-      left: 50%;
-      margin-left: -(map-get($breakpoints, "xl") / 2);
-      width: map-get($breakpoints, "xl");
       top: 56px;
+      left: 0;
+      right: 0;
+      background: $gray-1;
+    }
+    .subnavigation-container ul {
+      margin: 0 auto;
+      width: map-get($breakpoints, "xl");
+      background: none;
       > li {
         display: inline-block;
+        margin-right: 2em;
       }
       a {
-        padding: 1rem;
+        padding: 0.85rem 0;
+        color: $gray-6;
+        &.active, &:hover {
+          color: $orange;
+        }
       }
     }
   }
