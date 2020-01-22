@@ -1,6 +1,10 @@
 @import "../../utils/colors";
 @import "../../utils/variables";
 
+body {
+  padding-top: 56px;
+}
+
 .navigation-container {
   position: fixed;
   top: 0;
@@ -144,6 +148,10 @@
 }
 
 @media(min-width: map-get($breakpoints, "xl")) {
+  body {
+    padding-top: 140px;
+  }
+
   .navigation {
     #navigation-home {
       float: left;
