@@ -77,7 +77,21 @@ const Navigation = () => {
               </svg>
             </a>
           </span>
-          <NavLink exact to="/">
+          <NavLink
+            to="/"
+            isActive={(_,{ pathname }) => [
+              '/',
+              '/latest-images/',
+              '/hall-of-fame/',
+              '/how-to-contribute/',
+              '/partners/',
+              '/nomp/',
+              '/helcom-peg/',
+              '/links/',
+              '/literature/'
+              ].includes(pathname)
+            }
+          >
             Home
           </NavLink>
           <div className="subnavigation-container">
