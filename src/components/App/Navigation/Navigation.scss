@@ -114,17 +114,16 @@
 }
 
 .subnavigation {
+  position: relative;
   > .navigation-toggle {
-    position: relative;
-    display: block;
-
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
     .navigation-toggle-open,
     .navigation-toggle-close {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 48px;
+      border: none;
     }
   }
 }
@@ -157,6 +156,7 @@
       }
       a {
         padding: 0.4rem 1rem;
+        padding-right: 32px;
         background: none;
         border-bottom: none;
         text-align: left;
@@ -185,7 +185,7 @@
       }
     }
     > ul {
-      position: absolute;
+      position: fixed;
       top: 56px;
       a {
         padding: 1rem 2rem;

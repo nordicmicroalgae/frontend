@@ -76,10 +76,10 @@ const Navigation = () => {
                 <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
               </svg>
             </a>
-            <NavLink exact to="/">
-              Home
-            </NavLink>
           </span>
+          <NavLink exact to="/">
+            Home
+          </NavLink>
           <ul>
             <li>
               <NavLink exact to="/">
@@ -150,10 +150,10 @@ const Navigation = () => {
                 <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
               </svg>
             </a>
-            <NavLink to="/gallery/">
-              Galleries
-            </NavLink>
           </span>
+          <NavLink to="/gallery/">
+            Galleries
+          </NavLink>
           <ul>
             <li>
               <NavLink exact to="/gallery/helcom-peg/">
