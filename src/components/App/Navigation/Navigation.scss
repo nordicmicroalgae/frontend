@@ -130,10 +130,15 @@
 }
 
 .navigation, .subnavigation {
-  &.navigation-open > .navigation-toggle > .navigation-toggle-open,
-  &.navigation-closed > .navigation-toggle > .navigation-toggle-close,
-  &.navigation-closed > ul {
+  > ul,
+  > .navigation-toggle > .navigation-toggle-close,
+  &.navigation-open > .navigation-toggle > .navigation-toggle-open {
     display: none;
+  }
+
+  &.navigation-open > ul,
+  &.navigation-open > .navigation-toggle > .navigation-toggle-close {
+    display: block;
   }
 }
 
@@ -144,6 +149,7 @@
       margin: 0 1rem 0 0;
     }
     > ul {
+      display: block;
       position: static;
       > li {
         display: inline-block;

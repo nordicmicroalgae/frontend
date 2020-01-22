@@ -41,8 +41,6 @@ const Navigation = () => {
 
     if (isOpen[id]) {
       classNames.push('navigation-open');
-    } else {
-      classNames.push('navigation-closed');
     }
 
     return classNames.join(' ');
