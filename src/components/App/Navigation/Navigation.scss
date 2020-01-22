@@ -63,7 +63,7 @@
   }
 
   .subnavigation {
-    & > ul {
+    ul {
       background: $gray-6;
 
       a {
@@ -130,12 +130,14 @@
 
 .navigation, .subnavigation {
   > ul,
+  > .subnavigation-container,
   > .navigation-toggle > .navigation-toggle-close,
   &.navigation-open > .navigation-toggle > .navigation-toggle-open {
     display: none;
   }
 
   &.navigation-open > ul,
+  &.navigation-open > .subnavigation-container,
   &.navigation-open > .navigation-toggle > .navigation-toggle-close {
     display: block;
   }
@@ -173,10 +175,10 @@
     > .navigation-toggle {
       display: none;
     }
-    a.active ~ ul {
+    a.active ~ .subnavigation-container {
       display: block;
     }
-    > ul {
+    ul {
       position: fixed;
       left: 50%;
       margin-left: -(map-get($breakpoints, "xl") / 2);

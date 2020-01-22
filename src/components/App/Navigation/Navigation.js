@@ -80,6 +80,7 @@ const Navigation = () => {
           <NavLink exact to="/">
             Home
           </NavLink>
+          <div className="subnavigation-container">
           <ul>
             <li>
               <NavLink exact to="/">
@@ -127,6 +128,7 @@ const Navigation = () => {
                </NavLink>
             </li>
           </ul>
+          </div>
         </li>
         <li>
           <NavLink exact to="/quick-view/">
@@ -154,6 +156,7 @@ const Navigation = () => {
           <NavLink to="/gallery/">
             Galleries
           </NavLink>
+          <div className="subnavigation-container">
           <ul>
             <li>
               <NavLink exact to="/gallery/helcom-peg/">
@@ -211,6 +214,7 @@ const Navigation = () => {
               </NavLink>
             </li>
           </ul>
+          </div>
         </li>
         <li>
           <NavLink exact to="/checklists/">
