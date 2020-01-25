@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '../components/Page';
 
 
@@ -32,51 +32,33 @@ function readPage(page) {
   });
 }
 
-class PageContainer extends React.Component {
+const PageContainer = ({ match }) => {
+  let [ page, setPage ] = useState(undefined);
+  let [ isFetching, setIsFetching ] = useState(true);
 
-  constructor(props) {
-    super(props);
-    this.state = {page: undefined, isLoading: true};
-  }
-
-  componentDidMount() {
-    this.getPage();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.page != prevProps.match.params.page) {
-      this.getPage();
-    }
-  }
-
-  getPage() {
-    const { params } = this.props.match;
-
-    this.setState({isLoading: true});
-
-    readPage(params.page)
+  useEffect(() => {
+    setIsFetching(true);
+    readPage(match.params.page)
       .then(page => {
-        this.setState({ page, isLoading: false});
+        setPage(page);
       })
-      .catch(() => {
-        this.setState({page: undefined, isLoading: false});
+      .catch(_error => {
+        setPage(undefined);
       })
+      .finally(() => {
+        setIsFetching(false);
+      });
+  }, [ match.params.page ])
 
+  if (isFetching) {
+    return <p>Loading...</p>;
   }
 
-  render() {
-    const { page, isLoading } = this.state;
-
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-
-    if (page == null) {
-      return <h1>Page not found</h1>;
-    }
-
-    return <Page { ...page } />;
+  if (page == null) {
+    return <h1>Page not found</h1>
   }
-}
+
+  return <Page { ...page } />;
+};
 
 export default PageContainer;
