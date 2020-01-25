@@ -3,33 +3,13 @@ import Page from '../components/Page';
 
 
 function readPage(page) {
-  const pages = [
-    'latest-images',
-    'hall-of-fame',
-    'how-to-contribute',
-    'partners',
-    'nomp',
-    'helcom-peg',
-    'links',
-    'literature'
-  ];
-
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (pages.includes(page)) {
-        return resolve({
-          title: page,
-          body: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-        });
+  return fetch(`/api/page/${page}/`)
+    .then(response => {
+      if (!response.ok) {
+        return Promise.reject();
       }
-      return reject();
-    }, 1000);
-  });
+      return response.json();
+    })
 }
 
 const PageContainer = ({ match }) => {
@@ -39,7 +19,7 @@ const PageContainer = ({ match }) => {
   useEffect(() => {
     setIsFetching(true);
     readPage(match.params.page)
-      .then(page => {
+      .then(({ page }) => {
         setPage(page);
       })
       .catch(_error => {
