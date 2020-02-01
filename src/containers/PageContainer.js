@@ -1,44 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Page from '../components/Page';
+import { connect } from 'react-redux';
+import { loadPage } from '../actions';
 
 
-function readPage(page = 'introduction') {
-  return fetch(`/api/page/${page}/`)
-    .then(response => {
-      if (!response.ok) {
-        return Promise.reject();
-      }
-      return response.json();
-    })
-}
+const propTypes = {
+  slug: PropTypes.string.isRequired,
+  page: PropTypes.object
+};
 
-const PageContainer = ({ match }) => {
-  let [ page, setPage ] = useState(undefined);
-  let [ isFetching, setIsFetching ] = useState(true);
-
+const PageContainer = ({ getPage, page, slug }) => {
   useEffect(() => {
-    setIsFetching(true);
-    readPage(match.params.page)
-      .then(({ page }) => {
-        setPage(page);
-      })
-      .catch(_error => {
-        setPage(undefined);
-      })
-      .finally(() => {
-        setIsFetching(false);
-      });
-  }, [ match.params.page ])
+    getPage(slug);
+  }, [ slug ]);
 
-  if (isFetching) {
+  if (page == null) {
+    return null;
+  }
+
+  if (page.isFetching) {
     return <p>Loading...</p>;
   }
 
-  if (page == null) {
-    return <h1>Page not found</h1>
+  if (page.failedToFetch) {
+    return <h1>Could not fetch page</h1>;
   }
 
   return <Page { ...page } />;
 };
 
-export default PageContainer;
+PageContainer.propTypes = propTypes;
+
+
+const mapStateToProps = (state, { match: { params } }) => {
+  const { slug = 'introduction' } = params;
+  const page = state.pages[slug];
+  return { page, slug };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getPage: (slug) => dispatch(loadPage(slug))
+});
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PageContainer);
