@@ -1,0 +1,126 @@
+{
+  "ui": {
+    "navigation": [
+      {
+        "name": "Home",
+        "path": "/",
+        "subnavigation": [
+          {
+            "name": "Introduction",
+            "path": "/"
+          },
+          {
+            "name": "Latest images",
+            "path": "/latest-images/"
+          },
+          {
+            "name": "Hall of fame",
+            "path": "/hall-of-fame/"
+          },
+          {
+            "name": "How to contribute",
+            "path": "/how-to-contribute/"
+          },
+          {
+            "name": "Partners",
+            "path": "/partnes/"
+          },
+          {
+            "name": "NOMP",
+            "path": "/nomp/"
+          },
+          {
+            "name": "HELCOM-PEG",
+            "path": "/helcom-peg/"
+          },
+          {
+            "name": "Links",
+            "path": "/links/"
+          },
+          {
+            "name": "Literature",
+            "path": "/literature/"
+          }
+        ]
+      },
+      {
+        "name": "Quick View",
+        "path": "/quick-view/"
+      },
+      {
+        "name": "Taxon tree",
+        "path": "/taxon-tree/"
+      },
+      {
+        "name": "Galleries",
+        "path": "/gallery/",
+        "subnavigation": [
+          {
+            "name": "HELCOM-PEG",
+            "path": "/gallery/helcom-peg/"
+          },
+          {
+            "name": "NOMP",
+            "path": "/gallery/nomp/"
+          },
+          {
+            "name": "Kuylenstierna",
+            "path": "/gallery/kuylenstierna/"
+          },
+          {
+            "name": "Skagerrak-Kattegatt",
+            "path": "/gallery/skagerrak-kattegatt/"
+          },
+          {
+            "name": "Norwegian Sea",
+            "path": "/gallery/norwegian-sea/"
+          },
+          {
+            "name": "Freshwater",
+            "path": "/gallery/freshwater/"
+          },
+          {
+            "name": "Swedish benthic freshwater diatoms",
+            "path": "/gallery/swedish-benthic-freshwater-diatoms/"
+          },
+          {
+            "name": "Diatom resting stages",
+            "path": "/gallery/diatom-resting-stages/"
+          },
+          {
+            "name": "Dinoflagellate cysts",
+            "path": "/gallery/dinoflagellate-cysts/"
+          },
+          {
+            "name": "Other resting stages",
+            "path": "/gallery/other-resting-stages/"
+          },
+          {
+            "name": "Marine Research Institute - Iceland",
+            "path": "/gallery/marine-research-institute-iceland/"
+          }
+        ]
+      },
+      {
+        "name": "Checklists",
+        "path": "/checklists/"
+      },
+      {
+        "name": "Tools",
+        "path": "/tools/"
+      },
+      {
+        "name": "Contact",
+        "path": "/contact/"
+      },
+      {
+        "name": "About",
+        "path": "/about/"
+      },
+      {
+        "name": "Help",
+        "path": "/help/"
+      }
+    ]
+  }
+}
