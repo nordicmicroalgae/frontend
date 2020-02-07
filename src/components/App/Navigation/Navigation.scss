@@ -1,31 +1,48 @@
 @import "../../utils/colors";
 @import "../../utils/variables";
 
+$navigation-height: 56px;
+$logo-width: 22px;
+$logo-height: 32px;
+$logo-box: $navigation-height;
+$navigation-toggle-bar-width: 16px;
+$navigation-toggle-bar-height: 2px;
+$navigation-toggle-box: $navigation-height;
+
 body {
-  padding-top: 56px;
+  padding-top: $navigation-height;
 }
 
 .navigation-container {
+  * { box-sizing: border-box; }
+
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 12px;
-  height: 32px;
+  height: $navigation-height;
   color: $white;
   background: $black;
 }
 
 .navigation {
-  font-size: 0.875rem;
+  font-size: .875rem;
   margin: 0 auto;
   max-width: map-get($breakpoints, "xl");
 
   #navigation-home {
     display: block;
     margin: 0 auto;
-    width: 22px;
-    height: 32px;
+    padding: ($logo-box - $logo-height) / 2 0;
+    width: $logo-box;
+    height: $logo-box;
+
+    .logo {
+      display: block;
+      margin: 0 auto;
+      width: $logo-width;
+      height: $logo-height;
+    }
   }
 
   a {
@@ -36,11 +53,14 @@ body {
     &.active, &:hover {
       color: $orange;
     }
+    &:hover .logo {
+      color: inherit;
+    }
   }
 
   > ul {
     position: fixed;
-    top: 56px;
+    top: $navigation-height;
     left: 0;
     right: 0;
     bottom: 0;
@@ -50,7 +70,6 @@ body {
     > li {
       margin: 0 32px;
     }
-
   }
 
   ul {
@@ -76,6 +95,7 @@ body {
       }
     }
   }
+
 }
 
 .navigation {
@@ -83,9 +103,9 @@ body {
   > .navigation-toggle > .navigation-toggle-open {
     position: relative;
     float: left;
-    padding: 8px;
-    width: 16px;
-    height: 16px;
+    width: $navigation-toggle-box;
+    height: $navigation-toggle-box;
+    padding: ($navigation-toggle-box - $navigation-toggle-bar-width) / 2 0;
 
     &:hover {
       background: $gray-5;
@@ -94,19 +114,20 @@ body {
   }
   > .navigation-toggle > .navigation-toggle-open .navigation-toggle-bar {
     display: block;
-    margin: 0 0 4px;
-    width: 16px;
-    height: 2px;
+    margin: 0 auto 4px;
+    width: $navigation-toggle-bar-width;
+    height: $navigation-toggle-bar-height;
     background: $white;
     &:last-child {
-      margin: 0;
+      margin: 0 auto;
     }
   }
   > .navigation-toggle > .navigation-toggle-close .navigation-toggle-bar {
     position: absolute;
-    top: 14px;
-    width: 16px;
-    height: 2px;
+    top: 26px;
+    left: 20px;
+    width: $navigation-toggle-bar-width;
+    height: $navigation-toggle-bar-height;
     background: $white;
     &:first-child {
       transform: rotate(45deg);
@@ -123,8 +144,9 @@ body {
     position: absolute;
     top: 0;
     right: 0;
-    width: 48px;
-    height: 48px;
+    bottom: 0;
+    width: $navigation-toggle-box;
+    height: 100%;
     .navigation-toggle-open,
     .navigation-toggle-close {
       border: none;
@@ -148,14 +170,13 @@ body {
 }
 
 @media(min-width: map-get($breakpoints, "xl")) {
-  body {
-    padding-top: 140px;
-  }
-
   .navigation {
     #navigation-home {
       float: left;
       margin: 0 1rem 0 0;
+    }
+    > .navigation-toggle {
+      display: none;
     }
     > ul {
       display: block;
@@ -165,45 +186,28 @@ body {
         margin: 0;
       }
       a {
-        padding: 0.4rem 1rem;
-        background: none;
-        border-bottom: none;
-        text-align: left;
+        display: block;
+        padding: 18px 1rem;
+        height: $navigation-height;
       }
     }
-    > .navigation-toggle {
-      display: none;
-    }
-    &.navigation-closed > ul {
-      display: block;
-    }
-  }
-
-  .subnavigation {
-    > .navigation-toggle {
-      display: none;
-    }
-    a.active ~ .subnavigation-container {
-      display: block;
-      position: fixed;
-      top: 56px;
-      left: 0;
-      right: 0;
-      background: $gray-1;
-    }
-    .subnavigation-container ul {
-      margin: 0 auto;
-      width: map-get($breakpoints, "xl");
-      background: none;
-      > li {
-        display: inline-block;
-        margin-right: 2em;
+    .subnavigation {
+      .navigation-toggle {
+        display: none;
       }
-      a {
-        padding: 0.85rem 0;
-        color: $gray-6;
-        &.active, &:hover {
-          color: $orange;
+      &:hover .subnavigation-container {
+        display: block;
+      }
+      .subnavigation-container {
+        position: fixed;
+        top: $navigation-height;
+        width: 400px;
+      }
+      ul {
+        background: rgba($gray-6, .95);
+        a {
+          height: auto;
+          text-align: left;
         }
       }
     }
