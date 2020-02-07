@@ -13,17 +13,13 @@ const Navigation = () => {
 
   const handleClickClose = (ev) => {
     ev.preventDefault();
-    const targetId = (
-      ev.target.dataset.id || ev.target.parentElement.dataset.id
-    );
+    const targetId = ev.currentTarget.dataset.id;
     setIsOpen({ ...isOpen, [targetId]: false });
   };
 
   const handleClickOpen = (ev) => {
     ev.preventDefault();
-    const targetId = (
-      ev.target.dataset.id || ev.target.parentElement.dataset.id
-    );
+    const targetId = ev.currentTarget.dataset.id;
     setIsOpen({ ...isOpen, [targetId]: true });
   };
 
