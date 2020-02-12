@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Article from '../components/Article';
+import NotFound from '../components/Error/NotFound';
 import { connect } from 'react-redux';
 import { loadPage } from '../actions';
 
@@ -24,7 +25,7 @@ const Page = ({ getPage, page, slug }) => {
   }
 
   if (page.isNotFound) {
-    return <h1>Page not found</h1>;
+    return <NotFound />;
   }
 
   return <Article { ...page } />;
