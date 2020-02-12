@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
-    "core-js": "^3.6.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.3",
