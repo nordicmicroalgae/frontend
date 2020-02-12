@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Navigation from './Navigation';
-import PageContainer from '../../containers/PageContainer';
+import Page from '../../containers/Page';
 
 const App = () => (
   <Router>
@@ -11,7 +11,7 @@ const App = () => (
       <Navigation />
       <main className="main" role="main">
         <Switch>
-          <Route path="/:slug?/" component={PageContainer} />
+          <Route path="/:slug?/" component={Page} />
         </Switch>
       </main>
     </Provider>

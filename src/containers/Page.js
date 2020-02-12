@@ -10,7 +10,7 @@ const propTypes = {
   page: PropTypes.object
 };
 
-const PageContainer = ({ getPage, page, slug }) => {
+const Page = ({ getPage, page, slug }) => {
   useEffect(() => {
     getPage(slug);
   }, [ slug ]);
@@ -30,7 +30,7 @@ const PageContainer = ({ getPage, page, slug }) => {
   return <Article { ...page } />;
 };
 
-PageContainer.propTypes = propTypes;
+Page.propTypes = propTypes;
 
 
 const mapStateToProps = (state, { match: { params } }) => {
@@ -47,4 +47,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PageContainer);
+)(Page);
