@@ -1,4 +1,4 @@
-import { getPage } from '../api/pages';
+import { getPage, PageNotFound } from '../api/pages';
 
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';
@@ -24,7 +24,10 @@ export const fetchPage = slug => dispatch =>  {
       page => {
         dispatch(fetchPageSuccess(slug, page));
       },
-      _error => {
+      error => {
+        if (!(error instanceof PageNotFound)) {
+          return Promise.reject(error);
+        }
         dispatch(fetchPageFailure(slug));
       }
   );
