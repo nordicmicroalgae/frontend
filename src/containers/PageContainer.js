@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Page from '../components/Page';
+import Article from '../components/Article';
 import { connect } from 'react-redux';
 import { loadPage } from '../actions';
 
@@ -27,7 +27,7 @@ const PageContainer = ({ getPage, page, slug }) => {
     return <h1>Page not found</h1>;
   }
 
-  return <Page { ...page } />;
+  return <Article { ...page } />;
 };
 
 PageContainer.propTypes = propTypes;
