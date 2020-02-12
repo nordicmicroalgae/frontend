@@ -1,3 +1,5 @@
+import { getPage } from '../api/pages';
+
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';
 export const FETCH_PAGE_FAILURE = 'FETCH_PAGE_FAILURE';
@@ -17,15 +19,7 @@ export const fetchPageFailure = slug => ({
 export const fetchPage = slug => dispatch =>  {
   dispatch(fetchPageRequest(slug));
 
-  return fetch(`/api/page/${slug}/`)
-    .then(
-      response => {
-        if (!response.ok) {
-          return Promise.reject();
-        }
-        return response.json();
-      }
-    )
+  return getPage(slug)
     .then(
       page => {
         dispatch(fetchPageSuccess(slug, page));
