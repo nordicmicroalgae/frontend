@@ -29,7 +29,7 @@ const pages = (state = {}, action) => {
         ...state,
         [action.slug]: {
           isFetching: false,
-          failedToFetch: true
+          isNotFound: true
         }
       };
     default:

@@ -23,8 +23,8 @@ const PageContainer = ({ getPage, page, slug }) => {
     return <p>Loading...</p>;
   }
 
-  if (page.failedToFetch) {
-    return <h1>Could not fetch page</h1>;
+  if (page.isNotFound) {
+    return <h1>Page not found</h1>;
   }
 
   return <Page { ...page } />;
