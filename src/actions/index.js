@@ -1,4 +1,5 @@
-import { getPage, PageNotFound } from '../api/pages';
+import getApiClient, { HttpError } from '../api';
+const client = getApiClient({baseURL: '/api/'});
 
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';
@@ -19,16 +20,16 @@ export const fetchPageFailure = slug => ({
 export const fetchPage = slug => dispatch =>  {
   dispatch(fetchPageRequest(slug));
 
-  return getPage(slug)
+  return client.get(`/page/${slug}/`)
     .then(
-      page => {
-        dispatch(fetchPageSuccess(slug, page));
+      response => {
+        dispatch(fetchPageSuccess(slug, response.data));
       },
       error => {
-        if (!(error instanceof PageNotFound)) {
-          return Promise.reject(error);
+        if (error instanceof HttpError && error.status == HttpError.NOT_FOUND) {
+          return dispatch(fetchPageFailure(slug));
         }
-        dispatch(fetchPageFailure(slug));
+        return Promise.reject(error);
       }
   );
 }
