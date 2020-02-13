@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 export class PageNotFound extends Error {
 
@@ -14,14 +15,16 @@ export class PageNotFound extends Error {
 }
 
 export async function getPage(pageSlug) {
-  const response = await fetch(`/api/page/${pageSlug}/`);
+  let response;
 
-  if (!response.ok) {
-    if (response.status === 404) {
+  try {
+    response = await axios.get(`/api/page/${pageSlug}/`);
+  } catch(error) {
+    if (error.response && error.response.status === 404) {
       throw new PageNotFound(`Could not find page: ${pageSlug}`);
     }
-    throw new Error(`Could not fetch page: "${pageSlug}"`);
+    throw error;
   }
 
-  return response.json();
+  return response.data;
 }
