@@ -63,3 +63,11 @@ export class HttpError extends Error {
   }
 
 }
+
+export class HttpClientError extends HttpError {
+
+}
+
+export class HttpServerError extends HttpError {
+
+}
