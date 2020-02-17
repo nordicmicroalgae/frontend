@@ -8,7 +8,10 @@ import { loadPage } from '../actions';
 
 const propTypes = {
   slug: PropTypes.string.isRequired,
-  page: PropTypes.object
+  page: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object
+  ])
 };
 
 const Page = ({ getPage, page, slug }) => {
@@ -16,15 +19,12 @@ const Page = ({ getPage, page, slug }) => {
     getPage(slug);
   }, [ slug ]);
 
-  if (page == null) {
-    return null;
-  }
 
-  if (page.isFetching) {
+  if (page === null) {
     return <p>Loading...</p>;
   }
 
-  if (page.isNotFound) {
+  if (page === false) {
     return <NotFound />;
   }
 

@@ -11,15 +11,12 @@ const pages = (state = {}, action) => {
     case FETCH_PAGE_REQUEST:
       return {
         ...state,
-        [action.slug]: {
-          isFetching: true
-        }
+        [action.slug]: null
       };
     case FETCH_PAGE_SUCCESS:
       return {
         ...state,
         [action.slug]: {
-          isFetching: false,
           title: action.page.title,
           body: action.page.body
         }
@@ -27,10 +24,7 @@ const pages = (state = {}, action) => {
     case FETCH_PAGE_FAILURE:
       return {
         ...state,
-        [action.slug]: {
-          isFetching: false,
-          isNotFound: true
-        }
+        [action.slug]: false
       };
     default:
       return state;
