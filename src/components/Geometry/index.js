@@ -298,3 +298,30 @@ export const Ellipsoid = () => (
     </Group>
   </Scene>
 );
+
+export const TwoCones = () => (
+  <Scene>
+    <Group>
+    <Mesh position={[0, 1, 0]}>
+        <coneGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            2,    // height
+            32    // radial segments
+          ]}
+        />
+      </Mesh>
+      <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
+        <coneGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            2,    // height
+            32    // radial segments
+          ]}
+        />
+      </Mesh>
+    </Group>
+  </Scene>
+);
