@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { extend, Canvas, useUpdate, useThree } from 'react-three-fiber';
+import React, { useState, useRef } from 'react';
+import { extend, Canvas, useFrame, useUpdate, useThree } from 'react-three-fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
@@ -24,19 +24,68 @@ const Controls = () => {
   )
 };
 
+const Scene = ({ autoPlay, children }) => {
+  let [ animate, setAnimate ] = useState(autoPlay);
 
-const Scene = ({ children }) => {
+  const toggleAnimate = (_ev) => {
+    setAnimate(!animate);
+  };
+
   return (
     <div style={{maxWidth: '400px', height: '400px'}}>
       <Canvas>
         <Controls />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        {children}
+        <Animation active={animate}>
+          {children}
+        </Animation>
       </Canvas>
+      <div className="geometry-actions">
+        <button type="button" onClick={toggleAnimate}>
+          {animate ? <PauseIcon /> : <PlayIcon />}
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+Scene.defaultProps = {
+  autoPlay: false
+};
+
+const PlayIcon = () => (
+  <svg viewBox="0 0 9 12" width="9" height="12">
+    <path d="M 0 12 L 0 0 L 9 6 L 0 12 Z" fill="#333" />
+  </svg>
+);
+
+const PauseIcon = () => (
+  <svg viewBox="0 0 9 12" width="9" height="12">
+    <path d="M 0 0 L 3 0 L 3 12 L 0 12 L 0 0 Z" fill="#333" />
+    <path d="M 6 0 L 9 0 L 9 12 L 6 12 L 6 0 Z" fill="#333" />
+  </svg>
+);
+
+const Animation = ({ active, children }) => {
+  const group = useRef();
+
+  const rotateFrame = () => {
+    group.current.rotation.x += 0.005;
+    group.current.rotation.y += 0.005;
+    group.current.rotation.z += 0.005;
+  };
+
+  const voidFrame = () => null;
+
+  useFrame(active ? rotateFrame : voidFrame);
+
+  return (
+    <group ref={group}>
+      {children}
+    </group>
+  );
+};
 
 const Group = (props) => {
   return (
