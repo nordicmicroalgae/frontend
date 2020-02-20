@@ -38,55 +38,133 @@ const Scene = ({ children }) => {
   );
 }
 
+const Group = (props) => {
+  return (
+    <group {...props}>
+      {props.children}
+    </group>
+  );
+}
+
+const Mesh = (props) => (
+  <mesh { ...props }>
+    {props.children}
+    <meshStandardMaterial attach="material" color={props.color} />
+  </mesh>
+);
+
+Mesh.defaultProps = {
+  color: 'green',
+  position: [0, 0, 0],
+  scale: [1, 1, 1]
+};
 
 
 export const Cylinder = () => (
   <Scene>
-    <mesh position={[0, 0, 0]} >
-      <cylinderGeometry attach="geometry" args={[1, 1, 2.5, 32]} />
-      <meshStandardMaterial attach="material" color="green" />
-    </mesh>
+    <Group>
+      {/* ====== Cone ====== */}
+      <Mesh>
+        <cylinderGeometry
+          attach="geometry"
+          args={[
+            1,    // radius top
+            1,    // radius bottom
+            2.5,  // height
+            32    // radial segments
+          ]}
+        />
+      </Mesh>
+    </Group>
   </Scene>
 );
 
 export const Sphere = () => (
   <Scene>
-    <mesh position={[0, 0, 0]}>
-      <sphereGeometry attach="geometry" args={[1, 32, 32]} />
-      <meshStandardMaterial attach="material" color="green" />
-    </mesh>
+    <Group>
+      {/* ====== Sphere ====== */}
+      <Mesh>
+        <sphereGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            32,   // width segments
+            32    // height segments
+          ]}
+        />
+      </Mesh>
+    </Group>
   </Scene>
 );
 
 export const Cone = () => (
   <Scene>
-    <mesh position={[0, 0, 0]}>
-      <coneGeometry attach="geometry" args={[1, 2, 32]} />
-      <meshStandardMaterial attach="material" color="green" />
-    </mesh>
+    <Group>
+      {/* ====== Cone ====== */}
+      <Mesh>
+        <coneGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            2,    // height
+            32    // radial segments
+          ]}
+        />
+      </Mesh>
+    </Group>
   </Scene>
 );
 
 export const ConePlusHalfSphere = () => (
   <Scene>
-    <mesh position={[0, 0, 0]}>
-      <coneGeometry attach="geometry" args={[1, 2, 32]} />
-      <meshStandardMaterial attach="material" color="green" />
-    </mesh>
-    <mesh position={[0, -1, 0]}>
-      <sphereGeometry attach="geometry" args={[1, 32, 32, 0, Math.PI * 2, Math.PI * 0.5]} />
-      <meshStandardMaterial attach="material" color="green" />
-    </mesh>
+    <Group>
+      {/* ====== Cone ====== */}
+      <Mesh>
+        <coneGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            2,    // height
+            32    // radial segments
+          ]}
+        />
+      </Mesh>
+      {/* ====== Sphere ====== */}
+      <Mesh position={[0, -1, 0]}>
+        <sphereGeometry
+          attach="geometry"
+          args={[
+            1,             // radius
+            32,            // width segments
+            32,            // height segments
+            0,             // phi start
+            Math.PI * 2,   // phi length
+            Math.PI * 0.5  // theta start
+          ]}
+        />
+      </Mesh>
+    </Group>
   </Scene>
 );
 
 export const Trapezoid = () => {
   return(
     <Scene>
-      <mesh position={[0, 0, 0]} scale={[2, 1.5, 2]}>
-        <cylinderGeometry attach="geometry" args={[0.8 / Math.sqrt(2), 1 / Math.sqrt(2), 1, 4, 1]} />
-        <meshStandardMaterial attach="material" color="green" />
-      </mesh>
+      <Group>
+        {/* ====== Cylinder ====== */}
+        <Mesh scale={[2, 1.5, 2]}>
+          <cylinderGeometry
+            attach="geometry"
+            args={[
+              0.8 / Math.sqrt(2), // radius top
+              1 / Math.sqrt(2),   // radius bottom
+              1,                  // height
+              4,                  // radial segments
+              1                   // height segments
+            ]}
+          />
+        </Mesh>
+      </Group>
     </Scene>
   );
 };
