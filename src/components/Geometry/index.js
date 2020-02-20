@@ -281,3 +281,20 @@ export const ChainOfSpheres = () => (
     </Group>
   </Scene>
 );
+
+export const Ellipsoid = () => (
+  <Scene>
+    <Group>
+      <Mesh scale={[1, 0.5, 1]}>
+        <sphereGeometry
+          attach="geometry"
+          args={[
+            1,    // radius
+            32,   // width segments
+            32    // height segments
+          ]}
+        />
+      </Mesh>
+    </Group>
+  </Scene>
+);
