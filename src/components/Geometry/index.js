@@ -217,3 +217,30 @@ export const Trapezoid = () => {
     </Scene>
   );
 };
+
+export const Parallelepiped = () => (
+  <Scene>
+    <Group>
+      <Mesh position={[-0.25, 0, 0]} rotation={[0.25, 0.25, Math.PI * 1.5]}>
+        <cubeGeometry
+          attach="geometry"
+          args={[
+            1.5,
+            1.5,
+            1.5,
+          ]}
+          vertices={[
+            {x: 0.75, y: 0.75, z: 0.75},
+            {x: 0.75, y: 0.75, z: -0.75},
+            {x: 0.75,y: -0.75, z: 0.75},
+            {x: 0.75, y: -0.75, z: -0.75},
+            {x: -0.75, y: 1.5,z: -0.75},
+            {x: -0.75, y: 1.5, z: 0.75},
+            {x: -0.75, y:  0, z: -0.75},
+            {x: -0.75, y: 0, z: 0.75}
+          ]}
+        />
+      </Mesh>
+    </Group>
+  </Scene>
+);
