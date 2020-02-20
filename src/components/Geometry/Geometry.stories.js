@@ -1,7 +1,11 @@
 import React from 'react';
-import { Cylinder, Sphere, Cone, ConePlusHalfSphere, Trapezoid, Parallelepiped } from './';
+import { ChainOfSpheres, Cylinder, Sphere, Cone, ConePlusHalfSphere, Trapezoid, Parallelepiped } from './';
 
 export default { title: 'Geometry' };
+
+export const chainOfSpheres = () => (
+  <ChainOfSpheres />
+);
 
 export const cylinder = () => (
   <Cylinder />
