@@ -103,7 +103,7 @@ const Mesh = (props) => (
 );
 
 Mesh.defaultProps = {
-  color: 'green',
+  color: 'royalblue',
   position: [0, 0, 0],
   scale: [1, 1, 1]
 };
