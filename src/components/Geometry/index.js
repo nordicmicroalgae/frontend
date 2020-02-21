@@ -11,26 +11,9 @@ export { default as ConePlusHalfSphere } from './ConePlusHalfSphere';
 export { default as Trapezoid } from './Trapezoid';
 export { default as Parallelepiped } from './Parallelepiped';
 export { default as ChainOfSpheres } from './ChainOfSpheres';
+export { default as Ellipsoid } from './Ellipsoid';
 
 
-
-export const Ellipsoid = () => (
-  <Scene>
-    <Group>
-      <Mesh scale={[1, 0.5, 1]}>
-        {/* ====== Sphere ====== */}
-        <sphereGeometry
-          attach="geometry"
-          args={[
-            1,    // radius
-            32,   // width segments
-            32    // height segments
-          ]}
-        />
-      </Mesh>
-    </Group>
-  </Scene>
-);
 
 export const TwoCones = () => (
   <Scene>
