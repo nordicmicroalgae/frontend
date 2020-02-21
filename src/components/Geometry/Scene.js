@@ -65,7 +65,7 @@ const Scene = ({ autoPlay, children }) => {
         <pointLight position={[10, 10, 10]} />
         {children}
       </Canvas>
-      <div className="geometry-actions">
+      <div className="geometry-controls">
         <button
           type="button"
           onClick={handleClickReset}
