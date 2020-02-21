@@ -5,17 +5,23 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 extend({ OrbitControls });
 
-const Controls = () => {
+const Controls = ({ autoRotate }) => {
 
   const orbit = useRef();
   const { camera, gl } = useThree();
 
-  useUpdate(() => orbit.current.obj.update());
+  useFrame(() => {
+    if (orbit.current) {
+      orbit.current.update();
+    }
+  });
 
   return (
     <orbitControls
       ref={orbit}
       args={[camera, gl.domElement]}
+      autoRotate={autoRotate}
+      autoRotateSpeed={5.0}
       enableDamping={true}
       dampingFactor={0.25}
       enablePan={false}
@@ -34,12 +40,10 @@ const Scene = ({ autoPlay, children }) => {
   return (
     <div style={{maxWidth: '400px', height: '400px'}}>
       <Canvas>
-        <Controls />
+        <Controls autoRotate={animate} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <Animation active={animate}>
-          {children}
-        </Animation>
+        {children}
       </Canvas>
       <div className="geometry-actions">
         <button type="button" onClick={toggleAnimate}>
@@ -66,26 +70,6 @@ const PauseIcon = () => (
     <path d="M 6 0 L 9 0 L 9 12 L 6 12 L 6 0 Z" fill="#333" />
   </svg>
 );
-
-const Animation = ({ active, children }) => {
-  const group = useRef();
-
-  const rotateFrame = () => {
-    group.current.rotation.x += 0.005;
-    group.current.rotation.y += 0.005;
-    group.current.rotation.z += 0.005;
-  };
-
-  const voidFrame = () => null;
-
-  useFrame(active ? rotateFrame : voidFrame);
-
-  return (
-    <group ref={group}>
-      {children}
-    </group>
-  );
-};
 
 const Group = (props) => {
   return (
