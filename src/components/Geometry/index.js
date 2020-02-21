@@ -5,24 +5,8 @@ import Scene from './Scene';
 import Mesh from './Mesh';
 
 export { default as Cylinder } from './Cylinder';
+export { default as Sphere } from './Sphere';
 
-export const Sphere = () => (
-  <Scene>
-    <Group>
-      {/* ====== Sphere ====== */}
-      <Mesh>
-        <sphereGeometry
-          attach="geometry"
-          args={[
-            1,    // radius
-            32,   // width segments
-            32    // height segments
-          ]}
-        />
-      </Mesh>
-    </Group>
-  </Scene>
-);
 
 export const Cone = () => (
   <Scene>
