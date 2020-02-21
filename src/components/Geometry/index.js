@@ -309,3 +309,34 @@ export const TwoCones = () => (
     </Group>
   </Scene>
 );
+
+export const TwoTruncatedCones = () => (
+    <Scene>
+      <Group>
+        <Mesh position={[0, 1, 0]}>
+          <cylinderGeometry
+            attach="geometry"
+            args={[
+              0.4,  // radius top
+              1,    // radius bottom
+              2,    // height
+              32,   // radial segments
+              1     // height segments
+            ]}
+          />
+        </Mesh>
+        <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
+          <cylinderGeometry
+            attach="geometry"
+            args={[
+              0.4,  // radius top
+              1,    // radius bottom
+              2,    // height
+              32,   // radial segments
+              1     // height segments
+            ]}
+          />
+        </Mesh>
+      </Group>
+    </Scene>
+);

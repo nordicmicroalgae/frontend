@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChainOfSpheres, Cylinder, Ellipsoid, Sphere, Cone, ConePlusHalfSphere, Trapezoid, TwoCones, Parallelepiped } from './';
+import { ChainOfSpheres, Cylinder, Ellipsoid, Sphere, Cone, ConePlusHalfSphere, Trapezoid, TwoCones, TwoTruncatedCones, Parallelepiped } from './';
 
 export default { title: 'Geometry' };
 
@@ -33,6 +33,10 @@ export const trapezoid = () => (
 
 export const twoCones = () => (
   <TwoCones />
+);
+
+export const twoTruncatedCones = () => (
+  <TwoTruncatedCones />
 );
 
 export const parallelepiped = () => (
