@@ -180,39 +180,33 @@ export const ConePlusHalfSphere = () => (
   </Scene>
 );
 
-export const Trapezoid = () => {
-  return(
-    <Scene>
-      <Group>
-        {/* ====== Cylinder ====== */}
-        <Mesh scale={[2, 1.5, 2]}>
-          <cylinderGeometry
-            attach="geometry"
-            args={[
-              0.8 / Math.sqrt(2), // radius top
-              1 / Math.sqrt(2),   // radius bottom
-              1,                  // height
-              4,                  // radial segments
-              1                   // height segments
-            ]}
-          />
-        </Mesh>
-      </Group>
-    </Scene>
-  );
-};
+export const Trapezoid = () => (
+  <Scene>
+    <Group>
+      {/* ====== Cylinder ====== */}
+      <Mesh scale={[2, 1.5, 2]}>
+        <cylinderGeometry
+          attach="geometry"
+          args={[
+            0.8 / Math.sqrt(2), // radius top
+            1 / Math.sqrt(2),   // radius bottom
+            1,                  // height
+            4,                  // radial segments
+            1                   // height segments
+          ]}
+        />
+      </Mesh>
+    </Group>
+  </Scene>
+);
 
 export const Parallelepiped = () => (
   <Scene>
     <Group>
       <Mesh position={[-0.25, 0, 0]} rotation={[0.25, 0.25, Math.PI * 1.5]}>
+        {/* ====== Cube ====== */}
         <cubeGeometry
           attach="geometry"
-          args={[
-            1.5,
-            1.5,
-            1.5,
-          ]}
           vertices={[
             {x: 0.75, y: 0.75, z: 0.75},
             {x: 0.75, y: 0.75, z: -0.75},
@@ -233,6 +227,7 @@ export const ChainOfSpheres = () => (
   <Scene>
     <Group>
       <Mesh position={[-0.25, -1.5, 0]}>
+        {/* ====== Sphere 1 ====== */}
         <sphereGeometry
           attach="geometry"
           args={[
@@ -243,6 +238,7 @@ export const ChainOfSpheres = () => (
         />
       </Mesh>
       <Mesh position={[0, 0 ,0]}>
+        {/* ====== Sphere 2 ====== */}
         <sphereGeometry
           attach="geometry"
           args={[
@@ -253,6 +249,7 @@ export const ChainOfSpheres = () => (
         />
       </Mesh>
       <Mesh position={[0.5, 1.5, 0]}>
+        {/* ====== Sphere 3 ====== */}
         <sphereGeometry
           attach="geometry"
           args={[
@@ -270,6 +267,7 @@ export const Ellipsoid = () => (
   <Scene>
     <Group>
       <Mesh scale={[1, 0.5, 1]}>
+        {/* ====== Sphere ====== */}
         <sphereGeometry
           attach="geometry"
           args={[
@@ -286,7 +284,8 @@ export const Ellipsoid = () => (
 export const TwoCones = () => (
   <Scene>
     <Group>
-    <Mesh position={[0, 1, 0]}>
+      <Mesh position={[0, 1, 0]}>
+        {/* ====== Cone 1 ====== */}
         <coneGeometry
           attach="geometry"
           args={[
@@ -297,6 +296,7 @@ export const TwoCones = () => (
         />
       </Mesh>
       <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
+        {/* ====== Cone 2 ====== */}
         <coneGeometry
           attach="geometry"
           args={[
@@ -311,32 +311,34 @@ export const TwoCones = () => (
 );
 
 export const TwoTruncatedCones = () => (
-    <Scene>
-      <Group>
-        <Mesh position={[0, 1, 0]}>
-          <cylinderGeometry
-            attach="geometry"
-            args={[
-              0.4,  // radius top
-              1,    // radius bottom
-              2,    // height
-              32,   // radial segments
-              1     // height segments
-            ]}
-          />
-        </Mesh>
-        <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
-          <cylinderGeometry
-            attach="geometry"
-            args={[
-              0.4,  // radius top
-              1,    // radius bottom
-              2,    // height
-              32,   // radial segments
-              1     // height segments
-            ]}
-          />
-        </Mesh>
-      </Group>
-    </Scene>
+  <Scene>
+    <Group>
+      <Mesh position={[0, 1, 0]}>
+        {/* ====== Cylinder 1 ====== */}
+        <cylinderGeometry
+          attach="geometry"
+          args={[
+            0.4,  // radius top
+            1,    // radius bottom
+            2,    // height
+            32,   // radial segments
+            1     // height segments
+          ]}
+        />
+      </Mesh>
+      <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
+        {/* ====== Cylinder 2 ====== */}
+        <cylinderGeometry
+          attach="geometry"
+          args={[
+            0.4,  // radius top
+            1,    // radius bottom
+            2,    // height
+            32,   // radial segments
+            1     // height segments
+          ]}
+        />
+      </Mesh>
+    </Group>
+  </Scene>
 );
