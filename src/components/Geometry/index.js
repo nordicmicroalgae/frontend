@@ -6,25 +6,8 @@ import Mesh from './Mesh';
 
 export { default as Cylinder } from './Cylinder';
 export { default as Sphere } from './Sphere';
+export { default as Cone } from './Cone';
 
-
-export const Cone = () => (
-  <Scene>
-    <Group>
-      {/* ====== Cone ====== */}
-      <Mesh>
-        <coneGeometry
-          attach="geometry"
-          args={[
-            1,    // radius
-            2,    // height
-            32    // radial segments
-          ]}
-        />
-      </Mesh>
-    </Group>
-  </Scene>
-);
 
 export const ConePlusHalfSphere = () => (
   <Scene>
