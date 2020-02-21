@@ -12,37 +12,8 @@ export { default as Trapezoid } from './Trapezoid';
 export { default as Parallelepiped } from './Parallelepiped';
 export { default as ChainOfSpheres } from './ChainOfSpheres';
 export { default as Ellipsoid } from './Ellipsoid';
+export { default as TwoCones } from './TwoCones';
 
-
-
-export const TwoCones = () => (
-  <Scene>
-    <Group>
-      <Mesh position={[0, 1, 0]}>
-        {/* ====== Cone 1 ====== */}
-        <coneGeometry
-          attach="geometry"
-          args={[
-            1,    // radius
-            2,    // height
-            32    // radial segments
-          ]}
-        />
-      </Mesh>
-      <Mesh position={[0, -1, 0]} rotation={[Math.PI, 0, 0]}>
-        {/* ====== Cone 2 ====== */}
-        <coneGeometry
-          attach="geometry"
-          args={[
-            1,    // radius
-            2,    // height
-            32    // radial segments
-          ]}
-        />
-      </Mesh>
-    </Group>
-  </Scene>
-);
 
 export const TwoTruncatedCones = () => (
   <Scene>
