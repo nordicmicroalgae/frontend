@@ -1,14 +1,8 @@
 import './Geometry.scss';
 import React from 'react';
+import Group from './Group';
 import Scene from './Scene';
 
-const Group = (props) => {
-  return (
-    <group {...props}>
-      {props.children}
-    </group>
-  );
-}
 
 const Mesh = (props) => (
   <mesh { ...props }>
