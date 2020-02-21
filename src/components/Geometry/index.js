@@ -1,6 +1,6 @@
 import './Geometry.scss';
 import React, { useState, useRef } from 'react';
-import { extend, Canvas, useFrame, useUpdate, useThree } from 'react-three-fiber';
+import { extend, Canvas, useFrame, useThree } from 'react-three-fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
