@@ -5,9 +5,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 extend({ OrbitControls });
 
-const Controls = ({ autoRotate }) => {
+const Controls = ({ autoRotate, orbit }) => {
 
-  const orbit = useRef();
   const { camera, gl } = useThree();
 
   useFrame(() => {
@@ -31,21 +30,30 @@ const Controls = ({ autoRotate }) => {
 };
 
 const Scene = ({ autoPlay, children }) => {
+  const controlsRef = useRef();
+
   let [ animate, setAnimate ] = useState(autoPlay);
 
   const toggleAnimate = (_ev) => {
     setAnimate(!animate);
   };
 
+  const handleClickReset = (_ev) => {
+    controlsRef.current.reset();
+  };
+
   return (
     <div style={{maxWidth: '400px', height: '400px'}}>
       <Canvas>
-        <Controls autoRotate={animate} />
+        <Controls autoRotate={animate} orbit={controlsRef} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         {children}
       </Canvas>
       <div className="geometry-actions">
+        <button type="button" onClick={handleClickReset}>
+          <RewindIcon />
+        </button>
         <button type="button" onClick={toggleAnimate}>
           {animate ? <PauseIcon /> : <PlayIcon />}
         </button>
@@ -68,6 +76,13 @@ const PauseIcon = () => (
   <svg viewBox="0 0 9 12" width="9" height="12">
     <path d="M 0 0 L 3 0 L 3 12 L 0 12 L 0 0 Z" fill="#333" />
     <path d="M 6 0 L 9 0 L 9 12 L 6 12 L 6 0 Z" fill="#333" />
+  </svg>
+);
+
+const RewindIcon = () => (
+  <svg viewBox="0 0 14 12" width="14" height="12">
+    <path d="M 0 6 L 7 0 L 7 12 L 0 6 Z" fill="#333" />
+    <path d="M 7 6 L 14 0 L 14 12 L 7 6 Z" fill="#333" />
   </svg>
 );
 
