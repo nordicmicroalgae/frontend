@@ -5,19 +5,19 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 extend({ OrbitControls });
 
-const Controls = ({ autoRotate, orbit }) => {
+const Controls = ({ autoRotate, controlsRef }) => {
 
   const { camera, gl } = useThree();
 
   useFrame(() => {
-    if (orbit.current) {
-      orbit.current.update();
+    if (controlsRef.current) {
+      controlsRef.current.update();
     }
   });
 
   return (
     <orbitControls
-      ref={orbit}
+      ref={controlsRef}
       args={[camera, gl.domElement]}
       autoRotate={autoRotate}
       autoRotateSpeed={5.0}
@@ -29,14 +29,17 @@ const Controls = ({ autoRotate, orbit }) => {
   )
 };
 
+
 const Scene = ({ autoPlay, children }) => {
+
   const controlsRef = useRef();
+
   const containerRef = useRef();
 
-  let [ animate, setAnimate ] = useState(autoPlay);
+  let [ autoRotate, setAutoRotate ] = useState(autoPlay);
 
-  const toggleAnimate = (_ev) => {
-    setAnimate(!animate);
+  const handleClickPlayOrPause = (_ev) => {
+    setAutoRotate(!autoRotate);
   };
 
   const handleClickReset = (_ev) => {
@@ -46,7 +49,7 @@ const Scene = ({ autoPlay, children }) => {
   const handleClickFullscreen = (_ev) => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-    } else {
+    } else if (containerRef.current) {
       containerRef.current.requestFullscreen();
     }
   };
@@ -54,19 +57,35 @@ const Scene = ({ autoPlay, children }) => {
   return (
     <div className="geometry" ref={containerRef}>
       <Canvas>
-        <Controls autoRotate={animate} orbit={controlsRef} />
+        <Controls
+          autoRotate={autoRotate}
+          controlsRef={controlsRef}
+        />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         {children}
       </Canvas>
       <div className="geometry-actions">
-        <button type="button" onClick={handleClickReset}>
+        <button
+          type="button"
+          onClick={handleClickReset}
+        >
           <RewindIcon />
         </button>
-        <button type="button" onClick={toggleAnimate}>
-          {animate ? <PauseIcon /> : <PlayIcon />}
+        <button
+          type="button"
+          onClick={handleClickPlayOrPause}
+        >
+          {autoRotate ? (
+            <PauseIcon />
+          ): (
+            <PlayIcon />
+          )}
         </button>
-        <button type="button" onClick={handleClickFullscreen}>
+        <button
+          type="button"
+          onClick={handleClickFullscreen}
+        >
           <FullscreenIcon />
         </button>
       </div>
