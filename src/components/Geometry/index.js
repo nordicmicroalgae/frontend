@@ -1,3 +1,4 @@
+import './Geometry.scss';
 import React, { useState, useRef } from 'react';
 import { extend, Canvas, useFrame, useUpdate, useThree } from 'react-three-fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -52,14 +53,14 @@ const Scene = ({ autoPlay, children }) => {
   };
 
   return (
-    <div style={{position: 'relative', maxWidth: '400px', height: '400px'}} ref={containerRef}>
+    <div className="geometry" ref={containerRef}>
       <Canvas>
         <Controls autoRotate={animate} orbit={controlsRef} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         {children}
       </Canvas>
-      <div className="geometry-actions" style={{position: 'absolute', bottom: 0}}>
+      <div className="geometry-actions">
         <button type="button" onClick={handleClickReset}>
           <RewindIcon />
         </button>

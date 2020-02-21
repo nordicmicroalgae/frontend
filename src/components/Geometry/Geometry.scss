@@ -1,0 +1,25 @@
+.geometry {
+  position: relative;
+  max-width: 480px;
+  height: 480px;
+}
+
+.geometry-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+
+  button {
+    padding: .4rem .6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:last-child {
+    position: absolute;
+    right: 0;
+  }
+}
