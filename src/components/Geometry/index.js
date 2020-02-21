@@ -1,11 +1,11 @@
 import './Geometry.scss';
-export { default as Cylinder } from './Cylinder';
-export { default as Sphere } from './Sphere';
+export { default as ChainOfSpheres } from './ChainOfSpheres';
 export { default as Cone } from './Cone';
 export { default as ConePlusHalfSphere } from './ConePlusHalfSphere';
-export { default as Trapezoid } from './Trapezoid';
-export { default as Parallelepiped } from './Parallelepiped';
-export { default as ChainOfSpheres } from './ChainOfSpheres';
+export { default as Cylinder } from './Cylinder';
 export { default as Ellipsoid } from './Ellipsoid';
+export { default as Parallelepiped } from './Parallelepiped';
+export { default as Sphere } from './Sphere';
+export { default as Trapezoid } from './Trapezoid';
 export { default as TwoCones } from './TwoCones';
 export { default as TwoTruncatedCones } from './TwoTruncatedCones';
