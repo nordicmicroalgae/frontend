@@ -2,20 +2,7 @@ import './Geometry.scss';
 import React from 'react';
 import Group from './Group';
 import Scene from './Scene';
-
-
-const Mesh = (props) => (
-  <mesh { ...props }>
-    {props.children}
-    <meshStandardMaterial attach="material" color={props.color} />
-  </mesh>
-);
-
-Mesh.defaultProps = {
-  color: 'royalblue',
-  position: [0, 0, 0],
-  scale: [1, 1, 1]
-};
+import Mesh from './Mesh';
 
 
 export const Cylinder = () => (
