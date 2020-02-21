@@ -9,29 +9,8 @@ export { default as Sphere } from './Sphere';
 export { default as Cone } from './Cone';
 export { default as ConePlusHalfSphere } from './ConePlusHalfSphere';
 export { default as Trapezoid } from './Trapezoid';
+export { default as Parallelepiped } from './Parallelepiped';
 
-export const Parallelepiped = () => (
-  <Scene>
-    <Group>
-      <Mesh position={[-0.25, 0, 0]} rotation={[0.25, 0.25, Math.PI * 1.5]}>
-        {/* ====== Cube ====== */}
-        <cubeGeometry
-          attach="geometry"
-          vertices={[
-            {x: 0.75, y: 0.75, z: 0.75},
-            {x: 0.75, y: 0.75, z: -0.75},
-            {x: 0.75,y: -0.75, z: 0.75},
-            {x: 0.75, y: -0.75, z: -0.75},
-            {x: -0.75, y: 1.5,z: -0.75},
-            {x: -0.75, y: 1.5, z: 0.75},
-            {x: -0.75, y:  0, z: -0.75},
-            {x: -0.75, y: 0, z: 0.75}
-          ]}
-        />
-      </Mesh>
-    </Group>
-  </Scene>
-);
 
 export const ChainOfSpheres = () => (
   <Scene>
