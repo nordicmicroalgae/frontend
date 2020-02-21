@@ -23,8 +23,8 @@ const Controls = ({ autoRotate, controlsRef }) => {
       autoRotateSpeed={5.0}
       enableDamping={true}
       dampingFactor={0.25}
-      enablePan={false}
-      enableZoom={false}
+      enablePan={true}
+      enableZoom={true}
     />
   )
 };
