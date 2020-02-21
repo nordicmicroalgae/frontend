@@ -31,6 +31,7 @@ const Controls = ({ autoRotate, orbit }) => {
 
 const Scene = ({ autoPlay, children }) => {
   const controlsRef = useRef();
+  const containerRef = useRef();
 
   let [ animate, setAnimate ] = useState(autoPlay);
 
@@ -42,20 +43,31 @@ const Scene = ({ autoPlay, children }) => {
     controlsRef.current.reset();
   };
 
+  const handleClickFullscreen = (_ev) => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      containerRef.current.requestFullscreen();
+    }
+  };
+
   return (
-    <div style={{maxWidth: '400px', height: '400px'}}>
+    <div style={{position: 'relative', maxWidth: '400px', height: '400px'}} ref={containerRef}>
       <Canvas>
         <Controls autoRotate={animate} orbit={controlsRef} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         {children}
       </Canvas>
-      <div className="geometry-actions">
+      <div className="geometry-actions" style={{position: 'absolute', bottom: 0}}>
         <button type="button" onClick={handleClickReset}>
           <RewindIcon />
         </button>
         <button type="button" onClick={toggleAnimate}>
           {animate ? <PauseIcon /> : <PlayIcon />}
+        </button>
+        <button type="button" onClick={handleClickFullscreen}>
+          <FullscreenIcon />
         </button>
       </div>
     </div>
@@ -83,6 +95,15 @@ const RewindIcon = () => (
   <svg viewBox="0 0 14 12" width="14" height="12">
     <path d="M 0 6 L 7 0 L 7 12 L 0 6 Z" fill="#333" />
     <path d="M 7 6 L 14 0 L 14 12 L 7 6 Z" fill="#333" />
+  </svg>
+);
+
+const FullscreenIcon = () => (
+  <svg viewBox="0 0 14 12" width="14" height="12">
+    <path d="M 3 0 L 0 0 L 0 3" fill="none" strokeWidth="4" stroke="#333" strokeLinejoin="miter" strokeMiterlimit="3" strokeLinecap="square" />
+    <path d="M 0 9 L 0 12 L 3 12" fill="none" strokeWidth="4" stroke="#333" strokeLinejoin="miter" strokeMiterlimit="3" strokeLinecap="square" />
+    <path d="M 14 9 L 14 12 L 11 12" fill="none" strokeWidth="4" stroke="#333" strokeLinejoin="miter" strokeMiterlimit="3" strokeLinecap="square" />
+    <path d="M 11 0 L 14 0 L 14 3" fill="none" strokeWidth="4" stroke="#333" strokeLinejoin="miter" strokeMiterlimit="3" strokeLinecap="square" />
   </svg>
 );
 
