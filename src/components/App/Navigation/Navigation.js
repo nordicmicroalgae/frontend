@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../Logo';
 import getKey from '../../../utils/getKey';
@@ -15,80 +15,51 @@ const Navigation = () => {
 
   const items = settings.ui.navigation.map(setup);
 
-  const initialOpenState = {root: false};
-
-  items.forEach(( { key, subnavigation }) => {
-    if (subnavigation.length > 0) {
-      initialOpenState[key] = false;
-    }
-  });
-
-  let [ isOpen, setIsOpen ] = useState({ ...initialOpenState });
-
-  const handleClickClose = (ev) => {
-    ev.preventDefault();
-    const targetId = ev.currentTarget.dataset.id;
-    setIsOpen({ ...isOpen, [targetId]: false });
-  };
-
-  const handleClickOpen = (ev) => {
-    ev.preventDefault();
-    const targetId = ev.currentTarget.dataset.id;
-    setIsOpen({ ...isOpen, [targetId]: true });
-  };
+  const stateRef = useRef();
 
   const handleClick = (ev) => {
-    const shouldClose = (
-      ev.target.nodeName == 'A' && !ev.target.className.includes('toggle')
-    );
-    if (shouldClose) {
-      setIsOpen({ ...initialOpenState });
+    if (ev.target.nodeName == 'A' && stateRef.current) {
+      stateRef.current.checked = false;
     }
   };
-
-  const getNavigationClassName = (id = 'root') => {
-    const classNames = [ id == 'root' ? 'navigation' : 'subnavigation'];
-
-    if (isOpen[id]) {
-      classNames.push('navigation-open');
-    }
-
-    return classNames.join(' ');
-  }
 
   return (
     <div className="navigation-container">
-      <nav className={getNavigationClassName()} role="navigation" onClick={handleClick}>
-        <span className="navigation-toggle">
-          <a className="navigation-toggle-open" href="#" data-id="root" role="button" onClick={handleClickOpen} aria-label="Open menu">
+      <nav className="navigation" role="navigation" onClick={handleClick}>
+        <input type="checkbox" id="navigation-state-root" className="navigation-state" aria-hidden={true} ref={stateRef} />
+        <label htmlFor="navigation-state-root" className="navigation-toggle">
+          <span className="navigation-toggle-open">
             <span className="navigation-toggle-bar" />
             <span className="navigation-toggle-bar" />
             <span className="navigation-toggle-bar" />
-          </a>
-          <a className="navigation-toggle-close" href="#" data-id="root" role="button" onClick={handleClickClose} aria-label="Close menu">
+          </span>
+          <span className="navigation-toggle-close">
             <span className="navigation-toggle-bar" />
             <span className="navigation-toggle-bar" />
-          </a>
-        </span>
+          </span>
+        </label>
         <Link id="navigation-home" to="/">
           <Logo size={32} theme="light" />
         </Link>
         <ul>
         {items.map(({ name, key, path, subnavigation }) => (
-          <li className={getNavigationClassName(key)} key={key}>
+          <li className="subnavigation" key={key}>
           {subnavigation.length > 0 && (
-            <span className="navigation-toggle">
-              <a className="navigation-toggle-open" href="#" data-id={key} role="button" onClick={handleClickOpen} aria-label={`Open ${name} submenu`}>
-                <svg viewBox="0 0 24 16" width="24" height="16">
-                  <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-                </svg>
-              </a>
-              <a className="navigation-toggle-close" href="#" data-id={key} role="button" onClick={handleClickClose} aria-label={`Close ${name} submenu`}>
-                <svg viewBox="0 0 24 16" width="24" height="16">
-                  <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-                </svg>
-              </a>
-            </span>
+            <>
+              <input type="checkbox" id={`navigation-state-${key}`} className="navigation-state" aria-hidden={true} />
+              <label htmlFor={`navigation-state-${key}`} className="navigation-toggle">
+                <span className="navigation-toggle-open">
+                  <svg viewBox="0 0 24 16" width="24" height="16">
+                    <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
+                  </svg>
+                </span>
+                <span className="navigation-toggle-close">
+                  <svg viewBox="0 0 24 16" width="24" height="16">
+                    <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
+                  </svg>
+                </span>
+              </label>
+            </>
           )}
             <NavLink
               to={path}
