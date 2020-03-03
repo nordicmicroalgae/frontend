@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import Logo from '../../Logo';
 import getKey from '../../../utils/getKey';
@@ -22,19 +22,21 @@ const propTypes = {
 };
 
 const Navigation = ({ items }) => {
+  const location = useLocation();
+
   const stateRef = useRef();
 
-  const handleClick = (ev) => {
-    if (ev.target.nodeName == 'A' && stateRef.current) {
+  useEffect(() => {
+    if (stateRef.current) {
       stateRef.current.checked = false;
     }
-  };
+  }, [ location ]);
 
   const withKey = (item) => ({ ...item, key: getKey(item.name)});
 
   return (
     <div className="navigation-container">
-      <nav className="navigation" role="navigation" onClick={handleClick}>
+      <nav className="navigation" role="navigation">
         <input type="checkbox" id="navigation-state-root" className="navigation-state" aria-hidden={true} ref={stateRef} />
         <label htmlFor="navigation-state-root" className="navigation-toggle">
           <span className="navigation-toggle-open">
