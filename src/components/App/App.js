@@ -4,11 +4,13 @@ import { Provider } from 'react-redux';
 import store from '../../store';
 import Navigation from './Navigation';
 import Page from '../../containers/Page';
+import settings from '../../settings.json';
+
 
 const App = () => (
   <Router>
     <Provider store={store}>
-      <Navigation />
+      <Navigation items={settings.ui.navigation} />
       <main className="main" role="main">
         <Switch>
           <Route path="/:slug?/" component={Page} />

@@ -1,20 +1,27 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
+
 import Logo from '../../Logo';
 import getKey from '../../../utils/getKey';
-import settings from '../../../settings.json';
 
-const Navigation = () => {
 
-  const setup = ({ name, path, subnavigation }) => ({
-    name,
-    path,
-    key: getKey(name),
-    subnavigation: subnavigation ? subnavigation.map(setup) : []
-  });
+const propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+      subnavigation: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          path: PropTypes.string.isRequired
+        })
+      )
+    })
+  ).isRequired
+};
 
-  const items = settings.ui.navigation.map(setup);
-
+const Navigation = ({ items }) => {
   const stateRef = useRef();
 
   const handleClick = (ev) => {
@@ -22,6 +29,8 @@ const Navigation = () => {
       stateRef.current.checked = false;
     }
   };
+
+  const withKey = (item) => ({ ...item, key: getKey(item.name)});
 
   return (
     <div className="navigation-container">
@@ -42,9 +51,9 @@ const Navigation = () => {
           <Logo size={32} theme="light" />
         </Link>
         <ul>
-        {items.map(({ name, key, path, subnavigation }) => (
+        {items.map(withKey).map(({ name, key, path, subnavigation }) => (
           <li className="subnavigation" key={key}>
-          {subnavigation.length > 0 && (
+          {subnavigation && subnavigation.length > 0 && (
             <>
               <input type="checkbox" id={`navigation-state-${key}`} className="navigation-state" aria-hidden={true} />
               <label htmlFor={`navigation-state-${key}`} className="navigation-toggle">
@@ -64,7 +73,7 @@ const Navigation = () => {
             <NavLink
               to={path}
               isActive={(_,{ pathname }) => (
-                subnavigation.length > 0 ? (
+                subnavigation && subnavigation.length > 0 ? (
                   subnavigation.map(({ path }) => path).includes(pathname)
                 ) : (
                   path === pathname
@@ -73,10 +82,10 @@ const Navigation = () => {
             >
               {name}
             </NavLink>
-            {subnavigation.length > 0 && (
+            {subnavigation && subnavigation.length > 0 && (
               <div className="subnavigation-container">
                 <ul>
-                {subnavigation.map(({ name, key, path }) => (
+                {subnavigation.map(withKey).map(({ name, key, path }) => (
                   <li key={key}>
                     <NavLink exact to={path}>
                       {name}
@@ -94,5 +103,7 @@ const Navigation = () => {
   );
 
 };
+
+Navigation.propTypes = propTypes;
 
 export default Navigation;
