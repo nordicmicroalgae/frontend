@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../Logo';
+import getKey from '../../../utils/getKey';
+import settings from '../../../settings.json';
 
 const Navigation = () => {
-  const initialOpenState = {
-    root: false,
-    home: false,
-    galleries: false
-  };
+
+  const setup = ({ name, path, subnavigation }) => ({
+    name,
+    path,
+    key: getKey(name),
+    subnavigation: subnavigation ? subnavigation.map(setup) : []
+  });
+
+  const items = settings.ui.navigation.map(setup);
+
+  const initialOpenState = {root: false};
+
+  items.forEach(( { key, subnavigation }) => {
+    if (subnavigation.length > 0) {
+      initialOpenState[key] = false;
+    }
+  });
 
   let [ isOpen, setIsOpen ] = useState({ ...initialOpenState });
 
@@ -44,217 +58,70 @@ const Navigation = () => {
 
   return (
     <div className="navigation-container">
-    <nav className={getNavigationClassName()} role="navigation" onClick={handleClick}>
-      <span className="navigation-toggle">
-        <a className="navigation-toggle-open" href="#" data-id="root" role="button" onClick={handleClickOpen} aria-label="Open menu">
-          <span className="navigation-toggle-bar" />
-          <span className="navigation-toggle-bar" />
-          <span className="navigation-toggle-bar" />
-        </a>
-        <a className="navigation-toggle-close" href="#" data-id="root" role="button" onClick={handleClickClose} aria-label="Close menu">
-          <span className="navigation-toggle-bar" />
-          <span className="navigation-toggle-bar" />
-        </a>
-      </span>
-      <Link id="navigation-home" to="/">
-        <Logo size={32} theme="light" />
-      </Link>
-      <ul>
-        <li className={getNavigationClassName('home')}>
-          <span className="navigation-toggle">
-            <a className="navigation-toggle-open" href="#" data-id="home" role="button" onClick={handleClickOpen} aria-label="Open home submenu">
-              <svg viewBox="0 0 24 16" width="24" height="16">
-                <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-              </svg>
-            </a>
-            <a className="navigation-toggle-close" href="#" data-id="home" role="button" onClick={handleClickClose} aria-label="Close home submenu">
-              <svg viewBox="0 0 24 16" width="24" height="16">
-                <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-              </svg>
-            </a>
-          </span>
-          <NavLink
-            to="/"
-            isActive={(_,{ pathname }) => [
-              '/',
-              '/latest-images/',
-              '/hall-of-fame/',
-              '/how-to-contribute/',
-              '/partners/',
-              '/nomp/',
-              '/helcom-peg/',
-              '/links/',
-              '/literature/'
-              ].includes(pathname)
-            }
-          >
-            Home
-          </NavLink>
-          <div className="subnavigation-container">
-          <ul>
-            <li>
-              <NavLink exact to="/">
-                Introduction
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/latest-images/">
-                Latest Images
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/hall-of-fame/">
-                Hall of fame
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/how-to-contribute/">
-                How to contribute
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/partners/">
-                Partners
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/nomp/">
-                NOMP
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/helcom-peg/">
-                HELCOM-PEG
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/links/">
-                Links
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/literature/">
-                Literature
-               </NavLink>
-            </li>
-          </ul>
-          </div>
-        </li>
-        <li>
-          <NavLink exact to="/quick-view/">
-            Quick view
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/taxon-tree/">
-            Taxon tree
-          </NavLink>
-        </li>
-        <li className={getNavigationClassName('galleries')}>
-          <span className="navigation-toggle">
-            <a className="navigation-toggle-open" href="#" data-id="galleries" role="button" onClick={handleClickOpen} aria-label="Open galleries submenu">
-              <svg viewBox="0 0 24 16" width="24" height="16">
-                <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-              </svg>
-            </a>
-            <a className="navigation-toggle-close" href="#" data-id="galleries" role="button" onClick={handleClickClose} aria-label="Close galleries submenu">
-              <svg viewBox="0 0 24 16" width="24" height="16">
-                <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-              </svg>
-            </a>
-          </span>
-          <NavLink to="/gallery/">
-            Galleries
-          </NavLink>
-          <div className="subnavigation-container">
-          <ul>
-            <li>
-              <NavLink exact to="/gallery/helcom-peg/">
-                HELCOM-PEG
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/nomp/">
-                NOMP
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/kuylenstierna/">
-                Kuylenstierna
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/skagerrak-kattegat/">
-                Skagerrak-Kattegat
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/norwegian-sea/">
-                Norwegian Sea
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/freshwater/">
-                Freshwater
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/swedish-benthic-freshwater-diatoms/">
-                Swedish benthic freshwater diatoms
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/diatom-resting-stages/">
-                Diatom resting stages
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/dinoflagellate-cysts/">
-                Dinoflagellate cysts
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/other-resting-stages/">
-                Other resting stages
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact to="/gallery/marine-research-institute-iceland/">
-                Marine Research Institute - Iceland
-              </NavLink>
-            </li>
-          </ul>
-          </div>
-        </li>
-        <li>
-          <NavLink exact to="/checklists/">
-            Checklists
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/tools/">
-            Tools
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/contact/">
-            Contact
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/about/">
-            About
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/help/">
-            Help
-          </NavLink>
-        </li>
-      </ul>
-    </nav>
+      <nav className={getNavigationClassName()} role="navigation" onClick={handleClick}>
+        <span className="navigation-toggle">
+          <a className="navigation-toggle-open" href="#" data-id="root" role="button" onClick={handleClickOpen} aria-label="Open menu">
+            <span className="navigation-toggle-bar" />
+            <span className="navigation-toggle-bar" />
+            <span className="navigation-toggle-bar" />
+          </a>
+          <a className="navigation-toggle-close" href="#" data-id="root" role="button" onClick={handleClickClose} aria-label="Close menu">
+            <span className="navigation-toggle-bar" />
+            <span className="navigation-toggle-bar" />
+          </a>
+        </span>
+        <Link id="navigation-home" to="/">
+          <Logo size={32} theme="light" />
+        </Link>
+        <ul>
+        {items.map(({ name, key, path, subnavigation }) => (
+          <li className={getNavigationClassName(key)} key={key}>
+          {subnavigation.length > 0 && (
+            <span className="navigation-toggle">
+              <a className="navigation-toggle-open" href="#" data-id={key} role="button" onClick={handleClickOpen} aria-label={`Open ${name} submenu`}>
+                <svg viewBox="0 0 24 16" width="24" height="16">
+                  <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
+                </svg>
+              </a>
+              <a className="navigation-toggle-close" href="#" data-id={key} role="button" onClick={handleClickClose} aria-label={`Close ${name} submenu`}>
+                <svg viewBox="0 0 24 16" width="24" height="16">
+                  <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
+                </svg>
+              </a>
+            </span>
+          )}
+            <NavLink
+              to={path}
+              isActive={(_,{ pathname }) => (
+                subnavigation.length > 0 ? (
+                  subnavigation.map(({ path }) => path).includes(pathname)
+                ) : (
+                  path === pathname
+                )
+              )}
+            >
+              {name}
+            </NavLink>
+            {subnavigation.length > 0 && (
+              <div className="subnavigation-container">
+                <ul>
+                {subnavigation.map(({ name, key, path }) => (
+                  <li key={key}>
+                    <NavLink exact to={path}>
+                      {name}
+                    </NavLink>
+                  </li>
+                ))}
+                </ul>
+              </div>
+            )}
+          </li>
+        ))}
+        </ul>
+      </nav>
     </div>
   );
+
 };
 
 export default Navigation;
