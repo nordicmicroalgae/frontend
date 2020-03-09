@@ -1,0 +1,12 @@
+@import "../utils/colors";
+
+.icon {
+  display: inline-block;
+  fill: currentcolor;
+  &.icon-dark {
+    color: $gray-3;
+  }
+  &.icon-light {
+    color: $gray-1;
+  }
+}
