@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import Logo from '../../Logo';
+import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
 import getKey from '../../../utils/getKey';
-
 
 const propTypes = {
   items: PropTypes.arrayOf(
@@ -60,14 +60,10 @@ const Navigation = ({ items }) => {
               <input type="checkbox" id={`navigation-state-${key}`} className="navigation-state" aria-hidden={true} />
               <label htmlFor={`navigation-state-${key}`} className="navigation-toggle">
                 <span className="navigation-toggle-open">
-                  <svg viewBox="0 0 24 16" width="24" height="16">
-                    <path d="M 4 4 L 12 12 L 20 4" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-                  </svg>
+                  <ChevronDownIcon />
                 </span>
                 <span className="navigation-toggle-close">
-                  <svg viewBox="0 0 24 16" width="24" height="16">
-                    <path d="M 4 12 L 12 4 L 20 12" fill="none" strokeWidth="2" stroke="#ccc" strokeLinejoin="miter" />
-                  </svg>
+                  <ChevronUpIcon />
                 </span>
               </label>
             </>
