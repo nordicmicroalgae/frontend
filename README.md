@@ -1,6 +1,10 @@
 <p align="center">
-    <img src="./doc/logo.svg" width="88" height="128" alt="Nordic Microalgae" />
+    <img src="./doc/logo.svg" width="176" height="256" alt="µ" />
 </p>
+
+<h1 align="center">
+    nµa frontend
+</h1>
 
 Nordic Microalgae is a source of information about microalgae and related organisms in the Nordic area, i.e the Baltic Sea, the North East Atlantic and lakes, rivers and streams in the area. It is used for science, education, environmental monitoring etc. The content is mainly supplied by the users.
 
