@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from './';
+import { ChevronDownIcon, ChevronUpIcon, DashIcon, PlusIcon } from './';
 
 export default { title: 'Icons' };
 
@@ -36,6 +36,12 @@ export const basic = () => (
     </IconBox>
     <IconBox title="Chevron up">
       <ChevronUpIcon />
+    </IconBox>
+    <IconBox title="Dash">
+      <DashIcon />
+    </IconBox>
+    <IconBox title="Plus">
+      <PlusIcon />
     </IconBox>
   </>
 );
