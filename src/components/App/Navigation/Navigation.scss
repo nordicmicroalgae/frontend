@@ -51,7 +51,7 @@ body {
     text-transform: uppercase;
     transition: color 0.5s ease-in;
     &.active, &:hover {
-      color: $orange;
+      color: $orange-cup-coral;
     }
     &:hover .logo {
       color: inherit;
