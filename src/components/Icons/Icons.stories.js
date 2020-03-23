@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDownIcon, ChevronUpIcon, DashIcon, PlusIcon } from './';
+import { ChevronDownIcon, ChevronUpIcon, DashIcon, PlusIcon, SearchIcon } from './';
 
 export default { title: 'Icons' };
 
@@ -42,6 +42,9 @@ export const basic = () => (
     </IconBox>
     <IconBox title="Plus">
       <PlusIcon />
+    </IconBox>
+    <IconBox title="Search">
+      <SearchIcon />
     </IconBox>
   </>
 );

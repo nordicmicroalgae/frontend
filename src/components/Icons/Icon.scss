@@ -3,6 +3,7 @@
 .icon {
   display: inline-block;
   fill: currentcolor;
+  fill-rule: evenodd;
   &.icon-dark {
     color: $gray-3;
   }
