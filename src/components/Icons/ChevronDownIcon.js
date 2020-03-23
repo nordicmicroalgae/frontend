@@ -3,7 +3,7 @@ import Icon from './Icon';
 
 const ChevronDownIcon = (props) => (
   <Icon { ...props }>
-    <path d="M 2.5 5.5 L 1 7 L 12 18 L 23 7 L 21.5 5.5 L 12 15 L 2.5 5.5 Z" />
+    <path d="M 3.7 5.6 L 3 6.4 L 9 12.4 L 15 6.4 L 14.3 5.6 L 9 10.9 L 3.7 5.6 Z" />
   </Icon>
 );
 
