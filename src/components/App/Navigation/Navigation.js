@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import Logo from '../../Logo';
-import { ChevronDownIcon, ChevronUpIcon } from '../../Icons';
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from '../../Icons';
 import getKey from '../../../utils/getKey';
 
 const propTypes = {
@@ -32,11 +32,22 @@ const Navigation = ({ items }) => {
     }
   }, [ location ]);
 
+  const handleFocusSearch = (ev) => {
+    ev.target.value = '';
+    if (stateRef.current) {
+      stateRef.current.checked = false;
+    }
+  };
+
   const withKey = (item) => ({ ...item, key: getKey(item.name)});
 
   return (
     <div className="navigation-container">
       <nav className="navigation" role="navigation">
+        <input type="text" id="search-input" placeholder="Enter search term..." onFocus={handleFocusSearch} />
+        <label id="search-label" htmlFor="search-input">
+          <SearchIcon />
+        </label>
         <input type="checkbox" id="navigation-state-root" className="navigation-state" aria-hidden={true} ref={stateRef} />
         <label htmlFor="navigation-state-root" className="navigation-toggle">
           <span className="navigation-toggle-open">

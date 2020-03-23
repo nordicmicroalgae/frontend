@@ -26,6 +26,7 @@ body {
 }
 
 .navigation {
+  position: relative;
   font-size: .875rem;
   margin: 0 auto;
   max-width: map-get($breakpoints, "xl");
@@ -167,6 +168,39 @@ body {
   > .navigation-state:checked ~ .subnavigation-container,
   > .navigation-state:checked ~ .navigation-toggle > .navigation-toggle-close {
     display: block;
+  }
+}
+
+.navigation {
+  #search-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $navigation-toggle-box;
+    height: $navigation-toggle-box;
+    padding: 16px 0;
+    text-align: center;
+    cursor: pointer;
+  }
+  #search-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: $navigation-toggle-box;
+    width: $navigation-toggle-box;
+    padding-left: $navigation-toggle-box;
+    background: $black;
+    color: $white;
+    border: none;
+  }
+  #search-input:focus {
+    width: 100%;
+  }
+  #search-input:focus,
+  #search-input:focus ~ #search-label {
+    left: 0;
+    z-index: 800;
   }
 }
 
