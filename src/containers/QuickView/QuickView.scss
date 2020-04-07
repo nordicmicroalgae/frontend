@@ -1,0 +1,235 @@
+@import "../../components/utils/colors";
+@import "../../components/utils/variables";
+
+.quick-view {
+  padding: 48px 0 0;
+
+  .quick-view-groups-toggle {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    z-index: 60000;
+    cursor: pointer;
+
+    &[aria-expanded=false] ~ * .quick-view-group-list {
+      display: none;
+    }
+
+    @media(min-width: map-get($breakpoints, "xl")) {
+      display: none;
+
+      &[aria-expanded] ~ * .quick-view-group-list {
+        display: block;
+      }
+
+      &[aria-expanded] ~ .quick-view-heading {
+        display: none;
+      }
+    }
+  }
+
+  .quick-view-groups {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    min-height: 48px;
+    border-bottom: 1px solid $gray-2;
+    background: linear-gradient(#eeeeee, #f9f9f9);
+    z-index: 40000;
+
+    @media(min-width: map-get($breakpoints, "xl")) {
+      min-height: auto;
+    }
+  }
+
+  .quick-view-group-list {
+    margin: 0 auto;
+    padding: 48px 0 0;
+    max-width: map-get($breakpoints, "xl");
+    list-style: none;
+
+    .quick-view-group-item {
+      margin: 0 0 1rem 48px;
+
+      a {
+        display: block;
+        padding: .5rem;
+        font-size: 1rem;
+        text-decoration: none;
+        color: $black;
+        &.active, &:hover {
+          color: $gray-4;
+        }
+      }
+    }
+
+    @media(min-width: map-get($breakpoints, "xl")) {
+      padding-top: 0;
+
+      .quick-view-group-item {
+        display: inline-block;
+        margin: 0 .5rem;
+      }
+    }
+  }
+
+  .quick-view-heading {
+    position: fixed;
+    top: 56px;
+    left: 48px;
+    margin: 0;
+    padding: calc((48px - 1em) / 2) 0;
+    font-size: 1.125rem;
+    font-weight: normal;
+    line-height: 1;
+    z-index: 40000;
+    &::before {
+      content: 'Group: ';
+    }
+  }
+
+  .quick-view-filters-toggle {
+    position: fixed;
+    top: 56px;
+    right: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    z-index: 80000;
+    cursor: pointer;
+
+    &[aria-expanded=false] ~ .quick-view-filters {
+      display: none;
+    }
+
+    @media(min-width: map-get($breakpoints, "xl")) {
+      display: none;
+
+      &[aria-expanded] ~ .quick-view-filters {
+        display: block;
+      }
+    }
+  }
+
+  .quick-view-filters {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    padding: 48px 0 0;
+    background: linear-gradient(#eeeeee, #f9f9f9);
+    border-bottom: 1px solid $gray-2;
+    z-index: 60000;
+
+    @media(min-width: map-get($breakpoints, "xl")) {
+      position: static;
+      float: right;
+      width: 25%;
+      padding: 0;
+      background: none;
+      border: none;
+    }
+
+    .quick-view-filters-heading {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      margin: 0;
+      padding: 0;
+      font-size: 1.125rem;
+      font-weight: normal;
+      line-height: 1;
+
+      @media(min-width: map-get($breakpoints, "xl")) {
+        display: none;
+      }
+    }
+
+    .quick-view-filter-group {
+      margin: 0 0 1rem;
+      border: none;
+
+      @media(min-width: map-get($breakpoints, "xl")) {
+        background: linear-gradient(#eeeeee, #f9f9f9);
+      }
+
+      .quick-view-filter-group-name {
+        // hack to make legend appear inside fieldset
+        float: left;
+        + *::before {
+          content: '';
+          display: block;
+          height: 0;
+          visibility: hidden;
+          clear: both;
+        }
+
+        // regular syling of legend
+        margin: .5rem .5rem 1rem;
+        font-size: .875rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .quick-view-filter-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .quick-view-filter-item {
+        margin: 0 0 .5rem;
+        padding: .5rem;
+      }
+    }
+  }
+
+  .quick-view-results {
+    @media(min-width: map-get($breakpoints, "xl")) {
+      float: left;
+      width: 75%;
+    }
+    .quick-view-results-loading {
+      display: flex;
+      height: 60vh;
+
+      .spinner {
+        margin: auto;
+      }
+    }
+
+    // TODO: This should be solved somehow in <GroupedTaxonList />
+    .taxon-list-navigation {
+      top: calc(56px + 48px + 2em);
+      @media(min-width: map-get($breakpoints, "xl")) {
+        top: calc(56px + 36px + 2em);
+      }
+    }
+    .taxon-list-group-title {
+      top: calc(56px + 48px);
+      @media(min-width: map-get($breakpoints, "xl")) {
+        top: calc(56px + 36px);
+      }
+    }
+
+    // hack to compensate for fixed header
+    // when scrolling element into view
+    .taxon-list-group::before {
+      content: ' ';
+      display: block;
+      margin-top: calc(-56px + -36px);
+      height: calc(56px + 36px);
+      visibility: hidden;
+    }
+  }
+
+}

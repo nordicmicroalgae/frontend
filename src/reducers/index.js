@@ -2,7 +2,10 @@ import { combineReducers } from 'redux';
 import {
   FETCH_PAGE_REQUEST,
   FETCH_PAGE_SUCCESS,
-  FETCH_PAGE_FAILURE
+  FETCH_PAGE_FAILURE,
+  FETCH_TAXA_REQUEST,
+  FETCH_TAXA_SUCCESS,
+  FETCH_TAXA_FAILURE
 } from '../actions';
 
 
@@ -31,8 +34,25 @@ const pages = (state = {}, action) => {
   }
 };
 
+const taxa = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_TAXA_REQUEST:
+      return null;
+    case FETCH_TAXA_SUCCESS:
+      return action.taxa.map(taxon => ({
+        ...taxon,
+        thumbnail: `/media/small/${taxon.image}.jpg`
+      }));
+    case FETCH_TAXA_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  pages
+  pages,
+  taxa
 });
 
 export default rootReducer;

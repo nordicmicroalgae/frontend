@@ -10,7 +10,7 @@ $navigation-toggle-bar-height: 2px;
 $navigation-toggle-box: $navigation-height;
 
 body {
-  padding-top: $navigation-height;
+  padding-top: $navigation-height !important;
 }
 
 .navigation-container {
@@ -23,6 +23,7 @@ body {
   height: $navigation-height;
   color: $white;
   background: $black;
+  z-index: 100000;
 }
 
 .navigation {

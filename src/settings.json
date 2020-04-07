@@ -121,6 +121,70 @@
         "name": "Help",
         "path": "/help/"
       }
-    ]
+    ],
+    "quickView": {
+      "groups": [
+        {
+          "label": "All",
+          "value": null
+        },
+        {
+          "label": "Cyanobacteria",
+          "value": "Cyanobacteria"
+        },
+        {
+          "label": "Diatoms",
+          "value": "Diatoms"
+        },
+        {
+          "label": "Dinoflagellates",
+          "value": "Dinoflagellates"
+        },
+        {
+          "label": "Other microalgae",
+          "value": "Other microalgae"
+        },
+        {
+          "label": "Ciliates",
+          "value": "Ciliates"
+        },
+        {
+          "label": "Other protozoa",
+          "value": "Other protozoa"
+        }
+      ],
+      "filters": [
+        {
+          "group": "Select",
+          "items": [
+            {
+              "label": "Illustrated only",
+              "name": "illustrated",
+              "value": true
+            },
+            {
+              "label": "HELCOM-PEG species",
+              "name": "helcom-peg",
+              "value": true
+            },
+            {
+              "label": "IOC Harmful algae only",
+              "name": "ioc",
+              "value": true
+            }
+          ]
+        },
+        {
+          "group": "For contributors",
+          "items": [
+            {
+              "label": "Not illustrated",
+              "name": "illustrated",
+              "value": false
+            }
+          ]
+        }
+      ]
+    }
   }
 }

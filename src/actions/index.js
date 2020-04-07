@@ -39,3 +39,34 @@ export const loadPage = slug => (dispatch, getState) => {
     return dispatch(fetchPage(slug));
   }
 };
+
+
+export const FETCH_TAXA_REQUEST = 'FETCH_TAXA_REQUEST';
+export const FETCH_TAXA_SUCCESS = 'FETCH_TAXA_SUCCESS';
+export const FETCH_TAXA_FAILURE = 'FETCH_TAXA_FAILURE';
+
+export const fetchTaxaRequest = query => ({
+  type: FETCH_TAXA_REQUEST, query
+});
+
+export const fetchTaxaSuccess = (taxa) => ({
+  type: FETCH_TAXA_SUCCESS, taxa
+});
+
+export const fetchTaxaFailure = () => ({
+  type: FETCH_TAXA_FAILURE
+});
+
+export const fetchTaxa = query => dispatch =>  {
+  dispatch(fetchTaxaRequest(query));
+
+  return client.get('/findTaxaByFilter/')
+    .then(
+      response => {
+        dispatch(fetchTaxaSuccess(response.data.taxa));
+      },
+      error => {
+        return Promise.reject(error);
+      }
+  );
+};
