@@ -1,5 +1,5 @@
 import getApiClient, { HttpError } from '../api';
-const client = getApiClient({baseURL: '/api/'});
+const client = getApiClient({baseURL: '/v1/'});
 
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';
@@ -20,7 +20,7 @@ export const fetchPageFailure = slug => ({
 export const fetchPage = slug => dispatch =>  {
   dispatch(fetchPageRequest(slug));
 
-  return client.get(`/page/${slug}/`)
+  return client.get(`/pages/${slug}/`)
     .then(
       response => {
         dispatch(fetchPageSuccess(slug, response.data));
