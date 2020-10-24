@@ -1,5 +1,5 @@
 import React from 'react';
-import TaxonList, { GroupedTaxonList } from './';
+import TaxonList from './';
 
 const data = [
   {
@@ -1388,5 +1388,5 @@ export const basic = () => (
 );
 
 export const grouped = () => (
-  <GroupedTaxonList data={data} />
+  <TaxonList data={data} groupBy="scientificName" />
 );

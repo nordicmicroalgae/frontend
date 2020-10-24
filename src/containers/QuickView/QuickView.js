@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from '../../components/Icons';
-import { GroupedTaxonList } from '../../components/TaxonList';
+import TaxonList from '../../components/TaxonList';
 import Spinner from '../../components/Spinner';
 import Switch from '../../components/Controls/Switch';
 import buildQueryString from '../../utils/buildQueryString';
@@ -180,7 +180,7 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
           </div>
         )}
         {taxa && taxa.length > 0 && (
-          <GroupedTaxonList data={taxa} />
+          <TaxonList data={taxa} groupBy="scientificName" />
         )}
       </div>
     </section>
