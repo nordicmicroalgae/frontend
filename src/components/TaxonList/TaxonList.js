@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import compileList from './helpers/compileList';
+import useVirtualList from './useVirtualList';
 import TaxonListItem from './TaxonListItem';
 
 
@@ -16,16 +17,18 @@ const propTypes = {
   groupBy: PropTypes.oneOf([
     'scientificName',
     'authority'
-  ])
+  ]),
+  itemHeight: PropTypes.number
 };
 
 const defaultProps = {
-  data: []
+  data: [],
+  itemHeight: 120
 };
 
-const TaxonList = ({ data, groupBy }) => {
+const TaxonList = ({ data, groupBy, itemHeight }) => {
 
-  const list = compileList(data, groupBy);
+  const list = useMemo(() => compileList(data, groupBy), [ data, groupBy ]);
 
   const refs = useRef({});
 
@@ -35,12 +38,14 @@ const TaxonList = ({ data, groupBy }) => {
     });
   };
 
+  const virtualList = useVirtualList({ list, refs, itemHeight });
+
   return (
     <div className="taxon-list-container">
       {groupBy && (
         <nav className="taxon-list-navigation">
           <ul>
-            {list.map(({ group }) => (
+            {virtualList.map(({ group }) => (
               <li className="taxon-list-navigation-item">
                 <button type="button" value={group} onClick={scrollIntoView}>
                   {group}
@@ -50,14 +55,22 @@ const TaxonList = ({ data, groupBy }) => {
           </ul>
         </nav>
       )}
-      {list.map(({ group, items }) => (
+      {virtualList.map(({ group, items, virtual }) => (
         <div className="taxon-list-group" ref={el => refs.current[group] = el}>
           {groupBy && (
             <h2 className="taxon-list-group-title">
               {group}
             </h2>
           )}
-          <ul className="taxon-list">
+          <ul
+            className={virtual
+              ? 'taxon-list taxon-list-virtual'
+              : 'taxon-list'
+            }
+            style={{
+              '--virtual-list-height': virtual && `${virtual.height}px`
+            }}
+          >
             {items.map(item => (
               <TaxonListItem {...item} />
             ))}

@@ -81,3 +81,20 @@
   font-size: 1rem;
   font-weight: normal;
 }
+
+
+.taxon-list-virtual {
+  position: relative;
+  height: var(--virtual-list-height);
+
+  .taxon-list-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--virtual-item-height);
+    transform: translateY(var(--virtual-item-top));
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}
