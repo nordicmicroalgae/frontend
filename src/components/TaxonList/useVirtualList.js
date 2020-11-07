@@ -24,7 +24,7 @@ function useVirtualList({ list, refs, itemHeight }) {
         items: items
           .slice(startIndex, endIndex)
           .map((item, index) => ({
-            ...item,
+            item,
             virtual: {
               height: itemHeight,
               top: (startIndex + index) * itemHeight

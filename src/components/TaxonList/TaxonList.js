@@ -71,8 +71,8 @@ const TaxonList = ({ data, groupBy, itemHeight }) => {
               '--virtual-list-height': virtual && `${virtual.height}px`
             }}
           >
-            {items.map(item => (
-              <TaxonListItem {...item} />
+            {items.map(({ item, virtual }) => (
+              <TaxonListItem data={item} virtual={virtual} />
             ))}
           </ul>
         </div>

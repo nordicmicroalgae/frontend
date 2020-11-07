@@ -7,12 +7,14 @@ import Picture from '../Picture';
 
 
 const propTypes = {
-  scientificName: PropTypes.string,
-  authority: PropTypes.string,
-  thumbnail: PropTypes.string
+  data: PropTypes.shape({
+    scientificName: PropTypes.string,
+    authority: PropTypes.string,
+    thumbnail: PropTypes.string
+  })
 };
 
-const TaxonListItem = ({ scientificName, authority, thumbnail, virtual }) => (
+const TaxonListItem = ({ data, virtual }) => (
   <li
     className="taxon-list-item"
     style={{
@@ -21,14 +23,14 @@ const TaxonListItem = ({ scientificName, authority, thumbnail, virtual }) => (
     }}
   >
     <div className="taxon-list-item-thumbnail" style={{minWidth: "160px"}}>
-      {thumbnail && (<Picture src={thumbnail} width={160} />)}
+      {data.thumbnail && (<Picture src={data.thumbnail} width={160} />)}
     </div>
     <h3 className="taxon-list-item-title">
       <ScientificName>
-        {scientificName}
+        {data.scientificName}
       </ScientificName>
       {' '}
-      {authority && (<Authority>{authority}</Authority>)}
+      {data.authority && (<Authority>{data.authority}</Authority>)}
     </h3>
   </li>
 );
