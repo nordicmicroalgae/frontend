@@ -26,7 +26,7 @@ const defaultProps = {
   itemHeight: 120
 };
 
-const TaxonList = ({ data, groupBy, itemHeight }) => {
+const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
 
   const list = useMemo(() => compileList(data, groupBy), [ data, groupBy ]);
 
@@ -72,7 +72,12 @@ const TaxonList = ({ data, groupBy, itemHeight }) => {
             }}
           >
             {items.map(({ item, virtual }) => (
-              <TaxonListItem data={item} virtual={virtual} />
+              <TaxonListItem
+                data={item}
+                virtual={virtual}
+                getItemLinkProps={getItemLinkProps}
+                Link={Link}
+              />
             ))}
           </ul>
         </div>
