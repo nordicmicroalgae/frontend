@@ -1,5 +1,5 @@
 import getApiClient, { HttpError } from '../api';
-const client = getApiClient({baseURL: '/v1/'});
+const client = getApiClient({baseURL: '/api/v1/'});
 
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';

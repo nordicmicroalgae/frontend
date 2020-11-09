@@ -29,7 +29,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
     proxy: {
-      '/v1': {
+      '/api': {
         target: {
           host: getenv('WDS_PROXY_API_HOST', '127.0.0.1'),
           protocol: 'http',
