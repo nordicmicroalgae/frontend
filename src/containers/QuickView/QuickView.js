@@ -190,10 +190,19 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
 QuickView.propTypes = propTypes;
 
 
+const selectTaxa = (state, query = '*') => {
+  if (state.queries.taxa[query]) {
+    return state.queries.taxa[query].map(
+      aphiaId => state.taxa[aphiaId]
+    );
+  }
+  return null;
+};
+
 const mapStateToProps = (state) => ({
   filters: settings.ui.quickView.filters,
   groups: settings.ui.quickView.groups,
-  taxa: state.taxa
+  taxa: selectTaxa(state)
 });
 
 const mapDispatchToProps = dispatch => ({

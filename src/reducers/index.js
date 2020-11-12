@@ -34,17 +34,44 @@ const pages = (state = {}, action) => {
   }
 };
 
-const taxa = (state = [], action) => {
+const taxa = (state = {}, action) => {
+  switch (action.type) {
+    case FETCH_TAXA_SUCCESS:
+      const additionalTaxa = {};
+      for (const taxon of action.taxa) {
+        if (state[taxon.aphiaId] == null) {
+          additionalTaxa[taxon.aphiaId] = {
+            ...taxon,
+            thumbnail: `/media/small/${taxon.image}.jpg`
+          }
+        }
+      }
+      return { ...state, ...additionalTaxa };
+    default:
+      return state;
+  }
+};
+
+const queries = (state = {taxa: {}}, action) => {
+  const query = '*';
+
   switch (action.type) {
     case FETCH_TAXA_REQUEST:
-      return null;
+      return {
+        ...state,
+        taxa: {
+          ...state.taxa,
+          [query]: []
+        }
+      };
     case FETCH_TAXA_SUCCESS:
-      return action.taxa.map(taxon => ({
-        ...taxon,
-        thumbnail: `/media/small/${taxon.image}.jpg`
-      }));
-    case FETCH_TAXA_FAILURE:
-      return false;
+      return {
+        ...state,
+        taxa: {
+          ...state.taxa,
+          [query]: action.taxa.map(taxon => taxon.aphiaId)
+        }
+      };
     default:
       return state;
   }
@@ -52,7 +79,8 @@ const taxa = (state = [], action) => {
 
 const rootReducer = combineReducers({
   pages,
-  taxa
+  taxa,
+  queries
 });
 
 export default rootReducer;
