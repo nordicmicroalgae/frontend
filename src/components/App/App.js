@@ -5,6 +5,7 @@ import store from '../../store';
 import Navigation from './Navigation';
 import Page from '../../containers/Page';
 import QuickView from '../../containers/QuickView';
+import TaxonView from '../../containers/TaxonView';
 import settings from '../../settings.json';
 
 
@@ -15,6 +16,7 @@ const App = () => (
       <main className="main" role="main">
         <Switch>
           <Route path="/quick-view/:group?/" component={QuickView} />
+          <Route path="/taxon/:aphiaId/" component={TaxonView} />
           <Route path="/:slug?/" component={Page} />
         </Switch>
       </main>

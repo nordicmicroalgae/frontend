@@ -70,3 +70,40 @@ export const fetchTaxa = query => dispatch =>  {
       }
   );
 };
+
+
+export const FETCH_TAXON_REQUEST = 'FETCH_TAXON_REQUEST';
+export const FETCH_TAXON_SUCCESS = 'FETCH_TAXON_SUCCESS';
+export const FETCH_TAXON_FAILURE = 'FETCH_TAXON_FAILURE';
+
+export const fetchTaxonRequest = aphiaId => ({
+  type: FETCH_TAXON_REQUEST, aphiaId
+});
+
+export const fetchTaxonSuccess = taxon => ({
+  type: FETCH_TAXON_SUCCESS, taxon
+});
+
+export const fetchTaxonFailure = aphiaId => ({
+  type: FETCH_TAXON_FAILURE, aphiaId
+});
+
+export const fetchTaxon = aphiaId => dispatch =>  {
+  dispatch(fetchTaxonRequest(aphiaId));
+
+  return client.get(`/taxa/${aphiaId}/`)
+    .then(
+      response => {
+        dispatch(fetchTaxonSuccess(response.data));
+      },
+      error => {
+        return Promise.reject(error);
+      }
+  );
+};
+
+export const loadTaxon = aphiaId => (dispatch, getState) => {
+  if (getState().taxa[aphiaId] == null) {
+    return dispatch(fetchTaxon(aphiaId));
+  }
+};

@@ -5,7 +5,10 @@ import {
   FETCH_PAGE_FAILURE,
   FETCH_TAXA_REQUEST,
   FETCH_TAXA_SUCCESS,
-  FETCH_TAXA_FAILURE
+  FETCH_TAXA_FAILURE,
+  FETCH_TAXON_REQUEST,
+  FETCH_TAXON_SUCCESS,
+  FETCH_TAXON_FAILURE
 } from '../actions';
 
 
@@ -47,6 +50,14 @@ const taxa = (state = {}, action) => {
         }
       }
       return { ...state, ...additionalTaxa };
+    case FETCH_TAXON_SUCCESS:
+      return {
+        ...state,
+        [action.taxon.aphiaId]: {
+          ...action.taxon,
+          thumbnail: `/media/small/${action.taxon.image}.jpg`
+        }
+      };
     default:
       return state;
   }

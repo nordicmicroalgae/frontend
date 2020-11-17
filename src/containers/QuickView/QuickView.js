@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from '../../components/Icons';
@@ -79,6 +79,12 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
     }
 
     return linkTo;
+  };
+
+  const getLinkToTaxon = (taxon) => {
+    return {
+      pathname: `/taxon/${taxon.aphiaId}/`
+    };
   };
 
   const handleChangeFilter = (ev) => {
@@ -180,7 +186,14 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
           </div>
         )}
         {taxa && taxa.length > 0 && (
-          <TaxonList data={taxa} groupBy="scientificName" />
+          <TaxonList
+            data={taxa}
+            groupBy="scientificName"
+            getItemLinkProps={taxon => ({
+              to: getLinkToTaxon(taxon)
+            })}
+            Link={Link}
+          />
         )}
       </div>
     </section>
