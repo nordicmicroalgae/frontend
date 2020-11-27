@@ -22,7 +22,7 @@
 }
 
 .taxon-list-navigation-item {
-  margin: 0.25rem 0;
+  margin: .25rem 0;
 }
 
 @media(min-height: 65rem) {
@@ -41,7 +41,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  font-size: 12px;
+  font-size: .75rem;
   font-weight: bold;
   border: none;
   background: none;
@@ -57,8 +57,9 @@
   z-index: 10000;
   font-size: 1rem;
   font-weight: bold;
-  margin: 0 0 2px;
-  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  margin: 0 0 .125rem;
+  padding: .34375rem .5rem;
 }
 
 .taxon-list {
@@ -69,7 +70,7 @@
 
 .taxon-list-item {
   display: flex;
-  border-bottom: 1px solid $gray-3;
+  border-bottom: .0625rem solid $gray-3;
 }
 
 .taxon-list-item-link {
