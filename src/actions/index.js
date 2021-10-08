@@ -10,7 +10,7 @@ export const fetchPageRequest = slug => ({
 });
 
 export const fetchPageSuccess = (slug, page) => ({
-  type: FETCH_PAGE_SUCCESS, slug, ...page
+  type: FETCH_PAGE_SUCCESS, slug, page
 });
 
 export const fetchPageFailure = slug => ({
@@ -20,7 +20,7 @@ export const fetchPageFailure = slug => ({
 export const fetchPage = slug => dispatch =>  {
   dispatch(fetchPageRequest(slug));
 
-  return client.get(`/pages/${slug}/`)
+  return client.get(`/articles/${slug}/`)
     .then(
       response => {
         dispatch(fetchPageSuccess(slug, response.data));

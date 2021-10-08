@@ -24,7 +24,7 @@ const pages = (state = {}, action) => {
         ...state,
         [action.slug]: {
           title: action.page.title,
-          body: action.page.body
+          body: action.page.content
         }
       };
     case FETCH_PAGE_FAILURE:
