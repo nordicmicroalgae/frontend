@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=production",
-    "start": "webpack-dev-server",
+    "start": "webpack serve --mode=development",
     "storybook": "start-storybook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,8 +28,8 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.2"
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",

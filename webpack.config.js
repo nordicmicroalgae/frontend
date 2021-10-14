@@ -10,7 +10,7 @@ function getenv(name, defaultValue) {
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
-    filename: '[name].[chunkhash].js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
@@ -26,7 +26,9 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    static: {
+      directory: path.resolve(__dirname, 'dist')
+    },
     historyApiFallback: true,
     proxy: {
       '/api': {
@@ -37,9 +39,11 @@ module.exports = {
         }
       }
     },
-    overlay: {
-      errors: true,
-      warnings: true
+    client: {
+      overlay: {
+        errors: true,
+        warnings: true
+      }
     }
   },
   module: {
