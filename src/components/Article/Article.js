@@ -1,4 +1,5 @@
 import React from 'react';
+import Markdown from 'react-markdown';
 
 
 const Article = ({ title, body }) => (
@@ -9,7 +10,9 @@ const Article = ({ title, body }) => (
       </h1>
     </header>
     <div className="article-content">
-      {body}
+      <Markdown>
+        {body}
+      </Markdown>
     </div>
   </article>
 );
