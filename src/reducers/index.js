@@ -42,9 +42,12 @@ const taxa = (state = {}, action) => {
     case FETCH_TAXA_SUCCESS:
       const additionalTaxa = {};
       for (const taxon of action.taxa) {
-        if (state[taxon.aphiaId] == null) {
-          additionalTaxa[taxon.aphiaId] = {
-            ...taxon,
+        if (state[taxon.scientific_name] == null) {
+          additionalTaxa[taxon.scientific_name] = {
+            scientificName: taxon.scientific_name,
+            authority: taxon.authority,
+            rank: taxon.rank,
+            parentName: taxon.parentName,
             thumbnail: `/media/small/${taxon.image}.jpg`
           }
         }
@@ -53,8 +56,11 @@ const taxa = (state = {}, action) => {
     case FETCH_TAXON_SUCCESS:
       return {
         ...state,
-        [action.taxon.aphiaId]: {
-          ...action.taxon,
+        [action.taxon.scientific_name]: {
+          scientificName: action.taxon.scientific_name,
+          authority: action.taxon.authority,
+          rank: action.taxon.rank,
+          parentName: action.taxon.parentName,
           thumbnail: `/media/small/${action.taxon.image}.jpg`
         }
       };
@@ -80,7 +86,7 @@ const queries = (state = {taxa: {}}, action) => {
         ...state,
         taxa: {
           ...state.taxa,
-          [query]: action.taxa.map(taxon => taxon.aphiaId)
+          [query]: action.taxa.map(taxon => taxon.scientific_name)
         }
       };
     default:

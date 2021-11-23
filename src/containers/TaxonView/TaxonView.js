@@ -8,7 +8,7 @@ import { loadTaxon } from '../../actions';
 
 
 const propTypes = {
-  aphiaId: PropTypes.string.isRequired,
+  scientificName: PropTypes.string.isRequired,
   taxon: PropTypes.shape({
     authority: PropTypes.string,
     scientificName: PropTypes.string.isRequired
@@ -16,11 +16,11 @@ const propTypes = {
 };
 
 
-const TaxonView = ({ aphiaId, taxon, getTaxon }) => {
+const TaxonView = ({ scientificName, taxon, getTaxon }) => {
 
   useEffect(() => {
-    getTaxon(aphiaId);
-  }, [ aphiaId ]);
+    getTaxon(scientificName);
+  }, [ scientificName ]);
 
   if (taxon == null) {
     return <p>Loading...</p>;
@@ -49,14 +49,14 @@ TaxonView.propTypes = propTypes;
 
 const mapStateToProps = (state, { match }) => {
   return {
-    aphiaId: match.params.aphiaId,
-    taxon: state.taxa[match.params.aphiaId]
+    scientificName: match.params.scientificName,
+    taxon: state.taxa[match.params.scientificName]
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTaxon: (aphiaId) => dispatch(loadTaxon(aphiaId))
+    getTaxon: (scientificName) => dispatch(loadTaxon(scientificName))
   };
 };
 

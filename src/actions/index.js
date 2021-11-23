@@ -60,7 +60,7 @@ export const fetchTaxaFailure = () => ({
 export const fetchTaxa = query => dispatch =>  {
   dispatch(fetchTaxaRequest(query));
 
-  return client.get('/findTaxaByFilter/')
+  return client.get('/taxa/')
     .then(
       response => {
         dispatch(fetchTaxaSuccess(response.data.taxa));
@@ -76,22 +76,22 @@ export const FETCH_TAXON_REQUEST = 'FETCH_TAXON_REQUEST';
 export const FETCH_TAXON_SUCCESS = 'FETCH_TAXON_SUCCESS';
 export const FETCH_TAXON_FAILURE = 'FETCH_TAXON_FAILURE';
 
-export const fetchTaxonRequest = aphiaId => ({
-  type: FETCH_TAXON_REQUEST, aphiaId
+export const fetchTaxonRequest = scientificName => ({
+  type: FETCH_TAXON_REQUEST, scientificName
 });
 
 export const fetchTaxonSuccess = taxon => ({
   type: FETCH_TAXON_SUCCESS, taxon
 });
 
-export const fetchTaxonFailure = aphiaId => ({
-  type: FETCH_TAXON_FAILURE, aphiaId
+export const fetchTaxonFailure = scientificName => ({
+  type: FETCH_TAXON_FAILURE, scientificName
 });
 
-export const fetchTaxon = aphiaId => dispatch =>  {
-  dispatch(fetchTaxonRequest(aphiaId));
+export const fetchTaxon = scientificName => dispatch =>  {
+  dispatch(fetchTaxonRequest(scientificName));
 
-  return client.get(`/taxa/${aphiaId}/`)
+  return client.get(`/taxa/${scientificName}/`)
     .then(
       response => {
         dispatch(fetchTaxonSuccess(response.data));
@@ -102,8 +102,8 @@ export const fetchTaxon = aphiaId => dispatch =>  {
   );
 };
 
-export const loadTaxon = aphiaId => (dispatch, getState) => {
-  if (getState().taxa[aphiaId] == null) {
-    return dispatch(fetchTaxon(aphiaId));
+export const loadTaxon = scientificName => (dispatch, getState) => {
+  if (getState().taxa[scientificName] == null) {
+    return dispatch(fetchTaxon(scientificName));
   }
 };

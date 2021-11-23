@@ -83,7 +83,7 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
 
   const getLinkToTaxon = (taxon) => {
     return {
-      pathname: `/taxon/${taxon.aphiaId}/`
+      pathname: `/taxon/${taxon.scientificName}/`
     };
   };
 
@@ -206,7 +206,7 @@ QuickView.propTypes = propTypes;
 const selectTaxa = (state, query = '*') => {
   if (state.queries.taxa[query]) {
     return state.queries.taxa[query].map(
-      aphiaId => state.taxa[aphiaId]
+      scientificName => state.taxa[scientificName]
     );
   }
   return null;
