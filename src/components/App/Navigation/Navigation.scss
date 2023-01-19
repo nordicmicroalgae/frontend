@@ -35,7 +35,7 @@ body {
   #navigation-home {
     display: block;
     margin: 0 auto;
-    padding: ($logo-box - $logo-height) / 2 0;
+    padding: calc(($logo-box - $logo-height) / 2) 0;
     width: $logo-box;
     height: $logo-box;
 
@@ -106,7 +106,7 @@ body {
     float: left;
     width: $navigation-toggle-box;
     height: $navigation-toggle-box;
-    padding: ($navigation-toggle-box - $navigation-toggle-bar-width) / 2 0;
+    padding: calc(($navigation-toggle-box - $navigation-toggle-bar-width) / 2) 0;
     text-align: center;
     cursor: pointer;
     &:hover {
