@@ -126,7 +126,7 @@
       "groups": [
         {
           "label": "All",
-          "value": null
+          "value": "All"
         },
         {
           "label": "Cyanobacteria",
@@ -159,17 +159,12 @@
           "items": [
             {
               "label": "Illustrated only",
-              "name": "illustrated",
+              "name": "illustrated-only",
               "value": true
             },
             {
               "label": "HELCOM-PEG species",
-              "name": "helcom-peg",
-              "value": true
-            },
-            {
-              "label": "IOC Harmful algae only",
-              "name": "ioc",
+              "name": "helcom-peg-only",
               "value": true
             }
           ]
@@ -179,7 +174,7 @@
           "items": [
             {
               "label": "Not illustrated",
-              "name": "illustrated",
+              "name": "not-illustrated-only",
               "value": false
             }
           ]

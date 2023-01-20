@@ -48,9 +48,9 @@ const QuickView = ({ filters, groups, history, location, match }) => {
 
   const query = parseQueryString(location.search);
 
-  if (match.params.group) {
-    query.group = match.params.group.toLowerCase().replace(' ', '-');
-  }
+  query.group = match.params.group
+    ? match.params.group
+    : 'All';
 
   const result = useGetAllTaxaQuery();
   const filteredResult = useGetFilteredTaxaQuery(query);
@@ -75,11 +75,10 @@ const QuickView = ({ filters, groups, history, location, match }) => {
   };
 
   const getSelectedGroupName = () => {
-    const group = groups
-      .filter(g => g.value == match.params.group)
-      .pop();
-
-    return group.label;
+    const group = groups.find(
+      g => g.value === query.group
+    );
+    return group ? group.label : 'All';
   };
 
   const getLinkToGroup = (group) => {
@@ -88,7 +87,7 @@ const QuickView = ({ filters, groups, history, location, match }) => {
       search: location.search
     };
 
-    if (group != null) {
+    if (group != null && group !== 'All') {
       linkTo.pathname = linkTo.pathname + `${group}/`;
     }
 
@@ -105,6 +104,9 @@ const QuickView = ({ filters, groups, history, location, match }) => {
     const nextQuery = {};
 
     Object.keys(query).forEach(queryKey => {
+      if (queryKey === 'group') {
+        return;
+      }
       if (queryKey !== ev.target.name) {
         nextQuery[queryKey] = query[queryKey];
       }
