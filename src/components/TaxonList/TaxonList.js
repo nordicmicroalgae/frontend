@@ -1,6 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import getKey from '../../utils/getKey';
 import compileList from './helpers/compileList';
 import useVirtualList from './useVirtualList';
 import TaxonListItem from './TaxonListItem';
@@ -46,7 +47,7 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
         <nav className="taxon-list-navigation">
           <ul>
             {virtualList.map(({ group }) => (
-              <li className="taxon-list-navigation-item">
+              <li className="taxon-list-navigation-item" key={getKey('taxon-list-navigation', group)}>
                 <button type="button" value={group} onClick={scrollIntoView}>
                   {group}
                 </button>
@@ -56,7 +57,7 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
         </nav>
       )}
       {virtualList.map(({ group, items, virtual }) => (
-        <div className="taxon-list-group" ref={el => refs.current[group] = el}>
+        <div className="taxon-list-group" ref={el => refs.current[group] = el} key={getKey('taxon-list-group', group)}>
           {groupBy && (
             <h2 className="taxon-list-group-title">
               {group}
@@ -73,6 +74,7 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
           >
             {items.map(({ item, virtual }) => (
               <TaxonListItem
+                key={getKey('taxon-list-item', item.scientificName)}
                 data={item}
                 virtual={virtual}
                 getItemLinkProps={getItemLinkProps}

@@ -8,6 +8,7 @@ import Spinner from '../../components/Spinner';
 import Switch from '../../components/Controls/Switch';
 import buildQueryString from '../../utils/buildQueryString';
 import parseQueryString from '../../utils/parseQueryString';
+import getKey from '../../utils/getKey';
 import settings from '../../settings';
 import { useGetAllTaxaQuery, useGetFilteredTaxaQuery } from '../../slices/taxa';
 
@@ -156,7 +157,7 @@ const QuickView = ({ filters, groups, history, location, match }) => {
       <div className="quick-view-groups">
         <ul className="quick-view-group-list" id="groups-of-organisms">
         {groups.map(({ label, value }) => (
-          <li className="quick-view-group-item">
+          <li className="quick-view-group-item" key={getKey('group', label)}>
             <NavLink exact to={getLinkToGroup(value)}>
               {label}
             </NavLink>
@@ -169,13 +170,13 @@ const QuickView = ({ filters, groups, history, location, match }) => {
           Filters
         </h2>
       {filters.map(({ group, items }) => (
-        <fieldset className="quick-view-filter-group">
+        <fieldset className="quick-view-filter-group" key={getKey('filter-group', group)}>
           <legend className="quick-view-filter-group-name">
             {group}
           </legend>
           <ul className="quick-view-filter-list">
           {items.map(({ label, name, value }) => (
-            <li className="quick-view-filter-item">
+            <li className="quick-view-filter-item" key={getKey('filter', name, value)}>
               <Switch
                 checked={getStateForFilter(name, value)}
                 labelText={label}
