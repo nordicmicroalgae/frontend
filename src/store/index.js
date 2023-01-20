@@ -1,13 +1,13 @@
-import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from '../reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import { baseApi } from '../services/nordicmicroalgae';
 
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(
-    thunkMiddleware
-  )
-);
+const store = configureStore({
+  reducer: {
+    [baseApi.reducerPath]: baseApi.reducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(baseApi.middleware)
+});
 
 export default store;

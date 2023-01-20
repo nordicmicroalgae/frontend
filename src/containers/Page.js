@@ -1,51 +1,26 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Article from '../components/Article';
 import NotFound from '../components/Error/NotFound';
-import { connect } from 'react-redux';
-import { loadPage } from '../actions';
+import { useGetArticleByIdQuery } from '../slices/articles';
 
 
-const propTypes = {
-  slug: PropTypes.string.isRequired,
-  page: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object
-  ])
-};
 
-const Page = ({ getPage, page, slug }) => {
-  useEffect(() => {
-    getPage(slug);
-  }, [ slug ]);
+const Page = ({ match }) => {
+  const article = useGetArticleByIdQuery(match.params.slug);
 
 
-  if (page === null) {
-    return <p>Loading...</p>;
-  }
-
-  if (page === false) {
+  if (article.isError) {
     return <NotFound />;
   }
+
+  const page = {
+    id: article.data && article.data.id,
+    title: article.data && article.data.title,
+    body: article.data && article.data.content,
+  };
 
   return <Article { ...page } />;
 };
 
-Page.propTypes = propTypes;
 
-
-const mapStateToProps = (state, { match: { params } }) => {
-  const { slug = 'introduction' } = params;
-  const page = state.pages[slug];
-  return { page, slug };
-};
-
-const mapDispatchToProps = dispatch => ({
-  getPage: (slug) => dispatch(loadPage(slug))
-});
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Page);
+export default Page;

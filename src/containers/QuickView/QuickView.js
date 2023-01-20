@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from '../../components/Icons';
 import TaxonList from '../../components/TaxonList';
@@ -10,8 +9,7 @@ import Switch from '../../components/Controls/Switch';
 import buildQueryString from '../../utils/buildQueryString';
 import parseQueryString from '../../utils/parseQueryString';
 import settings from '../../settings';
-import { fetchTaxa } from '../../actions';
-
+import { useGetAllTaxaQuery, useGetFilteredTaxaQuery } from '../../slices/taxa';
 
 const propTypes = {
   filters: PropTypes.arrayOf(
@@ -38,7 +36,7 @@ const propTypes = {
   )
 };
 
-const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa }) => {
+const QuickView = ({ filters, groups, history, location, match }) => {
   let [ groupsIsExpanded, setGroupsIsExpanded ] = useState(false);
 
   let [ filtersIsExpanded, setFiltersIsExpanded ] = useState(false);
@@ -49,9 +47,24 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
 
   const query = parseQueryString(location.search);
 
-  useEffect(() => {
-    getTaxa(query);
-  }, [ location.search, match.params.group ]);
+  if (match.params.group) {
+    query.group = match.params.group.toLowerCase().replace(' ', '-');
+  }
+
+  const result = useGetAllTaxaQuery();
+  const filteredResult = useGetFilteredTaxaQuery(query);
+
+  const isLoading = result.isLoading || filteredResult.isLoading;
+  const isSuccess = result.isSuccess && filteredResult.isSuccess;
+  
+  const taxa = isSuccess
+    ? filteredResult.data.map(
+        slug => ({
+          ...result.data.entities[slug],
+          thumbnail: null,
+        })
+      )
+    : [];
 
   const getStateForFilter = (filter, value) => {
     if (query[filter] == null) {
@@ -83,7 +96,7 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
 
   const getLinkToTaxon = (taxon) => {
     return {
-      pathname: `/taxon/${taxon.scientificName}/`
+      pathname: `/taxon/${taxon.slug}/`
     };
   };
 
@@ -180,7 +193,7 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
         {getSelectedGroupName()}
       </h1>
       <div className="quick-view-results">
-        {taxa === null && (
+        {isLoading && (
           <div className="quick-view-results-loading">
             <Spinner />
           </div>
@@ -202,28 +215,10 @@ const QuickView = ({ filters, groups, history, location, match, taxa, getTaxa })
 
 QuickView.propTypes = propTypes;
 
-
-const selectTaxa = (state, query = '*') => {
-  if (state.queries.taxa[query]) {
-    return state.queries.taxa[query].map(
-      scientificName => state.taxa[scientificName]
-    );
-  }
-  return null;
-};
-
-const mapStateToProps = (state) => ({
+QuickView.defaultProps = {
   filters: settings.ui.quickView.filters,
   groups: settings.ui.quickView.groups,
-  taxa: selectTaxa(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  getTaxa: (query) => dispatch(fetchTaxa(query))
-});
+};
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuickView);
+export default QuickView;
