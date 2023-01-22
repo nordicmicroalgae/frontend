@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import getKey from '../../utils/getKey';
+import getKey from '../../../utils/getKey';
 import compileList from './helpers/compileList';
 import useVirtualList from './useVirtualList';
 import TaxonListItem from './TaxonListItem';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 
 import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from '../../components/Icons';
-import TaxonList from '../../components/TaxonList';
+import TaxonList from '../../components/Taxonomy/List';
 import Spinner from '../../components/Spinner';
 import Switch from '../../components/Controls/Switch';
 import buildQueryString from '../../utils/buildQueryString';
