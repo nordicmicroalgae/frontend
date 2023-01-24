@@ -17,7 +17,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  initialPath: [],
+  initialPath: null,
   initialSelected: null,
   onExpand(_taxon) {},
   onCollapse(_taxon) {},
