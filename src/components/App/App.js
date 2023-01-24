@@ -16,7 +16,7 @@ const App = () => (
       <main className="main" role="main">
         <Switch>
           <Route path="/quick-view/:group?/" component={QuickView} />
-          <Route path="/taxon/:scientificName/" component={TaxonView} />
+          <Route path="/taxon/:slug/" component={TaxonView} />
           <Route path="/:slug?/" component={Page} />
         </Switch>
       </main>

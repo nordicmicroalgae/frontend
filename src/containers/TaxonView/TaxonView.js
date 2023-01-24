@@ -10,7 +10,7 @@ const TaxonView = ({ match }) => {
   const query = useGetAllTaxaQuery();
 
   const taxon = useSelector(
-    state => selectById(state, match.params.scientificName)
+    state => selectById(state, match.params.slug)
   );
 
   if (query.isLoading) {
