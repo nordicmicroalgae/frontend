@@ -29,15 +29,16 @@ module.exports = {
       directory: path.resolve(__dirname, 'dist')
     },
     historyApiFallback: true,
-    proxy: {
-      '/api': {
+    proxy: [
+      {
+        context: ['/api', '/media'],
         target: {
           host: getenv('WDS_PROXY_API_HOST', '127.0.0.1'),
           protocol: 'http',
           port: getenv('WDS_PROXY_API_PORT', '5000')
         }
       }
-    },
+    ],
     client: {
       overlay: {
         errors: true,
