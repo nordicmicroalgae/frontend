@@ -6,6 +6,7 @@ import Authority from '../../components/Authority';
 import ScientificName from '../../components/ScientificName';
 import Tree from '../../components/Taxonomy/Tree';
 import { useGetAllTaxaQuery, selectById } from '../../slices/taxa';
+import MediaView from '../MediaView';
 
 
 const TaxonView = ({ match }) => {
@@ -77,6 +78,12 @@ const TaxonView = ({ match }) => {
             to: `/taxon/${slug}`
           })}
         />
+      </div>
+      <div className="taxon-view-media">
+        <MediaView query={{taxon: taxon.slug}}>
+          <MediaView.Details />
+          <MediaView.Thumbnails />
+        </MediaView>
       </div>
     </section>
   );
