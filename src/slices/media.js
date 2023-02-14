@@ -8,7 +8,12 @@ export const extendedApiSlice = baseApi.injectEndpoints({
       transformResponse: responseData =>
         transformResponseKeys(responseData).media
     }),
+    getArtists: builder.query({
+      query: () => 'media/artists',
+      transformResponse: responseData =>
+        transformResponseKeys(responseData).artists
+    }),
   }),
 });
 
-export const { useGetMediaQuery } = extendedApiSlice;
+export const { useGetArtistsQuery, useGetMediaQuery } = extendedApiSlice;

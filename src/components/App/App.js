@@ -5,6 +5,7 @@ import store from '../../store';
 import Navigation from './Navigation';
 import Page from '../../containers/Page';
 import GalleryView from '../../containers/GalleryView';
+import HallOfFame from '../../containers/HallOfFame';
 import QuickView from '../../containers/QuickView';
 import TaxonView from '../../containers/TaxonView';
 import settings from '../../settings.json';
@@ -17,6 +18,7 @@ const App = () => (
       <main className="main" role="main">
         <Switch>
           <Route path="/gallery/:scope?/:value/" component={GalleryView} exact />
+          <Route path="/hall-of-fame/" component={HallOfFame} />
           <Route path="/quick-view/:group?/" component={QuickView} />
           <Route path="/taxon/:slug/" component={TaxonView} />
           <Route path="/:slug?/" component={Page} />
