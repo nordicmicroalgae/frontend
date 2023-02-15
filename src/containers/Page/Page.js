@@ -1,7 +1,8 @@
 import React from 'react';
-import Article from '../components/Article';
-import NotFound from '../components/Error/NotFound';
-import { useGetArticleByIdQuery } from '../slices/articles';
+
+import Article from '../../components/Article';
+import NotFound from '../../components/Error/NotFound';
+import { useGetArticleByIdQuery } from '../../slices/articles';
 
 
 
