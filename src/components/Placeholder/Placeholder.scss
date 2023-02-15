@@ -1,0 +1,17 @@
+@import "../utils/colors";
+
+
+.placeholder {
+  display: inline-block;
+  width: 100%;
+  background: $gray-1;
+  line-height: 1;
+
+  &.placeholder-rectangle {
+    border-radius: .125rem;
+  }
+
+  &.placeholder-circle {
+    border-radius: 100%;
+  }
+}
