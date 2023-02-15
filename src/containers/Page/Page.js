@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import Article from '../../components/Article';
 import NotFound from '../../components/Error/NotFound';
+import Placeholder from '../../components/Placeholder';
 import { useGetArticleByIdQuery } from '../../slices/articles';
 
 
@@ -17,14 +18,24 @@ const Page = ({ slug, children }) => {
     return <NotFound />;
   }
 
-  const page = {
-    id: article.data && article.data.id,
-    title: article.data && article.data.title,
-    body: article.data && article.data.content,
-    children,
-  };
+  if (article.isLoading) {
+    return (
+      <Article title={<Placeholder />}>
+        <p>
+          <Placeholder repeat={5} />
+        </p>
+        {children}
+      </Article>
+    );
+  }
 
-  return <Article { ...page } />;
+  const { title, content } = article.data;
+
+  return (
+    <Article title={title} body={content}>
+      {children}
+    </Article>
+  );
 };
 
 
