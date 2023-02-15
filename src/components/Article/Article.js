@@ -2,7 +2,7 @@ import React from 'react';
 import Markdown from 'react-markdown';
 
 
-const Article = ({ title, body }) => (
+const Article = ({ title, body, children }) => (
   <article className="article">
     <header className="article-header">
       <h1>
@@ -13,6 +13,7 @@ const Article = ({ title, body }) => (
       <Markdown>
         {body}
       </Markdown>
+      {children}
     </div>
   </article>
 );
