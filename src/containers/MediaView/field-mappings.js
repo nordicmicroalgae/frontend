@@ -1,6 +1,7 @@
 const mappings = new Map([
   ['title', 'Title'],
-  ['artist', 'Photographer/artist'],
+  ['photographerArtist', 'Photographer/artist'],
+  ['createdAt', 'Date added'],
   ['copyrightHolder', 'Copyright holder'],
   ['copyrightStamp', 'Copyright stamp'],
   ['institute', 'Institute'],
