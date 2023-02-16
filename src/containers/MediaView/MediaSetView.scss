@@ -3,6 +3,34 @@
   flex-wrap: wrap;
 
   .media-thumbnail {
+    display: block;
     margin: .5rem .5rem 0;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    color: inherit;
+
+    .attributes {
+      display: block;
+      height: 5rem;
+
+      .attribute-name {
+        display: none;
+      }
+
+      .attribute-value {
+        display: block;
+        margin: 0;
+        width: 100%;
+        font-size: .75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
   }
 }

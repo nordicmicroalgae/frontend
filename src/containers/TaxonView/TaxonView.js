@@ -82,7 +82,7 @@ const TaxonView = ({ match }) => {
       <div className="taxon-view-media">
         <MediaView query={{taxon: taxon.slug}}>
           <MediaView.Details />
-          <MediaView.Thumbnails />
+          <MediaView.Thumbnails fieldList={[]} />
         </MediaView>
       </div>
     </section>
