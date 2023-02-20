@@ -62,7 +62,9 @@ const QuickView = ({ filters, groups, history, location, match }) => {
     ? filteredResult.data.map(
         slug => ({
           ...result.data.entities[slug],
-          thumbnail: null,
+          thumbnail: result.data.entities[slug].image
+            ? result.data.entities[slug].image.s.url
+            : null,
         })
       )
     : [];
