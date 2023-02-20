@@ -28,7 +28,7 @@ const Gallery = ({ selectors }) => {
 
 Gallery.defaultProps = {
   selectors: {
-    title: query => query.originalArgs.gallery
+    title: query => query.originalArgs.gallery ?? 'Latest images'
   },
 };
 
