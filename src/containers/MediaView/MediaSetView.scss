@@ -1,3 +1,6 @@
+@import "../../components/utils/mixins";
+
+
 .mediaset-view {
   display: flex;
   flex-wrap: wrap;
@@ -15,7 +18,7 @@
       height: 5rem;
 
       .attribute-name {
-        display: none;
+        @extend .visually-hidden;
       }
 
       .attribute-value {
