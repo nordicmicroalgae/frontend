@@ -49,7 +49,21 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-      { test: /\.s[ac]ss$/, use: ["style-loader", "css-loader", "sass-loader"] }
+      {
+        test: /\.s[ac]ss$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sassOptions: {
+                includePaths: [path.resolve(__dirname, 'src/styles/partials')]
+              }
+            }
+          }
+        ]
+      }
     ]
   },
 };
