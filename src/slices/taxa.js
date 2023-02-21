@@ -1,6 +1,6 @@
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { baseApi, transformResponseKeys } from '../services/nordicmicroalgae';
+import { baseApi, transformResponseKeys } from 'Services/nordicmicroalgae';
 
 
 export const taxaAdapter = createEntityAdapter({

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useMediaQuery } from './media-context';
 import MediaDetailsView from './MediaDetailsView';
-import Dialog from '../../components/Dialog';
+import Dialog from 'Components/Dialog';
 
 import './MediaDetailsDialog.scss';
 

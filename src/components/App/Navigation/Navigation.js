@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-import Logo from '../../Logo';
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from '../../Icons';
-import getKey from '../../../utils/getKey';
+import Logo from 'Components/Logo';
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from 'Components/Icons';
+import getKey from 'Utilities/getKey';
 
 const propTypes = {
   items: PropTypes.arrayOf(

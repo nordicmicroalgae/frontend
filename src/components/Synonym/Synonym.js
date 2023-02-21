@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ScientificName from '../ScientificName';
+import ScientificName from 'Components/ScientificName';
 
 
 const propTypes = {

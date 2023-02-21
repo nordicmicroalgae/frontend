@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import getKey from '../../utils/getKey';
-import { useGetArtistsQuery } from '../../slices/media';
+import getKey from 'Utilities/getKey';
+import { useGetArtistsQuery } from 'Slices/media';
 
 
 const HallOfFame = () => {

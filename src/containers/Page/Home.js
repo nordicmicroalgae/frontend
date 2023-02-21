@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Page from './Page';
-import MediaView from '../MediaView';
+import MediaView from 'Containers/MediaView';
 
 
 const Home = () => (

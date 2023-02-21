@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 
-import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from '../../components/Icons';
-import TaxonList from '../../components/Taxonomy/List';
-import Spinner from '../../components/Spinner';
-import Switch from '../../components/Controls/Switch';
-import buildQueryString from '../../utils/buildQueryString';
-import parseQueryString from '../../utils/parseQueryString';
-import getKey from '../../utils/getKey';
+import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from 'Components/Icons';
+import TaxonList from 'Components/Taxonomy/List';
+import Spinner from 'Components/Spinner';
+import Switch from 'Components/Controls/Switch';
+import buildQueryString from 'Utilities/buildQueryString';
+import parseQueryString from 'Utilities/parseQueryString';
+import getKey from 'Utilities/getKey';
 import settings from '../../settings';
-import { useGetAllTaxaQuery, useGetFilteredTaxaQuery } from '../../slices/taxa';
+import { useGetAllTaxaQuery, useGetFilteredTaxaQuery } from 'Slices/taxa';
 
 const propTypes = {
   filters: PropTypes.arrayOf(

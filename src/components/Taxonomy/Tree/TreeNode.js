@@ -2,8 +2,8 @@ import React from 'react';
 
 import propTypes from './propTypes';
 import defaultProps from './defaultProps';
-import ScientificName from '../../ScientificName';
-import { PlusIcon, DashIcon } from '../../Icons';
+import ScientificName from 'Components/ScientificName';
+import { PlusIcon, DashIcon } from 'Components/Icons';
 import Tree from './Tree';
 
 

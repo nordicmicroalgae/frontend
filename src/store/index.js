@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { baseApi } from '../services/nordicmicroalgae';
+import { baseApi } from 'Services/nordicmicroalgae';
 
 
 const store = configureStore({

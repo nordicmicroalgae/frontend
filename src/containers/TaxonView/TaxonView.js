@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Authority from '../../components/Authority';
-import ScientificName from '../../components/ScientificName';
-import Tree from '../../components/Taxonomy/Tree';
-import { useGetAllTaxaQuery, selectById } from '../../slices/taxa';
-import MediaView from '../MediaView';
+import Authority from 'Components/Authority';
+import ScientificName from 'Components/ScientificName';
+import Tree from 'Components/Taxonomy/Tree';
+import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
+import MediaView from 'Containers/MediaView';
 
 
 const TaxonView = ({ match }) => {

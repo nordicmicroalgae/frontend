@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Authority from '../../Authority';
-import ScientificName from '../../ScientificName';
-import Picture from '../../Picture';
+import Authority from 'Components/Authority';
+import ScientificName from 'Components/ScientificName';
+import Picture from 'Components/Picture';
 
 
 const propTypes = {

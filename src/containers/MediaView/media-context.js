@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useGetMediaQuery } from '../../slices/media';
-import parseQueryString from '../../utils/parseQueryString';
+import { useGetMediaQuery } from 'Slices/media';
+import parseQueryString from 'Utilities/parseQueryString';
 
 
 const MediaQueryContext = createContext();

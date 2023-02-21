@@ -1,4 +1,4 @@
-import { baseApi, transformResponseKeys } from '../services/nordicmicroalgae';
+import { baseApi, transformResponseKeys } from 'Services/nordicmicroalgae';
 
 
 export const extendedApiSlice = baseApi.injectEndpoints({

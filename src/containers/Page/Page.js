@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import Article from '../../components/Article';
-import NotFound from '../../components/Error/NotFound';
-import Placeholder from '../../components/Placeholder';
-import { useGetArticleByIdQuery } from '../../slices/articles';
+import Article from 'Components/Article';
+import NotFound from 'Components/Error/NotFound';
+import Placeholder from 'Components/Placeholder';
+import { useGetArticleByIdQuery } from 'Slices/articles';
 
 
 const Page = ({ slug, children }) => {

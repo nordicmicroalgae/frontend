@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import asArray from '../../utils/asArray';
-import getKey from '../../utils/getKey';
+import asArray from 'Utilities/asArray';
+import getKey from 'Utilities/getKey';
 
 
 const propTypes = {

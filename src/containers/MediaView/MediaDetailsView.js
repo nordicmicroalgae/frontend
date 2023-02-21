@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useMediaQuery } from './media-context';
 import { getAttributeList } from './field-utils';
-import Attributes from '../../components/Attributes';
-import Picture from '../../components/Picture';
-import { ChevronDownIcon, ChevronUpIcon } from '../../components/Icons';
+import Attributes from 'Components/Attributes';
+import Picture from 'Components/Picture';
+import { ChevronDownIcon, ChevronUpIcon } from 'Components/Icons';
 
 import './MediaDetailsView.scss';
 

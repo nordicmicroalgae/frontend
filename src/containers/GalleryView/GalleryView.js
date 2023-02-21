@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 
-import MediaView, { useMediaQuery } from '../MediaView';
+import MediaView, { useMediaQuery } from 'Containers/MediaView';
 
 
 const Gallery = ({ selectors }) => {

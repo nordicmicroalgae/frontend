@@ -14,6 +14,17 @@ module.exports = {
     publicPath: '/',
     clean: true,
   },
+  resolve: {
+    alias: {
+      Components: path.resolve(__dirname, 'src', 'components'),
+      Containers: path.resolve(__dirname, 'src', 'containers'),
+      Services: path.resolve(__dirname, 'src', 'services'),
+      Slices: path.resolve(__dirname, 'src', 'slices'),
+      Store: path.resolve(__dirname, 'src', 'store'),
+      Styles: path.resolve(__dirname, 'src', 'styles'),
+      Utilities: path.resolve(__dirname, 'src', 'utils'),
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'nµa frontend',
