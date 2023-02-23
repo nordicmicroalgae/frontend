@@ -173,7 +173,7 @@ body {
 }
 
 .navigation {
-  #search-label {
+  #search-button {
     position: absolute;
     top: 0;
     right: 0;
@@ -181,27 +181,9 @@ body {
     height: $navigation-toggle-box;
     padding: 16px 0;
     text-align: center;
-    cursor: pointer;
-  }
-  #search-input {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    height: $navigation-toggle-box;
-    width: $navigation-toggle-box;
-    padding-left: $navigation-toggle-box;
-    background: $black;
-    color: $white;
+    background: transparent;
     border: none;
-  }
-  #search-input:focus {
-    width: 100%;
-  }
-  #search-input:focus,
-  #search-input:focus ~ #search-label {
-    left: 0;
-    z-index: 800;
+    cursor: pointer;
   }
 }
 

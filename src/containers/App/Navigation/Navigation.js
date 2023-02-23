@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState ,useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
+import SearchView from 'Containers/SearchView';
 import Logo from 'Components/Logo';
 import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from 'Components/Icons';
 import getKey from 'Utilities/getKey';
@@ -24,6 +25,8 @@ const propTypes = {
 const Navigation = ({ items }) => {
   const location = useLocation();
 
+  const [ showSearchView, setShowSearchView ] = useState(false);
+
   const stateRef = useRef();
 
   useEffect(() => {
@@ -32,11 +35,15 @@ const Navigation = ({ items }) => {
     }
   }, [ location ]);
 
-  const handleFocusSearch = (ev) => {
-    ev.target.value = '';
+  const handleClickSearch = (ev) => {
     if (stateRef.current) {
       stateRef.current.checked = false;
     }
+    setShowSearchView(!showSearchView);
+  };
+
+  const handleCloseSearchView = (_ev) => {
+    setShowSearchView(false);
   };
 
   const withKey = (item) => ({ ...item, key: getKey(item.name)});
@@ -44,10 +51,14 @@ const Navigation = ({ items }) => {
   return (
     <div className="navigation-container">
       <nav className="navigation" role="navigation">
-        <input type="text" id="search-input" placeholder="Enter search term..." onFocus={handleFocusSearch} />
-        <label id="search-label" htmlFor="search-input">
+        <button
+          type="button"
+          id="search-button"
+          aria-label="Search"
+          onClick={handleClickSearch}
+        >
           <SearchIcon />
-        </label>
+        </button>
         <input type="checkbox" id="navigation-state-root" className="navigation-state" aria-hidden={true} ref={stateRef} />
         <label htmlFor="navigation-state-root" className="navigation-toggle">
           <span className="navigation-toggle-open">
@@ -108,6 +119,9 @@ const Navigation = ({ items }) => {
         ))}
         </ul>
       </nav>
+      {showSearchView && (
+        <SearchView onClose={handleCloseSearchView} />
+      )}
     </div>
   );
 
