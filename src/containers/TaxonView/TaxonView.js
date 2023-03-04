@@ -7,6 +7,7 @@ import ScientificName from 'Components/ScientificName';
 import Tree from 'Components/Taxonomy/Tree';
 import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
 import MediaView from 'Containers/MediaView';
+import Facts from './Facts';
 
 
 const TaxonView = ({ match }) => {
@@ -84,6 +85,11 @@ const TaxonView = ({ match }) => {
           <MediaView.Details />
           <MediaView.Thumbnails fieldList={[]} />
         </MediaView>
+      </div>
+      <div className="taxon-view-facts">
+        <Facts taxon={taxon.slug}>
+          <Facts.Biovolumes />
+        </Facts>
       </div>
     </section>
   );

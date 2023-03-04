@@ -1,0 +1,181 @@
+@import "colors";
+@import "variables";
+
+
+.facts-biovolumes {
+  position: relative;
+
+  * { box-sizing: border-box; }
+
+  .biovolumes-table {
+    font-size: .875rem;
+    margin-bottom: 1rem;
+
+    table {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      border-collapse: collapse;
+      caption-side: bottom;
+    }
+
+    caption {
+      padding: .5rem 0;
+    }
+
+    th, td {
+      padding: .5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-weight: bold;
+    }
+  }
+
+
+  .species-table {
+    max-width: 100%;
+    overflow-x: hidden;
+
+    tbody {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+
+      @media(min-width: map-get($breakpoints, "l")) {
+        width: 33%;
+      }
+
+      &.figure-row {
+        margin-top: .5rem;
+        width: 100%;
+        > th, > td {
+          width: 100%
+        }
+      }
+    }
+
+    th {
+      font-size: .625rem;
+      text-transform: uppercase;
+    }
+
+    .figure-row > th {
+      background-color: $gray-5;
+      color: $gray-1;
+    }
+
+    td {
+      padding-top: 0;
+    }
+
+    .figure-row > td {
+      position: relative;
+      padding: 0;
+
+      .geometry {
+        min-width: 100%;
+        background-color: #999;
+      }
+
+      .figure-text {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-size: 1.75rem;
+        text-transform: capitalize;
+        text-shadow: .0625rem .0625rem rgba(0, 0, 0, .15);
+        color: $gray-1;
+      }
+    }
+  }
+
+
+  .size-class-table {
+    display: flex;
+    flex-direction: row;
+
+    .scroll-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    &::after {
+      content: '';
+      margin-left: -1.25rem;
+      width: 1.25rem;
+      height: auto;
+      pointer-events: none;
+      background-image: linear-gradient(
+        90deg,
+        transparent,
+        rgba(15, 15, 15, .35)
+      );
+    }
+
+    caption {
+      position: absolute;
+      bottom: -2.5rem;
+      width: 100%;
+      text-align: center;
+      font-style: italic;
+    }
+
+    tr {
+      border-bottom: .0625rem solid #000;
+    }
+
+    th {
+      position: sticky;
+      left: 0;
+      padding: 0;
+      width: 7.5rem;
+      min-width: 7.5rem;
+      max-width: 7.5rem;
+
+      @media(min-width: map-get($breakpoints, "l")) {
+        width: 17.5rem;
+        min-width: 17.5rem;
+        max-width: 17.5rem;
+      }
+
+      background-clip: content-box;
+      background-color: #666;
+      color: $gray-1;
+
+      > span {
+        display: block;
+        padding: .5rem;
+      }
+    }
+
+    td {
+      text-align: center;
+      background-color: #999;
+      color: $white;
+    }
+
+    tr:first-child {
+      th, td {
+        font-weight: bold;
+        background-color: $gray-5;
+      }
+    }
+
+    tr:last-child {
+      th > span, td {
+        padding-bottom: 2rem;
+      }
+    }
+  }
+
+
+}
