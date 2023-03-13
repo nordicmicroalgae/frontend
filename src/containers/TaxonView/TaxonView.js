@@ -76,7 +76,7 @@ const TaxonView = ({ match }) => {
           selected={getTaxonKey(taxon)}
           Link={Link}
           getLinkProps={({ slug }) => ({
-            to: `/taxon/${slug}`
+            to: `/taxon/${slug}/`
           })}
         />
       </div>
