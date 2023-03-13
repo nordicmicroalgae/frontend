@@ -13,9 +13,14 @@ import getKey from 'Utilities/getKey';
 
 const propTypes = {
   onClose: PropTypes.func.isRequired,
+  limit: PropTypes.number,
 };
 
-const SearchView = ({ onClose }) => {
+const defaultProps = {
+  limit: 50,
+};
+
+const SearchView = ({ onClose, limit }) => {
   const history = useHistory();
 
   const query = useGetAllTaxaQuery();
@@ -26,16 +31,19 @@ const SearchView = ({ onClose }) => {
 
   const [ selectedIndex, setSelectedIndex ] = useState(0);
 
-  const matches = useMemo(() => matchSorter(
-    Object.values(
-      query.data ? query.data.entities : {}
-    ),
-    inputValue,
-    {
-      keys: ['scientificName'],
-      threshold: matchSorter.rankings.CONTAINS,
-    }
-  ), [inputValue, query]);
+  const matches = useMemo(() =>
+    matchSorter(
+      Object.values(
+        query.data ? query.data.entities : {}
+      ),
+      inputValue,
+      {
+        keys: ['scientificName'],
+        threshold: matchSorter.rankings.CONTAINS,
+      }
+    ).slice(0, limit),
+    [inputValue, query]
+  );
 
 
   useEffect(() => {
@@ -195,6 +203,8 @@ const SearchView = ({ onClose }) => {
 };
 
 SearchView.propTypes = propTypes;
+
+SearchView.defaultProps = defaultProps;
 
 
 export default SearchView;
