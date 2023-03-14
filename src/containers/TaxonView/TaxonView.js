@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Authority from 'Components/Authority';
@@ -10,7 +10,9 @@ import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
 
 
-const TaxonView = ({ match }) => {
+const TaxonView = () => {
+  const params = useParams();
+
   const [ taxonomyIsExpanded, setTaxonomyIsExpanded ] = useState(false);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const TaxonView = ({ match }) => {
   const query = useGetAllTaxaQuery();
 
   const taxon = useSelector(
-    state => selectById(state, match.params.slug)
+    state => selectById(state, params.slug)
   );
 
   const getTaxonKey = ({ slug }) => slug;
