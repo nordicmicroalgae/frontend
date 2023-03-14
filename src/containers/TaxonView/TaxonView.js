@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Authority from 'Components/Authority';
 import ScientificName from 'Components/ScientificName';
-import Tree from 'Components/Taxonomy/Tree';
 import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
+import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
 
@@ -13,27 +13,11 @@ import Facts from './Facts';
 const TaxonView = () => {
   const params = useParams();
 
-  const [ taxonomyIsExpanded, setTaxonomyIsExpanded ] = useState(false);
-
-  useEffect(() => {
-    if (taxonomyIsExpanded) {
-      document.body.classList.add('has-expanded-taxonomy');
-    } else {
-      document.body.classList.remove('has-expanded-taxonomy');
-    }
-  }, [ taxonomyIsExpanded ]);
-
   const query = useGetAllTaxaQuery();
 
   const taxon = useSelector(
     state => selectById(state, params.slug)
   );
-
-  const getTaxonKey = ({ slug }) => slug;
-
-  const handleClickToggleTaxonomy = _ev => {
-    setTaxonomyIsExpanded(!taxonomyIsExpanded);
-  };
 
   if (query.isLoading) {
     return <p>Loading...</p>;
@@ -54,34 +38,7 @@ const TaxonView = () => {
           </>
         )}
       </h1>
-      <button
-        type="button"
-        className="taxonomy-toggle"
-        onClick={handleClickToggleTaxonomy}
-        aria-controls="taxonomy-navigation"
-        aria-expanded={taxonomyIsExpanded}
-      >
-        <span className="taxonomy-toggle-bar" />
-        <span className="taxonomy-toggle-bar" />
-        <span className="taxonomy-toggle-bar" />
-      </button>
-      <div id="taxonomy-navigation" className="taxon-view-taxonomy">
-        <h2 className="taxon-view-taxonomy-heading">
-          Taxonomy
-        </h2>
-        <Tree
-          data={query.data.entities}
-          getTaxonKey={getTaxonKey}
-          initialPath={
-            taxon.classification.map(getTaxonKey)
-          }
-          selected={getTaxonKey(taxon)}
-          Link={Link}
-          getLinkProps={({ slug }) => ({
-            to: `/taxon/${slug}/`
-          })}
-        />
-      </div>
+      <Taxonomy taxon={params.slug} />
       <div className="taxon-view-media">
         <MediaView query={{taxon: taxon.slug}}>
           <MediaView.Details />
