@@ -14,7 +14,7 @@ function MediaQueryProvider({ children, queryArgs }) {
 
   const params = parseQueryString(location.search);
 
-  const mediaset = query.data || [];
+  const mediaset = query.currentData || [];
 
   const requestedMedia = params.media;
 
