@@ -35,9 +35,13 @@ const Taxonomy = ({ taxon }) => {
     setNavigationIsExpanded(!navigationIsExpanded);
   };
 
-  if (query.isLoading) {
-    return <p>Loading...</p>;
-  }
+  const initialPath = (
+    (selectedTaxon?.classification ?? []).map(getTaxonKey)
+  );
+
+  const selectedKey = (
+    selectedTaxon ? getTaxonKey(selectedTaxon) : null
+  );
 
   return (
     <>
@@ -56,18 +60,18 @@ const Taxonomy = ({ taxon }) => {
         <h2 className="taxon-view-taxonomy-heading">
           Taxonomy
         </h2>
-        <Tree
-          data={query.data.entities}
-          getTaxonKey={getTaxonKey}
-          initialPath={
-            selectedTaxon.classification.map(getTaxonKey)
-          }
-          selected={getTaxonKey(selectedTaxon)}
-          Link={Link}
-          getLinkProps={({ slug }) => ({
-            to: `/taxon/${slug}/`
-          })}
-        />
+        {query.data?.entities && (
+          <Tree
+            data={query.data.entities}
+            getTaxonKey={getTaxonKey}
+            initialPath={initialPath}
+            selected={selectedKey}
+            Link={Link}
+            getLinkProps={({ slug }) => ({
+              to: `/taxon/${slug}/`
+            })}
+          />
+        )}
       </div>
     </>
   );
