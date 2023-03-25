@@ -175,7 +175,7 @@
             {
               "label": "Not illustrated",
               "name": "not-illustrated-only",
-              "value": false
+              "value": true
             }
           ]
         }
