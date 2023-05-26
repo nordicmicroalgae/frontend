@@ -28,6 +28,6 @@ export const transformResponseKeys = data =>
 
 export const baseApi = createApi({
   reducerPath: 'nua',
-  baseQuery: fetchBaseQuery({baseUrl: '/api/v1/'}),
+  baseQuery: fetchBaseQuery({baseUrl: '/api/'}),
   endpoints: builder => ({}),
 });
