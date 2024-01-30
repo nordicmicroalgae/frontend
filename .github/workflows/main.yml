@@ -28,7 +28,7 @@ jobs:
                 path: dist
 
     staging:
-        if: github.ref == 'refs/head/next'
+        if: github.ref == 'refs/heads/next'
         needs: build
         uses: ./.github/workflows/deploy.yml
         with:
