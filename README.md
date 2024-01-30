@@ -1,5 +1,3 @@
-![build status](https://github.com/nordicmicroalgae/nua-frontend/actions/workflows/build.yml/badge.svg)
-
 <p align="center">
     <img src="./doc/logo.svg" width="176" height="256" alt="µ" />
 </p>

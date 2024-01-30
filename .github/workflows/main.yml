@@ -1,4 +1,4 @@
-name: Build
+name: Build & Deploy
 
 on: push
 
@@ -8,10 +8,10 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Setup Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                 node-version: 18
 
@@ -22,7 +22,15 @@ jobs:
               run: yarn run build
 
             - name: Archive Artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
-                name: nua-ui
+                name: frontend
                 path: dist
+
+    staging:
+        if: github.ref == 'refs/head/next'
+        needs: build
+        uses: ./.github/workflows/deploy.yml
+        with:
+            environment: staging
+        secrets: inherit
