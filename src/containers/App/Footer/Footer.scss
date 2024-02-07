@@ -1,0 +1,23 @@
+@import "colors";
+
+
+.footer {
+  padding: 2rem;
+  text-align: center;
+
+  nav ul {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+
+    li a {
+      padding: 0 .5rem;
+      border-right: .0625rem solid $gray-3;
+    }
+
+    li:last-child a {
+      border-right: none;
+    }
+  }
+}

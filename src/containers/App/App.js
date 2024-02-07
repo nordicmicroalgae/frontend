@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from 'Store';
 import Navigation from './Navigation';
+import Footer from './Footer';
 import Page, { Home } from 'Containers/Page';
 import GalleryView from 'Containers/GalleryView';
 import HallOfFame from 'Containers/HallOfFame';
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/:slug?/" component={Page} />
         </Switch>
       </main>
+      <Footer />
     </Provider>
   </Router>
 );

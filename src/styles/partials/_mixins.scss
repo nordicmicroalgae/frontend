@@ -1,3 +1,13 @@
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+}
+
 @mixin visually-hidden {
   position: absolute !important;
   margin: 0 !important;

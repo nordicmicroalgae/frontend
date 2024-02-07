@@ -115,7 +115,7 @@
 
       &[aria-expanded] ~ #taxonomy-navigation {
         display: block;
-        position: absolute;
+        position: static;
         z-index: unset;
         overflow-y: visible;
         padding-top: 0;
@@ -137,9 +137,8 @@
     padding-left: 22.25rem;
 
     .taxon-view-taxonomy {
-      position: absolute;
-      top: 0;
-      left: 0;
+      float: left;
+      margin-left: -21.25rem;
       width: 21.25rem;
 
       .taxon-view-taxonomy-heading {

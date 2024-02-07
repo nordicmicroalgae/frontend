@@ -1,7 +1,9 @@
 @import "colors";
 @import "variables";
+@import "mixins";
 
 .quick-view {
+  @include clearfix();
   padding: 48px 0 0;
 
   .quick-view-groups-toggle {
