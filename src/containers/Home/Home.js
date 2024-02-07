@@ -2,6 +2,7 @@ import React from 'react';
 
 import Introduction from './Introduction';
 import LatestImages from './LatestImages';
+import Statistics from './Statistics';
 
 
 const Home = () => (
@@ -10,6 +11,7 @@ const Home = () => (
       <Introduction />
       <LatestImages />
     </div>
+    <Statistics />
   </div>
 );
 
