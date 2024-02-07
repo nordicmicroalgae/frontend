@@ -1,3 +1,11 @@
 @import "colors";
 @import "variables";
 @import "mixins";
+
+
+.hero {
+  margin-top: -1.5rem;
+  padding: 2rem;
+  color: $white;
+  background-color: $gray-5;
+}

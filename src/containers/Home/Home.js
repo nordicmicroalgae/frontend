@@ -1,20 +1,15 @@
 import React from 'react';
 
-import Page from 'Containers/Page';
-import MediaView from 'Containers/MediaView';
+import Introduction from './Introduction';
+import LatestImages from './LatestImages';
 
 
 const Home = () => (
   <div className="home">
-    <Page slug={'introduction'}>
-      <div className="latest-illustrations">
-        <h2>Latest added illustrations</h2>
-        <MediaView query={{limit: 4}}>
-          <MediaView.Thumbnails />
-          <MediaView.DetailsDialog />
-        </MediaView>
-      </div>
-    </Page>
+    <div className="hero">
+      <Introduction />
+      <LatestImages />
+    </div>
   </div>
 );
 
