@@ -1,0 +1,18 @@
+@import "colors";
+@import "variables";
+@import "mixins";
+
+.page {
+  @include container();
+
+  .article-header {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .article-content {
+    font-size: 1.2rem;
+    margin: 0 auto;
+    max-width: map-get($breakpoints, "m");
+  }
+}

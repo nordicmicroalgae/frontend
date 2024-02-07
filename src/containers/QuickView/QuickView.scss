@@ -3,6 +3,7 @@
 @import "mixins";
 
 .quick-view {
+  @include container();
   @include clearfix();
   padding: 48px 0 0;
 

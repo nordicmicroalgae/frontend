@@ -2,5 +2,6 @@
 
 
 .taxon-view {
+  @include container();
   @include clearfix();
 }

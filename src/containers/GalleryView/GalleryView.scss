@@ -1,2 +1,8 @@
 @import "colors";
 @import "variables";
+@import "mixins";
+
+
+.gallery {
+  @include container();
+}
