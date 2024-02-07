@@ -14,27 +14,30 @@ const Page = ({ slug, children }) => {
     slug ?? params.slug
   );
 
-  if (article.isError) {
-    return <NotFound />;
-  }
+  const { title, content, layout } = (
+    article.currentData ?? {}
+  );
 
-  if (article.isLoading) {
-    return (
-      <Article title={<Placeholder />}>
-        <p>
-          <Placeholder repeat={5} />
-        </p>
-        {children}
-      </Article>
-    );
-  }
-
-  const { title, content } = article.data;
+  const layoutName = `${layout ?? 'page'}-layout`;
 
   return (
-    <Article title={title} body={content}>
-      {children}
-    </Article>
+    <div className={`page ${layoutName}`}>
+      {article.isLoading ? (
+        <Article title={<Placeholder />}>
+          <p>
+            <Placeholder repeat={5} />
+          </p>
+          {children}
+        </Article>
+      ) :
+      article.isError ?  (
+        <NotFound />
+      ) : (
+        <Article title={title} body={content}>
+          {children}
+        </Article>
+      )}
+    </div>
   );
 };
 
