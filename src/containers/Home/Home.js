@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Page from './Page';
+import Page from 'Containers/Page';
 import MediaView from 'Containers/MediaView';
 
 
