@@ -20,6 +20,16 @@ const Footer = () => (
             Disclaimer
           </NavLink>
         </li>
+        <li>
+          <NavLink to={'/privacy-policy/'}>
+            Privacy policy
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={'/terms-of-use/'}>
+            Terms of use
+          </NavLink>
+        </li>
       </ul>
     </nav>
   </footer>
