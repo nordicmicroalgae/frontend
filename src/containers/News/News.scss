@@ -1,0 +1,24 @@
+@import "colors";
+@import "variables";
+@import "mixins";
+
+
+.news {
+  @include container();
+
+  .article-header a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.news-archive {
+  > h1 {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+  .news {
+    margin: 0 auto;
+    max-width: map-get($breakpoints, "m");
+  }
+}

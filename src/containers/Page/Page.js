@@ -14,7 +14,7 @@ const Page = ({ slug, children }) => {
     slug ?? params.slug
   );
 
-  const { title, content, layout } = (
+  const { title, content, author, date, layout } = (
     article.currentData ?? {}
   );
 
@@ -33,7 +33,12 @@ const Page = ({ slug, children }) => {
       article.isError ?  (
         <NotFound />
       ) : (
-        <Article title={title} body={content}>
+        <Article
+          title={title}
+          postedBy={author}
+          postedOn={date}
+          body={content}
+        >
           {children}
         </Article>
       )}

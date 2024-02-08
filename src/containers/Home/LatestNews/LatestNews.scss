@@ -1,0 +1,33 @@
+@import "colors";
+@import "variables";
+@import "mixins";
+
+
+.latest-news {
+  text-align: center;
+
+  > h2 {
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    color: $gray-4;
+
+    svg {
+      margin: 2rem auto;
+      display: block;
+    }
+  }
+
+  .news {
+    margin: 0 auto;
+    max-width: map-get($breakpoints, "s");
+
+    .article-header h2 {
+      font-size: 1.125rem;
+      font-weight: bold;
+      color: $gray-5;
+    }
+  }
+}

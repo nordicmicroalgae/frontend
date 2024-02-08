@@ -7,6 +7,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import Home from 'Containers/Home';
 import Page from 'Containers/Page';
+import { NewsArchive } from 'Containers/News';
 import GalleryView from 'Containers/GalleryView';
 import HallOfFame from 'Containers/HallOfFame';
 import QuickView from 'Containers/QuickView';
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/hall-of-fame/" component={HallOfFame} />
           <Route path="/quick-view/:group?/" component={QuickView} />
           <Route path="/taxon/:slug/" component={TaxonView} />
+          <Route path="/news/" component={NewsArchive} />
           <Route path="/:slug?/" component={Page} />
         </Switch>
       </main>
