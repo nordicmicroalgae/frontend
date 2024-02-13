@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useMediaQuery } from './media-context';
 import { getAttributeList } from './field-utils';
 import Attributes from 'Components/Attributes';
+import Frame from 'Components/Media/Frame';
 import Picture from 'Components/Media/Picture';
 import { ChevronDownIcon, ChevronUpIcon } from 'Components/Icons';
 
@@ -30,12 +31,14 @@ const MediaDetailsView = ({ expandable }) => {
 
   return (selectedMedia && (
     <div className="media-details-view">
-      <Picture
-        src={selectedMedia.renditions.l.url}
-        backgroundColor="transparent"
-        backgroundImage={selectedMedia.renditions.p.url}
-        width={1024}
-      />
+      <Frame>
+        <Picture
+          src={selectedMedia.renditions.l.url}
+          backgroundColor="transparent"
+          backgroundImage={selectedMedia.renditions.p.url}
+          width={1024}
+        />
+      </Frame>
       <div className={
         expandable ? (
           `media-details ${isExpanded ? 'expanded' : 'collapsed'}`

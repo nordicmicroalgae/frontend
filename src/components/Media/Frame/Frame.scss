@@ -1,0 +1,32 @@
+@import "colors";
+
+
+.media-frame {
+  margin: .25rem;
+  padding: .625rem;
+  color: $black;
+  background: linear-gradient(#f9f9f9, #f0f0f0);
+  box-shadow: 0 0 .1875rem rgba(0, 0, 0, .35);
+
+  .picture {
+    position: relative;
+  }
+
+  .picture-source {
+    box-shadow: inset 0 0 .125rem $black;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-shadow: inset 0 0 .125rem rgba(0, 0, 0, .5);
+      border-top: .125rem solid rgba(200, 200, 200, .95);
+      border-right: .125rem solid rgba(200, 200, 200, .95);
+      border-left: .125rem solid rgba(230, 230, 230, .95);
+      border-bottom: .125rem solid rgba(230, 230, 230, .95);
+    }
+  }
+}
