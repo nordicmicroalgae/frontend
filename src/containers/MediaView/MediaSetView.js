@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from './media-context';
 import { getAttributeList, getFieldKeys } from './field-utils';
 import Attributes from 'Components/Attributes';
-import Picture from 'Components/Picture';
+import Picture from 'Components/Media/Picture';
 import getKey from 'Utilities/getKey';
 
 import './MediaSetView.scss';

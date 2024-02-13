@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Authority from 'Components/Authority';
 import ScientificName from 'Components/ScientificName';
-import Picture from 'Components/Picture';
+import Picture from 'Components/Media/Picture';
 
 
 const propTypes = {
