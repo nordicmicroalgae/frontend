@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Spinner from 'Components/Spinner';
@@ -9,60 +9,92 @@ const propTypes = {
   title: PropTypes.string,
   caption: PropTypes.string,
   backgroundColor: PropTypes.string,
+  backgroundImage: PropTypes.string,
   onLoad: PropTypes.func,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  Placeholder: PropTypes.func,
 };
 
 const defaultProps = {
   width: 640,
-  backgroundColor: '#f0f0f0'
+  backgroundColor: '#f0f0f0',
+  Placeholder: Spinner,
 };
 
-const Picture = ({ src, width, title, caption, backgroundColor, children, onLoad, onError }) => {
+const Status = {
+  Pending: Symbol('pending'),
+  Loading: Symbol('loading'),
+  Failure: Symbol('failure'),
+  Success: Symbol('success'),
+};
 
-  let [ imageSrc, setImageSrc ] = useState(undefined);
+const Picture = ({
+  src,
+  width,
+  title,
+  caption,
+  backgroundColor,
+  backgroundImage,
+  children,
+  onLoad,
+  onError,
+  Placeholder,
+}) => {
+  const [status, setStatus] = useState(Status.Pending);
 
-  const defaultLoadHandler = (event) => {
-    setImageSrc(event.target.src);
-  };
+  useEffect(() => {
+    setStatus(Status.Loading);
 
-  const defaultErrorHandler = (event) => {
-    setImageSrc(false);
-  };
+    const loadHandler = e => {
+      setStatus(Status.Success);
+      onLoad && onLoad(e);
+    };
 
-  if (imageSrc !== false) {
-    let image = new Image();
+    const errorHandler = e => {
+      setStatus(Status.Failure);
+      onError && onError(e);
+    };
 
+    const image = new Image();
     image.src = src;
 
-    image.onload = (event) => {
-      if (onLoad) {
-        return onLoad(event, defaultLoadHandler);
-      }
-      return defaultLoadHandler(event);
-    };
+    image.addEventListener('load', loadHandler);
+    image.addEventListener('error', errorHandler);
 
-    image.onerror = () => {
-      if (onError) {
-        return onError(event, defaultErrorHandler);
-      }
-      return defaultErrorHandler(event);
-    };
-  }
+    return () => {
+      image.removeEventListener('load', loadHandler);
+      image.removeEventListener('error', errorHandler);
+    }
+  }, [src]);
 
   return (
-    <div className="picture-container" style={{width: `${width}px`}}>
-      <div className="picture" style={{ backgroundColor }}>
+    <div
+      className="picture-container"
+      style={{width: `${width}px`}}
+    >
+      <div
+        className="picture"
+        style={{
+          backgroundColor,
+          backgroundImage: backgroundImage
+            ? `url(${backgroundImage})`
+            : undefined
+        }}
+      >
         <div className="picture-source">
-          {imageSrc == null &&(
-            <Spinner />
-          )}
-          {imageSrc === false && (
-            <p>Image not available</p>
-          )}
-          {imageSrc && (
-            <img src={imageSrc} />
-          )}
+          {
+            status == Status.Loading ? (
+              <Placeholder />
+            ) :
+            status == Status.Failure ? (
+              <p>Image not available</p>
+            ) :
+            status == Status.Success ? (
+              <img src={src} />
+            ) : (
+              null
+            )
+          }
         </div>
       </div>
       {title && (

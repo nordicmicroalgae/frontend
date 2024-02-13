@@ -39,7 +39,12 @@ const MediaSetView = ({ fieldList }) => {
           className="media-thumbnail"
           key={getKey('media', media.slug)}
         >
-          <Picture src={media.renditions.s.url} width={160}>
+          <Picture
+            src={media.renditions.s.url}
+            backgroundColor="transparent"
+            backgroundImage={media.renditions.p.url}
+            width={160}
+          >
             {Array.isArray(fieldList) && fieldList.length > 0 && (
               <Attributes
                 list={getAttributeList(

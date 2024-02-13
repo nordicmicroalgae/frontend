@@ -32,6 +32,8 @@ const MediaDetailsView = ({ expandable }) => {
     <div className="media-details-view">
       <Picture
         src={selectedMedia.renditions.l.url}
+        backgroundColor="transparent"
+        backgroundImage={selectedMedia.renditions.p.url}
         width={1024}
       />
       <div className={
