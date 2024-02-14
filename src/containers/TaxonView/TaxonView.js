@@ -9,6 +9,7 @@ import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
 import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
+import Synonyms from './Synonyms';
 
 
 const TaxonView = () => {
@@ -74,6 +75,9 @@ const TaxonView = () => {
             <MediaView.Details />
             <MediaView.Thumbnails fieldList={[]} />
           </MediaView>
+        </div>
+        <div className="taxon-view-synonyms">
+          <Synonyms taxon={taxon.slug} />
         </div>
         <div className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
