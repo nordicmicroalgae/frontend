@@ -31,13 +31,13 @@ const TaxonView = () => {
 
   return (
     isFetching ? (
-      <section className="taxon-view is-loading">
+      <div className="taxon-view is-loading">
         <h1><Placeholder /></h1>
         <Taxonomy taxon={params.slug} />
-      </section>
+      </div>
     ) :
     isMissing ? (
-      <section className="taxon-view is-missing">
+      <div className="taxon-view is-missing">
         <h1>Taxon not found</h1>
         <p>
           Unfortunately, the taxon you requested does
@@ -53,9 +53,9 @@ const TaxonView = () => {
           the search field in the top navigation.
         </p>
         <Taxonomy taxon={params.slug} />
-      </section>
+      </div>
     ) : (
-      <section className="taxon-view">
+      <div className="taxon-view">
         <h1>
           <ScientificName>
             {taxon.scientificName}
@@ -70,21 +70,21 @@ const TaxonView = () => {
           )}
         </h1>
         <Taxonomy taxon={params.slug} />
-        <div className="taxon-view-media">
+        <section className="taxon-view-media">
           <MediaView query={{taxon: taxon.slug}}>
             <MediaView.Details />
             <MediaView.Thumbnails fieldList={[]} />
           </MediaView>
-        </div>
-        <div className="taxon-view-synonyms">
+        </section>
+        <section className="taxon-view-synonyms">
           <Synonyms taxon={taxon.slug} />
-        </div>
-        <div className="taxon-view-facts">
+        </section>
+        <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
             <Facts.Biovolumes />
           </Facts>
-        </div>
-      </section>
+        </section>
+      </div>
     )
   );
 };

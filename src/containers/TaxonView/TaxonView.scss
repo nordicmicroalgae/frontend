@@ -1,7 +1,21 @@
+@import "colors";
 @import "mixins";
 
 
 .taxon-view {
   @include container();
   @include clearfix();
+
+  > section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: .125rem solid $gray-1;
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: $gray-4;
+    }
+  }
 }
