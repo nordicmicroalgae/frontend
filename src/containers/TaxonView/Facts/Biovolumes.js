@@ -13,12 +13,16 @@ import './Biovolumes.scss';
 const Biovolumes = () => {
   const { query } = useFactsQuery();
 
-  const { isFetching, isError, currentData, error } = query;
+  const { isFetching, currentData } = query;
 
   const biovolumes = (
     selectCollectionByProvider(
-      currentData, 'biovolumes', 'helcom-peg'
+      currentData, 'biovolumes', 'nomp'
     )
+  );
+
+  const isMissing = (
+    isFetching === false && biovolumes == null
   );
 
   const speciesInfo = biovolumes?.attributes;
@@ -50,12 +54,10 @@ const Biovolumes = () => {
         </div>
       </div>
     ) :
-    isError ? (
+    isMissing ? (
       <div className="facts-biovolumes is-missing">
         <h2>Biovolumes</h2>
-        {error?.status === 404 && (
-          <p>No data available for this taxon.</p>
-        )}
+        <p>No data available for this taxon.</p>
       </div>
     ) : (
       <div className="facts-biovolumes">
