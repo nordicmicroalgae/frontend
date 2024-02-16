@@ -1,13 +1,11 @@
 export const SpeciesFields = new Map([
   ['species', 'Species'],
   ['author', 'Author'],
-  ['division', 'Division'],
-  ['class', 'Class'],
-  ['order', 'Order'],
   ['sflag', 'SFLAG'],
   ['stage', 'Stage'],
   ['trophy', 'Trophy'],
   ['formula', 'Formula'],
+  ['list', 'List (source)'],
   ['geometricShape', 'Geometric shape'],
 ]);
 
