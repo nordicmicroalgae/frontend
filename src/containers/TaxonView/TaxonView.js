@@ -81,6 +81,11 @@ const TaxonView = () => {
         </section>
         <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
+            <Facts.ExternalLinks />
+          </Facts>
+        </section>
+        <section className="taxon-view-facts">
+          <Facts taxon={taxon.slug}>
             <Facts.Biovolumes />
           </Facts>
         </section>

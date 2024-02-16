@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FactsQueryProvider } from './facts-context';
 import Biovolumes from './Biovolumes';
+import ExternalLinks from './ExternalLinks';
 
 
 const propTypes = {
@@ -20,6 +21,7 @@ const Facts = ({ taxon, children }) => {
 Facts.propTypes = propTypes;
 
 Facts.Biovolumes = Biovolumes;
+Facts.ExternalLinks = ExternalLinks;
 
 
 export default Facts;
