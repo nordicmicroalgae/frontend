@@ -72,10 +72,12 @@ const SearchView = ({ onClose, limit }) => {
     },
     Enter(ev) {
       ev.preventDefault();
-      history.push(
-        `/taxon/${matches[selectedIndex].slug}/`
-      );
-      onClose(ev);
+      if (matches[selectedIndex]) {
+        history.push(
+          `/taxon/${matches[selectedIndex].slug}/`
+        );
+        onClose(ev);
+      }
     },
     Escape(ev) {
       onClose(ev);
