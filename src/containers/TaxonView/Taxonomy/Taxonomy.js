@@ -23,6 +23,8 @@ const Taxonomy = ({ taxon }) => {
     }
   }, [ navigationIsExpanded ]);
 
+  useEffect(() => setNavigationIsExpanded(false), [taxon]);
+
   const query = useGetAllTaxaQuery();
 
   const selectedTaxon = useSelector(
