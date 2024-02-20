@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 
 import { ChevronDownIcon, ChevronUpIcon, FilterIcon } from 'Components/Icons';
+import Picture from 'Components/Media/Picture';
 import TaxonList from 'Components/Taxonomy/List';
 import Spinner from 'Components/Spinner';
 import Switch from 'Components/Controls/Switch';
@@ -211,6 +212,14 @@ const QuickView = ({ filters, groups, history, location, match }) => {
               to: getLinkToTaxon(taxon)
             })}
             Link={Link}
+            Thumbnail={({data}) => (
+              <Picture
+                src={data.image.s.url}
+                backgroundColor="transparent"
+                backgroundImage={data.image.p.url}
+                width={160}
+              />
+            )}
           />
         )}
       </div>
