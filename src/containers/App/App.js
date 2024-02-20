@@ -26,7 +26,7 @@ const App = () => (
           <Route path="/gallery/:scope?/:value/" component={GalleryView} exact />
           <Route path="/hall-of-fame/" component={HallOfFame} />
           <Route path="/quick-view/:group?/" component={QuickView} />
-          <Route path="/taxon/:slug/" component={TaxonView} />
+          <Route path="/taxon/:slug?/" component={TaxonView} />
           <Route path="/news/" component={NewsArchive} />
           <Route path="/:slug?/" component={Page} />
         </Switch>

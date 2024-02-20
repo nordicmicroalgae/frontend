@@ -25,6 +25,10 @@ const TaxonView = () => {
     state => selectById(state, params.slug)
   );
 
+  const isRoot = (
+    isFetching === false && params.slug == null
+  );
+
   const isMissing = (
     isFetching === false && taxon == null
   );
@@ -36,9 +40,24 @@ const TaxonView = () => {
         <Taxonomy taxon={params.slug} />
       </div>
     ) :
+    isRoot ? (
+      <div className="taxon-view is-root">
+        <h1>Taxonomical tree</h1>
+        <Taxonomy taxon={params.slug} />
+        <p>
+          Use the buttons on the left-hand side of the names in the
+          tree to expand or collapse subordinate taxa.
+        </p>
+        <p>
+          Click on a name in the tree to select it and to show images, 
+          descriptions and other resources for that taxon.
+        </p>
+      </div>
+    ) :
     isMissing ? (
       <div className="taxon-view is-missing">
         <h1>Taxon not found</h1>
+        <Taxonomy taxon={params.slug} />
         <p>
           Unfortunately, the taxon you requested does
           not seem to currently be in our database.
@@ -52,7 +71,6 @@ const TaxonView = () => {
           either using the taxonomy tree on this page or by using
           the search field in the top navigation.
         </p>
-        <Taxonomy taxon={params.slug} />
       </div>
     ) : (
       <div className="taxon-view">
