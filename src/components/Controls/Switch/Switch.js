@@ -22,6 +22,7 @@ const Switch = ({ checked, labelText, theme, ...props }) => (
     <label className="switch-label">
       <input
         type="checkbox"
+        role="switch"
         className="switch-input"
         defaultChecked={checked}
         { ...props }

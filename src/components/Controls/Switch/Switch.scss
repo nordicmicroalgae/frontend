@@ -1,8 +1,8 @@
 @import "colors";
 
 
-$switch-track-height: 26px;
-$switch-track-width: 50px;
+$switch-track-height: 1.625rem;
+$switch-track-width: 3.125rem;
 $switch-label-color: $gray-5;
 $switch-track-color-off: $gray-4;
 $switch-track-color-on-dark: $ocean-blue;
@@ -29,6 +29,9 @@ $switch-track-color-on-light: $orange-cup-coral;
     padding: 0;
     width: $switch-track-width;
     height: $switch-track-height;
+    appearance: none;
+    background: none;
+    border: none;
   }
 
   .switch-track {
@@ -46,11 +49,11 @@ $switch-track-color-on-light: $orange-cup-coral;
     &::before {
       content: ' ';
       position: absolute;
-      left: 1px;
-      top: 1px;
-      bottom: 1px;
-      width: $switch-track-height - 2;
-      height: $switch-track-height - 2;
+      left: .0625rem;
+      top: .0625rem;
+      bottom: .0625rem;
+      width: calc($switch-track-height - .125rem);
+      height: calc($switch-track-height - .125rem);
       background: $white;
       border-radius: 50%;
     }
@@ -60,7 +63,7 @@ $switch-track-color-on-light: $orange-cup-coral;
       background: $switch-track-color-on-dark;
       &::before {
         left: auto;
-        right: 1px;
+        right: .0625rem;
       }
     }
 
