@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Types from '../types';
@@ -24,9 +24,16 @@ const defaultProps = {
   onSelect(_taxon) {},
 };
 
-const TreeContainer = ({ initialPath, initialSelected, getTaxonKey, ...props }) => {
+const TreeContainer = ({
+  initialPath,
+  initialSelected,
+  getTaxonKey,
+  ...props
+}) => {
 
   const [ path, setPath ] = useState(initialPath);
+
+  useEffect(() => setPath(initialPath), [initialPath]);
 
   const handleClickExpand = taxon => {
     const taxonKey = getTaxonKey(taxon);
