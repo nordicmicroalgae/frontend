@@ -27,9 +27,19 @@ const defaultProps = {
   itemHeight: 120
 };
 
-const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
+const TaxonList = ({
+  data,
+  groupBy,
+  itemHeight,
+  getItemLinkProps,
+  Link,
+  Thumbnail,
+}) => {
 
-  const list = useMemo(() => compileList(data, groupBy), [ data, groupBy ]);
+  const list = useMemo(() =>
+    compileList(data, groupBy),
+    [ data, groupBy ]
+  );
 
   const refs = useRef({});
 
@@ -47,8 +57,15 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
         <nav className="taxon-list-navigation">
           <ul>
             {virtualList.map(({ group }) => (
-              <li className="taxon-list-navigation-item" key={getKey('taxon-list-navigation', group)}>
-                <button type="button" value={group} onClick={scrollIntoView}>
+              <li
+                className="taxon-list-navigation-item"
+                key={getKey('taxon-list-navigation', group)}
+              >
+                <button 
+                  type="button"
+                  value={group}
+                  onClick={scrollIntoView}
+                >
                   {group}
                 </button>
               </li>
@@ -57,7 +74,11 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
         </nav>
       )}
       {virtualList.map(({ group, items, virtual }) => (
-        <div className="taxon-list-group" ref={el => refs.current[group] = el} key={getKey('taxon-list-group', group)}>
+        <div
+          className="taxon-list-group"
+          ref={el => refs.current[group] = el}
+          key={getKey('taxon-list-group', group)}
+        >
           {groupBy && (
             <h2 className="taxon-list-group-title">
               {group}
@@ -79,6 +100,7 @@ const TaxonList = ({ data, groupBy, itemHeight, getItemLinkProps, Link }) => {
                 virtual={virtual}
                 getItemLinkProps={getItemLinkProps}
                 Link={Link}
+                Thumbnail={Thumbnail}
               />
             ))}
           </ul>
