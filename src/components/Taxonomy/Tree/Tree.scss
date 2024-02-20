@@ -42,6 +42,7 @@
     border-right: .0625rem solid $gray-1;
 
     .scientific-name {
+      padding: 0 .125rem;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -66,11 +67,13 @@
     height: 3rem;
     background: none;
     border: none;
+    cursor: pointer;
 
     [class^="icon"] {
       background-color: $white;
-      border: .0625rem solid $gray-3;
+      border: .0625rem solid $gray-4;
       border-radius: 50%;
+      color: $gray-4;
     }
   }
 
