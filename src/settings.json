@@ -106,6 +106,10 @@
         "path": "/checklists/"
       },
       {
+        "name": "IFCB",
+        "path": "/ifcb/"
+      },
+      {
         "name": "Tools",
         "path": "/tools/"
       },
