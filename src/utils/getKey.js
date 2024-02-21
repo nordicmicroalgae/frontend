@@ -3,7 +3,7 @@ export default function getKey(...args) {
     value = value.toString();
     value = value.toLowerCase();
     value = value.replace(/[^a-z0-9\-]/g, '');
-    value = value.substring(0, 32);
+    value = value.substring(0, 64);
     return value;
   });
 
