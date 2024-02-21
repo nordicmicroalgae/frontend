@@ -1,5 +1,6 @@
 const path = require('path');
 const process = require('process');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function getenv(name, defaultValue) {
@@ -26,6 +27,16 @@ module.exports = {
     }
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        path.resolve(__dirname, 'src', 'favicon.ico'),
+        path.resolve(__dirname, 'src', 'icon.svg'),
+        path.resolve(__dirname, 'src', 'apple-touch-icon.png'),
+        path.resolve(__dirname, 'src', 'icon-192.png'),
+        path.resolve(__dirname, 'src', 'icon-512.png'),
+        path.resolve(__dirname, 'src', 'manifest.webmanifest'),
+      ],
+    }),
     new HtmlWebpackPlugin({
       title: 'nµa frontend',
       template: path.resolve(__dirname, 'src', 'index.html'),
