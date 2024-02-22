@@ -4,9 +4,11 @@
 
 
 .latest-illustrations {
+  @include container();
   margin-bottom: 2rem;
 
   h2 {
+    margin-bottom: 2.5rem;
     font-size: 1rem;
     text-transform: uppercase;
     text-align: center;
@@ -14,9 +16,8 @@
     color: $gray-3;
   }
 
-  .mediaset-view {
-    margin: 2rem auto;
-    display: flex;
-    justify-content: center;
+  .media-grid {
+    justify-content: space-around;
   }
+
 }

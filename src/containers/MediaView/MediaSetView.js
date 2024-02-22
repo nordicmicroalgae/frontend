@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useMediaQuery } from './media-context';
 import { getAttributeList, getFieldKeys } from './field-utils';
-import Attributes from 'Components/Attributes';
-import Frame from 'Components/Media/Frame';
-import Picture from 'Components/Media/Picture';
-import getKey from 'Utilities/getKey';
+import MediaGrid from 'Components/Media/Grid';
 
 import './MediaSetView.scss';
 
@@ -16,6 +13,11 @@ const propTypes = {
   fieldList: PropTypes.arrayOf(
     PropTypes.oneOf(getFieldKeys()),
   ),
+  itemSize: PropTypes.arrayOf(
+    PropTypes.number
+  ),
+  itemSpacing: PropTypes.number,
+  GridItemWrapper: PropTypes.node,
 };
 
 const defaultProps = {
@@ -28,38 +30,45 @@ const defaultProps = {
 };
 
 
-const MediaSetView = ({ fieldList }) => {
+const MediaSetView = ({
+  fieldList,
+  itemSize,
+  itemSpacing,
+  GridItemWrapper,
+}) => {
   const { mediaset } = useMediaQuery();
 
   return (
-    <div className="mediaset-view">
-      {mediaset.map(media => (
+    <MediaGrid
+      virtual={mediaset.length > 500}
+      size={itemSize}
+      spacing={itemSpacing}
+      data={mediaset.map(
+        media => ({
+          key: media.slug,
+          previewUrl: media.renditions.p.url,
+          thumbnailUrl: media.renditions.s.url,
+          attributes: getAttributeList(
+            {...media, ...media.attributes},
+            fieldList
+          )
+        })
+      )}
+      ItemWrapper={({data, children}) => (
         <Link
-          to={`?media=${media.slug}`}
+          to={`?media=${data.key}`}
           replace={true}
-          className="media-thumbnail"
-          key={getKey('media', media.slug)}
         >
-          <Frame>
-            <Picture
-              src={media.renditions.s.url}
-              backgroundColor="transparent"
-              backgroundImage={media.renditions.p.url}
-              width={160}
-            >
-              {Array.isArray(fieldList) && fieldList.length > 0 && (
-                <Attributes
-                  list={getAttributeList(
-                    {...media, ...media.attributes},
-                    fieldList
-                  )}
-                />
-              )}
-            </Picture>
-          </Frame>
+          {GridItemWrapper ? (
+            <GridItemWrapper>
+              {children}
+            </GridItemWrapper>
+          ) : (
+            children
+          )}
         </Link>
-      ))}
-    </div>
+      )}
+    />
   )
 };
 

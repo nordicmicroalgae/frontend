@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 
 import MediaView, { useMediaQuery } from 'Containers/MediaView';
+import Frame from 'Components/Media/Frame';
 
 
 const Gallery = ({ selectors }) => {
@@ -20,7 +21,7 @@ const Gallery = ({ selectors }) => {
           {query.isSuccess && selectors.description(query)}
         </p>
       )}
-      <MediaView.Thumbnails />
+      <MediaView.Thumbnails GridItemWrapper={Frame} />
       <MediaView.DetailsDialog />
     </div>
   );

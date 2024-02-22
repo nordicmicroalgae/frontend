@@ -91,7 +91,11 @@ const TaxonView = () => {
         <section className="taxon-view-media">
           <MediaView query={{taxon: taxon.slug}}>
             <MediaView.Details />
-            <MediaView.Thumbnails fieldList={[]} />
+            <MediaView.Thumbnails
+              fieldList={[]}
+              itemSize={[120, 120 / (4 / 3)] /* aspect ratio */}
+              itemSpacing={8}
+            />
           </MediaView>
         </section>
         <section className="taxon-view-synonyms">
