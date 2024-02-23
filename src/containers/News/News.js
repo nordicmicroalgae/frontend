@@ -44,7 +44,7 @@ const News = ({ query }) => {
 
 
 const NewsArticle = ({ slug }) => {
-  const { isFetching, currentData } = (
+  const { isFetching, isSuccess, currentData } = (
     useGetArticleByIdQuery(slug)
   );
 
@@ -55,7 +55,8 @@ const NewsArticle = ({ slug }) => {
           <Placeholder repeat={5} />
         </p>
       </Article>
-    ) : (
+    ) :
+    isSuccess ? (
       <Article
         title={currentData.title}
         excerpt={currentData.content}
@@ -68,6 +69,16 @@ const NewsArticle = ({ slug }) => {
             </Link>
           </h2>
         )}
+      />
+    ) : (
+      <Article
+        Heading="h2"
+        title="Failed to load article"
+        body={
+          `Unfortunately the article _${slug}_
+           could not be loaded at this time.
+           Please try again later.`
+        }
       />
     )
   );
