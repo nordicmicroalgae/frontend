@@ -67,6 +67,9 @@ body.has-overlay {
         &:focus {
           outline: none;
         }
+        &::placeholder {
+          color: $gray-1;
+        }
       }
 
       #search-clear {
