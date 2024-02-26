@@ -116,8 +116,13 @@ const QuickView = ({ filters, groups, history, location, match }) => {
     });
 
     if (ev.target.checked) {
-      // TODO: Handle boolean values properly
-      nextQuery[ev.target.name] = ev.target.value.toLowerCase() === 'true';
+      const field = ev.target.name;
+      const value = ev.target.value;
+      nextQuery[field] = (
+        ['true', 'false'].includes(value.toLowerCase())
+          ? value.toLowerCase() === 'true'
+          : value
+      );
     }
 
     history.replace({
