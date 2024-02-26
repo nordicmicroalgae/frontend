@@ -103,6 +103,28 @@ const TaxonView = () => {
         </section>
         <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
+            <Facts.ExternalLinks
+              collection="harmful algae blooms"
+              titleText="Harmfulness"
+              Label={({data}) => (
+                `${data.provider} HAB`
+              )}
+            />
+          </Facts>
+        </section>
+        <section className="taxon-view-facts">
+          <Facts taxon={taxon.slug}>
+            <Facts.ExternalLinks
+              collection="culture collection"
+              titleText="Culture collections"
+              Label={({data}) => (
+                `${data.provider} (strain ${data.externalId})`
+              )}
+            />
+          </Facts>
+        </section>
+        <section className="taxon-view-facts">
+          <Facts taxon={taxon.slug}>
             <Facts.ExternalLinks />
           </Facts>
         </section>

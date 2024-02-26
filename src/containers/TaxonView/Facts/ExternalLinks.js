@@ -9,21 +9,29 @@ import Placeholder from 'Components/Placeholder';
 import './ExternalLinks.scss';
 
 
-const ExternalLinks = () => {
+const defaultProps = {
+  collection: 'external links',
+  titleText: 'External Links',
+  Label: ({data}) => data.provider,
+};
+
+
+const ExternalLinks = ({ collection, titleText, Label }) => {
   const { query } = useFactsQuery();
 
   const { isFetching, currentData } = query;
 
   const externalLinksData = (
-    selectByCollection(currentData, 'external links')
+    selectByCollection(currentData, collection) ?? []
   );
 
   const isMissing = (
-    isFetching === false && externalLinksData == null
+    isFetching === false &&
+    externalLinksData.length == 0
   );
 
   const externalLinks = (
-    externalLinksData ?? []
+    externalLinksData
   ).reduce(
     (links, {provider, attributes}) => [
       ...links, 
@@ -55,24 +63,24 @@ const ExternalLinks = () => {
     ) :
     isMissing ? (
       <div className="facts-external-links is-missing">
-        <h2>External Links</h2>
+        <h2>{titleText}</h2>
         <p>No data available for this taxon.</p>
       </div>
     ) : (
       <div className="facts-external-links">
-        <h2>External Links</h2>
+        <h2>{titleText}</h2>
         <ul className="external-link-list">
           {externalLinks.map(
-            ({provider, externalId, externalUrl}) => (
+            data => (
               <li
                 className="external-link-item"
                 key={getKey(
-                  'external-link', provider, externalId
+                  'external-link', data.provider, data.externalId
                 )}
               >
-                <a href={externalUrl}>
+                <a href={data.externalUrl}>
                   <ExternalLinkIcon />
-                  {provider}
+                  <Label data={data} />
                 </a>
               </li>
             )
@@ -82,6 +90,8 @@ const ExternalLinks = () => {
     )
   );
 };
+
+ExternalLinks.defaultProps = defaultProps;
 
 
 export default ExternalLinks;
