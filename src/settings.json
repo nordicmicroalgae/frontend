@@ -170,6 +170,16 @@
               "label": "HELCOM-PEG species",
               "name": "helcom-peg-only",
               "value": true
+            },
+            {
+              "label": "HAB species",
+              "name": "harmful-only",
+              "value": true
+            },
+            {
+              "label": "NORCCA culture collection",
+              "name": "culture-collection",
+              "value": "NORCCA"
             }
           ]
         },
