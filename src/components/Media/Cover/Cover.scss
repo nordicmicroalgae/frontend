@@ -1,0 +1,35 @@
+.media-cover {
+  display: flex;
+  flex-direction: column-reverse;
+  width: calc(.0625rem * var(--cover-size));
+
+  .media-cover-title {
+    text-align: center;
+    font-size: .875rem;
+  }
+
+  .media-cover-thumbnails {
+    margin-bottom: .5rem;
+    width: calc(.0625rem * var(--cover-size));
+    height: calc(.0625rem * var(--cover-size));
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .media-cover-preview,
+    .media-cover-thumbnail {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .media-cover-preview {
+      flex: 1 1 calc(.0625rem * var(--cover-size) / 2);
+    }
+
+    .media-cover-thumbnail {
+      height: 100%;
+    }
+
+  }
+}

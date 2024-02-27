@@ -9,6 +9,7 @@ import Home from 'Containers/Home';
 import Page from 'Containers/Page';
 import { NewsArchive } from 'Containers/News';
 import GalleryView from 'Containers/GalleryView';
+import GalleryCovers from 'Containers/GalleryView/GalleryCovers';
 import HallOfFame from 'Containers/HallOfFame';
 import QuickView from 'Containers/QuickView';
 import TaxonView from 'Containers/TaxonView';
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" component={Home} exact />
           <Route path="/latest-images/" component={GalleryView} exact />
           <Route path="/gallery/:scope?/:value/" component={GalleryView} exact />
+          <Route path="/gallery/" component={GalleryCovers} exact />
           <Route path="/hall-of-fame/" component={HallOfFame} />
           <Route path="/quick-view/:group?/" component={QuickView} />
           <Route path="/taxon/:slug?/" component={TaxonView} />

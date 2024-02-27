@@ -13,7 +13,33 @@ export const extendedApiSlice = baseApi.injectEndpoints({
       transformResponse: responseData =>
         transformResponseKeys(responseData).artists
     }),
+    getGalleries: builder.query({
+      queryFn(_args, _queryApi, _extraOptions, baseQuery) {
+        const galleryListQuery = () =>
+          baseQuery({url: 'media/tags/galleries'});
+
+        const galleryInfoQuery = gallery =>
+          baseQuery({
+            url: 'media',
+            params: {
+              gallery,
+              limit: 4,
+              fields: ['slug', 'renditions'],
+            },
+          }).then(({ data: { media } }) => (
+            { gallery, media }
+          ));
+
+        return galleryListQuery().then(
+          ({ data: { tags } }) => Promise.all(
+            tags.map(tag => galleryInfoQuery(tag.name))
+          ).then(
+            data => ({ data })
+          )
+        );
+      },
+    }),
   }),
 });
 
-export const { useGetArtistsQuery, useGetMediaQuery } = extendedApiSlice;
+export const { useGetArtistsQuery, useGetMediaQuery, useGetGalleriesQuery } = extendedApiSlice;
