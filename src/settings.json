@@ -65,7 +65,17 @@
       },
       {
         "name": "Tools",
-        "path": "/tools/"
+        "path": "/tools/",
+        "subnavigation": [
+          {
+            "name": "Biovolume list",
+            "path": "/biovolume-list/"
+          },
+          {
+            "name": "Plankton toolbox",
+            "path": "/plankton-toolbox/"
+          }
+        ]
       },
       {
         "name": "Contact",
@@ -73,7 +83,21 @@
       },
       {
         "name": "About",
-        "path": "/about/"
+        "path": "/about/",
+        "subnavigation": [
+          {
+            "name": "History",
+            "path": "/history/"
+          },
+          {
+            "name": "Advisory committees",
+            "path": "/advisory-committees/"
+          },
+          {
+            "name": "Main objectives",
+            "path": "/main-objectives/"
+          }
+        ]
       },
       {
         "name": "Help",
