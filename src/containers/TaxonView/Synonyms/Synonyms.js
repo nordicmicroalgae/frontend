@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Authority from 'Components/Authority';
 import ScientificName from 'Components/ScientificName';
 import Placeholder from 'Components/Placeholder';
-import { useGetSynonymsQuery } from 'Slices/synonyms';
+import { useGetAllSynonymsQuery, selectByTaxon } from 'Slices/synonyms';
 import getKey from 'Utilities/getKey';
 
 
@@ -13,8 +14,12 @@ const propTypes = {
 };
 
 const Synonyms = ({ taxon }) => {
-  const { isFetching, isSuccess, currentData } = (
-    useGetSynonymsQuery({taxon})
+  const { isFetching, isSuccess } = (
+    useGetAllSynonymsQuery()
+  );
+
+  const synonyms = useSelector(
+    state => selectByTaxon(state, taxon)
   );
 
   return (
@@ -36,9 +41,9 @@ const Synonyms = ({ taxon }) => {
     isSuccess ? (
       <div className="synonyms">
         <h2>Synonyms</h2>
-        {(Array.isArray(currentData) && currentData.length > 0) ? (
+        {(Array.isArray(synonyms) && synonyms.length > 0) ? (
           <ul className="synonym-list">
-            {currentData.map(({authority, synonymName}) => (
+            {synonyms.map(({authority, synonymName}) => (
               <li
                 className="synonym-item"
                 key={getKey('synonym', synonymName)}

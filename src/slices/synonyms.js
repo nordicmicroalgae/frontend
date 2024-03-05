@@ -1,15 +1,36 @@
+import { createSelector } from '@reduxjs/toolkit';
+
 import { baseApi, transformResponseKeys } from 'Services/nordicmicroalgae';
 
 
 export const extendedApiSlice = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getSynonyms: builder.query({
-      query: params => ({url: 'synonyms', params}),
+    getAllSynonyms: builder.query({
+      query: () => 'synonyms',
       transformResponse: responseData =>
         transformResponseKeys(responseData).synonyms
+      ,
     }),
   }),
 });
 
+const selectSynonymsResult =
+  extendedApiSlice.endpoints.getAllSynonyms.select();
 
-export const { useGetSynonymsQuery } = extendedApiSlice;
+const emptySynonyms = [];
+
+export const selectAllSynonyms = createSelector(
+  selectSynonymsResult,
+  synonymsResult => synonymsResult.data ?? emptySynonyms
+);
+
+export const selectByTaxon = createSelector(
+  selectAllSynonyms,
+  (_state, taxon) => taxon,
+  (synonyms, taxon) => synonyms.filter(
+    synonym => synonym.relatedTaxon.slug == taxon
+  ),
+);
+
+export const { useGetAllSynonymsQuery } = extendedApiSlice;
+
