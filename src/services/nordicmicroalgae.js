@@ -30,4 +30,5 @@ export const baseApi = createApi({
   reducerPath: 'nua',
   baseQuery: fetchBaseQuery({baseUrl: '/api/'}),
   endpoints: builder => ({}),
+  keepUnusedDataFor: 60 * 30,
 });

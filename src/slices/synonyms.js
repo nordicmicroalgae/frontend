@@ -34,3 +34,5 @@ export const selectByTaxon = createSelector(
 
 export const { useGetAllSynonymsQuery } = extendedApiSlice;
 
+export const usePrefetchSynonyms = () =>
+  extendedApiSlice.usePrefetch('getAllSynonyms');

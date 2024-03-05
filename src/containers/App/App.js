@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from 'Store';
+import Prefetch from './Prefetch';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import Home from 'Containers/Home';
@@ -19,6 +20,7 @@ import settings from '../../settings.json';
 const App = () => (
   <Router>
     <Provider store={store}>
+      <Prefetch />
       <Navigation items={settings.ui.navigation} />
       <main className="main" role="main">
         <Switch>

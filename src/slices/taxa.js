@@ -45,3 +45,6 @@ export const selectTaxaData = createSelector(
 export const { selectAll, selectById } = taxaAdapter.getSelectors(
   state => selectTaxaData(state) ?? initialState
 );
+
+export const usePrefetchTaxa = () =>
+  extendedApiSlice.usePrefetch('getAllTaxa');
