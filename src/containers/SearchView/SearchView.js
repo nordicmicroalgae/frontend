@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { matchSorter } from 'match-sorter';
 
+import Authority from 'Components/Authority';
 import { SearchIcon } from 'Components/Icons';
 import ScientificName from 'Components/ScientificName';
+import Synonym from 'Components/Synonym';
 import Placeholder from 'Components/Placeholder';
-import { useGetAllTaxaQuery } from 'Slices/taxa';
 import getKey from 'Utilities/getKey';
+import useCombinedNamesQuery from './useCombinedNamesQuery';
 
 
 const propTypes = {
@@ -23,7 +25,7 @@ const defaultProps = {
 const SearchView = ({ onClose, limit }) => {
   const history = useHistory();
 
-  const query = useGetAllTaxaQuery();
+  const query = useCombinedNamesQuery();
 
   const inputRef = useRef();
 
@@ -31,19 +33,22 @@ const SearchView = ({ onClose, limit }) => {
 
   const [ selectedIndex, setSelectedIndex ] = useState(0);
 
-  const matches = useMemo(() =>
-    matchSorter(
-      Object.values(
-        query.data ? query.data.entities : {}
-      ),
-      inputValue,
-      {
-        keys: ['scientificName'],
-        threshold: matchSorter.rankings.CONTAINS,
-      }
-    ).slice(0, limit),
-    [inputValue, query]
-  );
+  const matches = useMemo(() => {
+    const terms = inputValue.split(' ');
+
+    return terms.reduceRight(
+      (results, term) =>
+        matchSorter(
+          results,
+          term,
+          {
+            keys: ['authority', 'scientificName'],
+            threshold: matchSorter.rankings.CONTAINS,
+          }
+        ),
+        query.data
+    ).slice(0, limit);
+  }, [inputValue, query]);
 
 
   useEffect(() => {
@@ -180,19 +185,35 @@ const SearchView = ({ onClose, limit }) => {
               ))
             )}
             {showResults && (
-              matches.map(({ scientificName, slug }, index) => (
+              matches.map((nameMatch, index) => (
                 <li
                   role="option"
-                  key={getKey('search', 'result', slug)}
+                  key={getKey('search', 'result', nameMatch.key)}
                   id={`search-result-item-${index}`}
                   onMouseOver={_ev => setSelectedIndex(index)}
                   onClick={onClose}
                   aria-selected={selectedIndex === index}
                 >
-                  <Link to={`/taxon/${slug}/`} className="search-link">
-                    <ScientificName>
-                      {scientificName}
-                    </ScientificName>
+                  <Link to={`/taxon/${nameMatch.slug}/`} className="search-link">
+                    {nameMatch.status == 'synonym' ? (
+                      <Synonym currentName={nameMatch.currentName}>
+                        {nameMatch.scientificName}
+                      </Synonym>
+                    ) : (
+                      <ScientificName>
+                        {nameMatch.scientificName}
+                      </ScientificName>
+                    )}
+                    {nameMatch.authority ? (
+                      <>
+                        {' '}
+                        <Authority>
+                          {nameMatch.authority}
+                        </Authority>
+                      </>
+                    ) : (
+                      null
+                    )}
                   </Link>
                 </li>
               ))
