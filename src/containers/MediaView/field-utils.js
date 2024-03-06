@@ -1,3 +1,5 @@
+import asArray from 'Utilities/asArray';
+
 import fieldMappings from './field-mappings';
 
 function isEmptyValue(value) {
@@ -23,4 +25,40 @@ export function getAttributeList(attributes, fieldList = getFieldKeys()) {
 
     return attributeList;
   }, []);
+}
+
+
+const reversedFieldMapping = new Map(
+  [...fieldMappings.entries()].map(
+    entry => entry.reverse()
+  )
+);
+
+export function applyFilters(attributeList, filterList) {
+  return attributeList.map(
+    ({ name, value }) => {
+
+      const field = reversedFieldMapping.get(name);
+
+      const filtersToApply =
+        filterList.filter(
+          filter => filter.appliesTo.includes(field)
+        );
+
+        if (filtersToApply.length > 0) {
+          value = filtersToApply.reduce(
+            (previousValue, filter) =>
+              asArray(previousValue).map(
+                itemValue => filter({
+                  field,
+                  value: itemValue,
+                })
+              ),
+            value
+          );
+        }
+
+      return { name, value }
+    }
+  );
 }

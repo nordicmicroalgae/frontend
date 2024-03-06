@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useMediaQuery } from './media-context';
-import { getAttributeList } from './field-utils';
+import { applyFilters, getAttributeList } from './field-utils';
+import { filters } from './FieldFilters';
 import Attributes from 'Components/Attributes';
 import Picture from 'Components/Media/Picture';
+import ScientificName from 'Components/ScientificName';
 import { ChevronDownIcon, ChevronUpIcon } from 'Components/Icons';
 
 import './MediaDetailsView.scss';
@@ -20,6 +23,8 @@ const defaultProps = {
 
 
 const MediaDetailsView = ({ expandable }) => {
+  const location = useLocation();
+
   let { mediaset, selectedMedia } = useMediaQuery();
 
   if (selectedMedia == null && mediaset.length > 0 ) {
@@ -27,6 +32,12 @@ const MediaDetailsView = ({ expandable }) => {
   }
 
   const [ isExpanded, setIsExpanded ] = useState(false);
+
+  const relatedTaxon = selectedMedia?.relatedTaxon;
+
+  const relatedTaxonPath = relatedTaxon
+    ? `/taxon/${relatedTaxon.slug}/`
+    : undefined;
 
   return (selectedMedia && (
     <div className="media-details-view">
@@ -51,10 +62,27 @@ const MediaDetailsView = ({ expandable }) => {
         <p className="media-details-caption">
           {selectedMedia.attributes.caption}
         </p>
+        {(relatedTaxon &&
+          relatedTaxonPath != location.pathname) && (
+          <p className="media-related-taxon">
+            <Link to={relatedTaxonPath}>
+              More about 
+              {' '}
+              <ScientificName>
+                {relatedTaxon.scientificName}
+              </ScientificName>
+            </Link>
+          </p>
+        )}
         <div className="media-details-additional-info">
           {(!expandable || isExpanded) && (
             <Attributes
-              list={getAttributeList(selectedMedia.attributes)}
+              list={
+                applyFilters(
+                  getAttributeList(selectedMedia.attributes),
+                  filters
+                )
+              }
             />
           )}
           {expandable && (

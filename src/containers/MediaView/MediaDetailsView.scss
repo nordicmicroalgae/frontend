@@ -16,6 +16,34 @@
       font-size: 1rem;
     }
 
+    .media-related-taxon {
+      text-align: center;
+      padding-bottom: 1.5rem;
+      border-bottom: .0625rem solid $gray-1;
+
+      a {
+        position: relative;
+        display: inline-block;
+        padding-right: 2rem;
+        font-size: 1rem;
+        text-decoration: none;
+        color: $gray-5;
+        &::after {
+          content: '';
+          position: absolute;
+          top: calc(50% - .25rem);
+          right: 0;
+          display: block;
+          margin-right: .5rem;
+          width: .625rem;
+          height: .625rem;
+          transform: rotate(45deg);
+          border-top: .125rem solid $gray-4;
+          border-right: .125rem solid $gray-4;
+        }
+      }
+    }
+
     .media-details-additional-info {
       margin: 2rem 0;
       font-size: .875rem;

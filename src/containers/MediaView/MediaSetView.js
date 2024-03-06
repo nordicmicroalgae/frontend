@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { useMediaQuery } from './media-context';
-import { getAttributeList, getFieldKeys } from './field-utils';
+import { applyFilters, getAttributeList, getFieldKeys } from './field-utils';
+import { FormattedDate } from './FieldFilters';
 import MediaGrid from 'Components/Media/Grid';
 
 import './MediaSetView.scss';
@@ -48,9 +49,12 @@ const MediaSetView = ({
           key: media.slug,
           previewUrl: media.renditions.p.url,
           thumbnailUrl: media.renditions.s.url,
-          attributes: getAttributeList(
-            {...media, ...media.attributes},
-            fieldList
+          attributes: applyFilters(
+            getAttributeList(
+              {...media, ...media.attributes},
+              fieldList
+            ),
+            [FormattedDate]
           )
         })
       )}
