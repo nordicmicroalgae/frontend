@@ -5,7 +5,7 @@ export const Queries = {
   species: {
     url: 'taxa',
     params: {
-      rank: 'species',
+      group: 'all',
     },
   },
   taxa: {
