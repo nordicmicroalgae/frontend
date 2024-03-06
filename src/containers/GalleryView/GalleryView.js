@@ -14,7 +14,9 @@ const Gallery = ({ selectors }) => {
   const { query } = useMediaQuery();
 
   const pageQuery = useGetArticleByIdQuery(
-    `galleries-${slugify(value)}`
+    value
+      ? `galleries-${slugify(value)}`
+      : 'galleries-latest-images'
   );
 
   return (
