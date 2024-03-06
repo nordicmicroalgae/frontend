@@ -28,7 +28,7 @@ const Gallery = ({ selectors }) => {
         {(query.isSuccess && pageQuery.isSuccess) && (
           <div className="gallery-description">
             <Markdown>
-              {pageQuery.currentData.content}
+              {pageQuery.currentData?.content}
             </Markdown>
           </div>
         )}
