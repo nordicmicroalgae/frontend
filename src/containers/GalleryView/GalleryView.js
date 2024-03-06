@@ -1,26 +1,38 @@
 import React from 'react';
+import Markdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 
-
+import slugify from 'Utilities/slugify';
+import { useGetArticleByIdQuery } from 'Slices/articles';
 import MediaView, { useMediaQuery } from 'Containers/MediaView';
 import Frame from 'Components/Media/Frame';
 
 
 const Gallery = ({ selectors }) => {
+  const { value } = useParams();
+
   const { query } = useMediaQuery();
+
+  const pageQuery = useGetArticleByIdQuery(
+    `galleries-${slugify(value)}`
+  );
 
   return (
     <div className="gallery">
-      {selectors.title && (
-        <h1 className="gallery-title">
-          {query.isSuccess && selectors.title(query)}
-        </h1>
-      )}
-      {selectors.description && (
-        <p className="gallery-description">
-          {query.isSuccess && selectors.description(query)}
-        </p>
-      )}
+      <div className="gallery-header">
+        {selectors.title && (
+          <h1 className="gallery-title">
+            {query.isSuccess && selectors.title(query)}
+          </h1>
+        )}
+        {(query.isSuccess && pageQuery.isSuccess) && (
+          <div className="gallery-description">
+            <Markdown>
+              {pageQuery.currentData.content}
+            </Markdown>
+          </div>
+        )}
+      </div>
       <MediaView.Thumbnails GridItemWrapper={Frame} />
       <MediaView.DetailsDialog />
     </div>

@@ -5,4 +5,9 @@
 
 .gallery {
   @include container();
+
+  .gallery-header {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
 }
