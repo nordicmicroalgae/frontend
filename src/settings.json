@@ -18,28 +18,12 @@
             "path": "/hall-of-fame/"
           },
           {
-            "name": "How to contribute",
-            "path": "/how-to-contribute/"
-          },
-          {
             "name": "Partners",
             "path": "/partners/"
           },
           {
-            "name": "NOMP",
-            "path": "/nomp/"
-          },
-          {
-            "name": "HELCOM-PEG",
-            "path": "/helcom-peg/"
-          },
-          {
             "name": "Links",
             "path": "/links/"
-          },
-          {
-            "name": "Literature",
-            "path": "/literature/"
           }
         ]
       },
@@ -54,10 +38,6 @@
       {
         "name": "Galleries",
         "path": "/gallery/"
-      },
-      {
-        "name": "Checklists",
-        "path": "/checklists/"
       },
       {
         "name": "IFCB",
@@ -101,7 +81,13 @@
       },
       {
         "name": "Help",
-        "path": "/help/"
+        "path": "/help/",
+        "subnavigation": [
+          {
+            "name": "How to contribute",
+            "path": "/how-to-contribute/"
+          }
+        ]
       }
     ],
     "quickView": {
