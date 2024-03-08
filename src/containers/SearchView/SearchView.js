@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
-import { matchSorter } from 'match-sorter';
+import { matchSorter, defaultBaseSortFn } from 'match-sorter';
 
 import Authority from 'Components/Authority';
 import { SearchIcon } from 'Components/Icons';
@@ -11,6 +11,17 @@ import Synonym from 'Components/Synonym';
 import Placeholder from 'Components/Placeholder';
 import getKey from 'Utilities/getKey';
 import useCombinedNamesQuery from './useCombinedNamesQuery';
+
+
+function baseSortFn(a, b) {
+  if (a.item.status == 'accepted' && b.item.status == 'synonym') {
+    return -1;
+  }
+  if (a.item.status == 'synonym' && b.item.status == 'accepted') {
+    return 1;
+  }
+  return defaultBaseSortFn(a, b);
+}
 
 
 const propTypes = {
@@ -36,6 +47,10 @@ const SearchView = ({ onClose, limit }) => {
   const matches = useMemo(() => {
     const terms = inputValue.split(' ');
 
+    if (terms.every(term => term == '')) {
+      return [];
+    }
+
     return terms.reduceRight(
       (results, term) =>
         matchSorter(
@@ -44,7 +59,8 @@ const SearchView = ({ onClose, limit }) => {
           {
             keys: ['authority', 'scientificName'],
             threshold: matchSorter.rankings.CONTAINS,
-          }
+            baseSort: baseSortFn,
+          },
         ),
         query.data
     ).slice(0, limit);
