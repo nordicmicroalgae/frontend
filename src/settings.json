@@ -63,21 +63,7 @@
       },
       {
         "name": "About",
-        "path": "/about/",
-        "subnavigation": [
-          {
-            "name": "History",
-            "path": "/history/"
-          },
-          {
-            "name": "Advisory committees",
-            "path": "/advisory-committees/"
-          },
-          {
-            "name": "Main objectives",
-            "path": "/main-objectives/"
-          }
-        ]
+        "path": "/about/"
       },
       {
         "name": "Help",
