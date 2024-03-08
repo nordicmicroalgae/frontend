@@ -1,3 +1,4 @@
+import reduceChildren from './reduceChildren';
 import TAXONOMY_RANKS from '../../ranks';
 
 const defaultOptions = {
@@ -6,8 +7,7 @@ const defaultOptions = {
 };
 
 export default function compileList(data, parent = null, options = {}) {
-
-  const { ranks, identifier } = {
+  const { ranks } = {
     ...defaultOptions,
     ...options
   };
@@ -25,15 +25,7 @@ export default function compileList(data, parent = null, options = {}) {
       }
     }
   } else {
-    const recurseChildrenIfNotInRanks = taxonKey => {
-      data[taxonKey].children.forEach(childTaxon => {
-        if (!ranks.includes(childTaxon.rank)) {
-          return recurseChildrenIfNotInRanks(childTaxon[identifier]);
-        }
-        list.push(childTaxon[identifier]);
-      });
-    };
-    recurseChildrenIfNotInRanks(parent);
+    list = reduceChildren(data, parent, options);
   }
 
   list.sort((a, b) => {

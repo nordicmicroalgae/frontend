@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import Tree from 'Components/Taxonomy/Tree';
 import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
+import useVaryingRanks from './useVaryingRanks';
 
 
 const propTypes = {
@@ -45,6 +46,8 @@ const Taxonomy = ({ taxon }) => {
     selectedTaxon ? getTaxonKey(selectedTaxon) : null
   );
 
+  const varyingRanks = useVaryingRanks(selectedTaxon?.rank)
+
   return (
     <>
       <button
@@ -68,6 +71,7 @@ const Taxonomy = ({ taxon }) => {
             getTaxonKey={getTaxonKey}
             initialPath={initialPath}
             selected={selectedKey}
+            ranks={varyingRanks}
             Link={Link}
             getLinkProps={({ slug }) => ({
               to: `/taxon/${slug}/`
