@@ -27,7 +27,7 @@ const Tree = ({
 
   return (
     <ul className="taxonomy-tree">
-      {taxa.sort().map(taxon => (
+      {taxa.map(taxon => (
         <TreeNode
           key={taxon}
           taxon={taxon}

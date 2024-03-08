@@ -36,5 +36,19 @@ export default function compileList(data, parent = null, options = {}) {
     recurseChildrenIfNotInRanks(parent);
   }
 
+  list.sort((a, b) => {
+    const comparedRanks = (
+      TAXONOMY_RANKS.indexOf(data[a].rank) -
+      TAXONOMY_RANKS.indexOf(data[b].rank)
+    );
+
+    if (comparedRanks == 0) {
+      return data[a].scientificName
+        .localeCompare(data[b].scientificName);
+    }
+
+    return comparedRanks;
+  });
+
   return list;
 }
