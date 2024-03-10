@@ -6,20 +6,12 @@
         "path": "/",
         "subnavigation": [
           {
-            "name": "Introduction",
-            "path": "/"
-          },
-          {
             "name": "Latest images",
             "path": "/latest-images/"
           },
           {
             "name": "Hall of fame",
             "path": "/hall-of-fame/"
-          },
-          {
-            "name": "Partners",
-            "path": "/partners/"
           },
           {
             "name": "Links",
@@ -40,6 +32,10 @@
         "path": "/gallery/"
       },
       {
+        "name": "Collaborations",
+        "path": "/collaborations/"
+      },
+      {
         "name": "IFCB",
         "path": "/ifcb/"
       },
@@ -58,12 +54,13 @@
         ]
       },
       {
-        "name": "Contact",
-        "path": "/contact/"
-      },
-      {
         "name": "About",
         "path": "/about/"
+      },
+
+      {
+        "name": "Contact",
+        "path": "/contact/"
       },
       {
         "name": "Help",
