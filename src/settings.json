@@ -117,8 +117,8 @@
               "value": true
             },
             {
-              "label": "HELCOM-PEG species",
-              "name": "helcom-peg-only",
+              "label": "HELCOM EG Phyto species",
+              "name": "helcom-eg-phyto-only",
               "value": true
             },
             {
