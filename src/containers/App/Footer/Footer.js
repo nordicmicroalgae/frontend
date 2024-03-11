@@ -30,6 +30,11 @@ const Footer = () => (
             Terms of use
           </NavLink>
         </li>
+        <li>
+          <NavLink to={'/for-developers/'}>
+            For developers
+          </NavLink>
+        </li>
       </ul>
     </nav>
   </footer>

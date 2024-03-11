@@ -8,10 +8,6 @@
           {
             "name": "Hall of fame",
             "path": "/hall-of-fame/"
-          },
-          {
-            "name": "Links",
-            "path": "/links/"
           }
         ]
       },
@@ -28,10 +24,6 @@
         "path": "/gallery/"
       },
       {
-        "name": "Collaborations",
-        "path": "/collaborations/"
-      },
-      {
         "name": "IFCB",
         "path": "/ifcb/"
       },
@@ -40,8 +32,8 @@
         "path": "/tools/",
         "subnavigation": [
           {
-            "name": "Biovolume list",
-            "path": "/biovolume-list/"
+            "name": "Checklists and biovolumes",
+            "path": "/checklists-and-biovolumes/"
           },
           {
             "name": "Plankton toolbox",
@@ -50,23 +42,20 @@
         ]
       },
       {
+        "name": "Collaborations",
+        "path": "/collaborations/"
+      },
+      {
+        "name": "How to contribute",
+        "path": "/how-to-contribute/"
+      },
+      {
         "name": "About",
         "path": "/about/"
       },
-
       {
-        "name": "Contact",
-        "path": "/contact/"
-      },
-      {
-        "name": "Help",
-        "path": "/help/",
-        "subnavigation": [
-          {
-            "name": "How to contribute",
-            "path": "/how-to-contribute/"
-          }
-        ]
+        "name": "FAQ",
+        "path": "/faq/"
       }
     ],
     "quickView": {
