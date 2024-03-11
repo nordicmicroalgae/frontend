@@ -6,10 +6,6 @@
         "path": "/",
         "subnavigation": [
           {
-            "name": "Latest images",
-            "path": "/latest-images/"
-          },
-          {
             "name": "Hall of fame",
             "path": "/hall-of-fame/"
           },

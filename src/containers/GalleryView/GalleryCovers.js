@@ -53,11 +53,11 @@ const GalleryCovers = ({ coverSize }) => {
           {currentData.map(({ gallery, media }) => (
             <li
               className="gallery-list-item"
-              key={getKey('gallery-item', gallery)}
+              key={getKey('gallery-item', gallery ?? 'all')}
             >
-              <Link to={`/gallery/${gallery}/`}>
+              <Link to={`/gallery/${gallery ?? 'all'}/`}>
                 <Cover
-                  titleText={gallery}
+                  titleText={gallery ?? 'All images'}
                   thumbnails={media.map(
                     ({ slug, renditions }) => ({
                       key: slug,

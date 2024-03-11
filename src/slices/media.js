@@ -32,7 +32,9 @@ export const extendedApiSlice = baseApi.injectEndpoints({
 
         return galleryListQuery().then(
           ({ data: { tags } }) => Promise.all(
-            tags.map(tag => galleryInfoQuery(tag.name))
+            [{name: undefined}, ...tags].map(
+              tag => galleryInfoQuery(tag.name)
+            )
           ).then(
             data => ({ data })
           )

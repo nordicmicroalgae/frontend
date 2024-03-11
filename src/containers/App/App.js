@@ -25,7 +25,7 @@ const App = () => (
       <main className="main" role="main">
         <Switch>
           <Route path="/" component={Home} exact />
-          <Route path="/latest-images/" component={GalleryView} exact />
+          <Route path="/gallery/all/" component={GalleryView} exact />
           <Route path="/gallery/:scope?/:value/" component={GalleryView} exact />
           <Route path="/gallery/" component={GalleryCovers} exact />
           <Route path="/hall-of-fame/" component={HallOfFame} />
