@@ -21,6 +21,16 @@
     grid-auto-flow: dense;
   }
 
+  a {
+    color: inherit;
+    border-radius: 1rem;
+    text-decoration: none;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, .03);
+    }
+  }
+
   dt, dd {
     padding: 1rem;
   }
