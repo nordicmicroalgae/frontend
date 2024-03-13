@@ -11,6 +11,11 @@ const Footer = () => (
     <nav role="navigation">
       <ul>
         <li>
+          <NavLink to={'/terms-of-use/'}>
+            Terms of use
+          </NavLink>
+        </li>
+        <li>
           <NavLink to={'/copyright-notice/'}>
             Copyright notice
           </NavLink>
@@ -26,8 +31,8 @@ const Footer = () => (
           </NavLink>
         </li>
         <li>
-          <NavLink to={'/terms-of-use/'}>
-            Terms of use
+          <NavLink to={'/contact/'}>
+            Contact
           </NavLink>
         </li>
         <li>
