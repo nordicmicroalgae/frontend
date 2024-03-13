@@ -16,11 +16,6 @@ const Footer = () => (
           </NavLink>
         </li>
         <li>
-          <NavLink to={'/copyright-notice/'}>
-            Copyright notice
-          </NavLink>
-        </li>
-        <li>
           <NavLink to={'/disclaimer/'}>
             Disclaimer
           </NavLink>
