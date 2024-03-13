@@ -3,13 +3,7 @@
     "navigation": [
       {
         "name": "Home",
-        "path": "/",
-        "subnavigation": [
-          {
-            "name": "Hall of fame",
-            "path": "/hall-of-fame/"
-          }
-        ]
+        "path": "/"
       },
       {
         "name": "Quick View",
