@@ -16,7 +16,7 @@ const Fields = new Map([
 ]);
 
 const Links = new Map([
-  ['species', '/checklists-and-biovolumes/'],
+  ['species', '/quick-view/'],
   ['taxa', '/taxon/'],
   ['images', '/gallery/'],
   ['contributors', '/hall-of-fame/'],
