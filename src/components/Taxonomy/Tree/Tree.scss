@@ -1,5 +1,6 @@
 @import "colors";
 @import "variables";
+@import "mixins";
 
 .taxonomy-tree {
   margin: 0;
@@ -11,10 +12,6 @@
   position: relative;
   margin: 0;
   padding: 0;
-
-  .taxonomy-tree-node-rank {
-    display: none;
-  }
 
   .taxonomy-tree-node-controls {
     box-sizing: border-box;
@@ -36,6 +33,8 @@
     padding-right: .5rem;
     width: calc(100% - 3rem);
     height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
     text-decoration: none;
     color: inherit;
     background-color: $white;
@@ -79,8 +78,13 @@
 
 }
 
+@media(max-width: calc(map-get($breakpoints, "xl") + 5rem)) {
+  .taxonomy-tree-node-rank {
+    @include visually-hidden();
+  }
+}
 
-@media(min-width: map-get($breakpoints, "l")) {
+@media(min-width: map-get($breakpoints, "xl")) {
   .taxonomy-tree {
     font-size: .875rem;
     margin-left: 7rem;
@@ -88,19 +92,18 @@
     border-left: .0625rem dotted $gray-4;
 
     .taxonomy-tree {
-      margin-left: .75rem;
+      margin-left: .35rem;
     }
   }
 
   .taxonomy-tree-node {
     .taxonomy-tree-node-rank {
-      display: block;
       position: absolute;
-      top: 10px;
+      top: .5625rem;
       left: calc(
-        (var(--tree-node-level) * -1.5625rem) + -5.5rem
+        (var(--tree-node-level) * -1.1625rem) + -5.5rem
       );
-      font-size: 10px;
+      font-size: .625rem;
       font-weight: bold;
       text-transform: uppercase;
       width: 5rem;
@@ -115,13 +118,14 @@
       border-bottom: none;
     }
     .taxonomy-tree-node-link {
-      margin-left: calc(.75rem / 2);
+      margin-left: calc(.35rem / 2);
       padding-left: .25rem;
       padding-right: .25rem;
       width: auto;
       height: auto;
       background: none;
       border-right: none;
+      border-radius: .25rem;
     }
     .taxonomy-tree-node-toggle {
       position: relative;
@@ -130,8 +134,8 @@
       height: 1.5rem;
 
       [class^="icon"] {
-        width: 18px;
-        height: 18px;
+        width: 1.125rem;
+        height: 1.125rem;
       }
 
       .spinner {
