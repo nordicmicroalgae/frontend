@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FactsQueryProvider } from './facts-context';
 import Biovolumes from './Biovolumes';
 import ExternalLinks from './ExternalLinks';
+import Occurrences from './Occurrences';
 
 
 const propTypes = {
@@ -22,6 +23,7 @@ Facts.propTypes = propTypes;
 
 Facts.Biovolumes = Biovolumes;
 Facts.ExternalLinks = ExternalLinks;
+Facts.Occurrences = Occurrences;
 
 
 export default Facts;

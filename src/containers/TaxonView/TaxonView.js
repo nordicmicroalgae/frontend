@@ -98,6 +98,15 @@ const TaxonView = () => {
             />
           </MediaView>
         </section>
+        {['species', 'variety', 'form', 'forma']
+          .includes(taxon.rank.toLowerCase()) && (
+            <section className="taxon-view-facts">
+              <Facts taxon={taxon.slug}>
+                <Facts.Occurrences />
+              </Facts>
+            </section>
+          )
+        }
         <section className="taxon-view-synonyms">
           <Synonyms taxon={taxon.slug} />
         </section>
