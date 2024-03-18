@@ -4,7 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import SearchView from 'Containers/SearchView';
 import Logo from 'Components/Logo';
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from 'Components/Icons';
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon, UserIcon } from 'Components/Icons';
 import getKey from 'Utilities/getKey';
 
 const propTypes = {
@@ -51,6 +51,14 @@ const Navigation = ({ items }) => {
   return (
     <div className="navigation-container">
       <nav className="navigation" role="navigation">
+        <a
+          id="navigation-admin"
+          aria-label="Log in"
+          title="Manage your contributions"
+          href="/admin/"
+        >
+          <UserIcon />
+        </a>
         <button
           type="button"
           id="search-button"

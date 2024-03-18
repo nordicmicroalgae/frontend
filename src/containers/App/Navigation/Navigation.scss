@@ -173,7 +173,8 @@ body {
 }
 
 .navigation {
-  #search-button {
+  #search-button,
+  #navigation-admin {
     position: absolute;
     top: 0;
     right: 0;
@@ -184,6 +185,9 @@ body {
     background: transparent;
     border: none;
     cursor: pointer;
+  }
+  #search-button {
+    right: $navigation-toggle-box;
   }
 }
 
