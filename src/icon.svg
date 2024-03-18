@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <path d="M5.75,1v30h5.62v-7.5l4.69,1.88v-5.62l-4.69-1.88V1h-5.62Z" fill="#505050" stroke-width="0"/>
-  <path d="M20.75,1h5.63v22.5l-10.31,1.88v-5.62l4.69-1.88" fill="#7c7c7c" stroke-width="0"/>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .l { fill: #bababa }
+      .r { fill: #e6e6e6 }
+    }
+  </style>
+  <path class="l" d="M5.75,1v30h5.62v-7.5l4.69,1.88v-5.62l-4.69-1.88V1h-5.62Z" fill="#505050" stroke-width="0"/>
+  <path class="r" d="M20.75,1h5.62v20.62l-10.31,3.75v-5.62l4.69-1.88" fill="#7c7c7c" stroke-width="0"/>
 </svg>
