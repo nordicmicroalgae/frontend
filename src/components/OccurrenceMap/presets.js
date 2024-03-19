@@ -2,7 +2,7 @@ export const gbif = {
   getAttributions: () => [
     '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     '<a href="https://openmaptiles.org/">OpenMapTiles</a>',
-    'occurrence data from <a href="https://www.gbif.org/citation-guidelines">GBIF</a>.'
+    'occurrence data from <a href="https://www.gbif.org/">GBIF</a>.'
   ].join(', '),
   getBaseTileUrl:
     (params = {}) => [
