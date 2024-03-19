@@ -6,7 +6,16 @@ import OccurrenceMap from 'Components/OccurrenceMap';
 import { gbif } from 'Components/OccurrenceMap/presets';
 
 
-const Occurrences = () => {
+const defaultProps = {
+  baseTileOptions: {},
+  occurrenceTileOptions: {},
+};
+
+
+const Occurrences = ({
+  baseTileOptions,
+  occurrenceTileOptions,
+}) => {
   const { query } = useFactsQuery();
 
   const { currentData } = query;
@@ -25,10 +34,21 @@ const Occurrences = () => {
       <OccurrenceMap
         {...gbif}
         externalId={gbifLink?.externalId}
+        getBaseTileUrl={
+          () => gbif.getBaseTileUrl(baseTileOptions)
+        }
+        getOccurrenceTileUrl={
+          externalId => gbif.getOccurrenceTileUrl(
+            externalId,
+            occurrenceTileOptions
+          )
+        }
       />
     </div>
   );
 };
+
+Occurrences.defaultProps = defaultProps;
 
 
 export default Occurrences;
