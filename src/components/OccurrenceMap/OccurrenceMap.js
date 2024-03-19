@@ -8,8 +8,6 @@ import { createXYZ } from 'ol/tilegrid';
 import { fromLonLat } from 'ol/proj';
 import { getCenter } from 'ol/extent';
 
-import { Europe } from './boundaries';
-
 
 const propTypes = {
   width: PropTypes.string,
@@ -24,16 +22,9 @@ const propTypes = {
 const defaultProps = {
   width: '100%',
   height: '50vh',
-  getViewExtent: () =>
-    Europe.reduce(
-      (extent, [lat, lon]) => [
-        ...extent,
-        ...fromLonLat([lon, lat])
-      ],
-      []
-    ),
   getViewOptions: () => ({
-    zoom: 2,
+    center: fromLonLat([8, 60]),
+    zoom: 4,
   }),
   getTileOptions: () => ({
     projection: 'EPSG:3857',
@@ -61,7 +52,9 @@ const OccurrenceMap = ({
   const olRef = useRef();
 
   useEffect(() => {
-    const viewExtent = getViewExtent();
+    const viewExtent = getViewExtent
+      ? getViewExtent()
+      : undefined;
 
     const map = new Map({
       target: elRef.current,
@@ -75,8 +68,10 @@ const OccurrenceMap = ({
       ],
       view: new View({
         ...getViewOptions(),
-        center: getCenter(viewExtent),
-        extent: viewExtent,
+        ...(viewExtent ? {
+          center: getCenter(viewExtent),
+          extent: viewExtent,
+        } : {})
       }),
     });
 
