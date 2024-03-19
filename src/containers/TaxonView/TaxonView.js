@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import Authority from 'Components/Authority';
 import ScientificName from 'Components/ScientificName';
 import Placeholder from 'Components/Placeholder';
-import { compareRanks } from 'Components/Taxonomy/utils';
 import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
 import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
@@ -101,13 +100,7 @@ const TaxonView = () => {
         </section>
         <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
-            <Facts.Occurrences
-              occurrenceTileOptions={{
-                style: compareRanks('superfamily', taxon.rank) <= 0
-                  ? 'scaled.circles' 
-                  : 'orangeHeat.point',
-              }}
-            />
+            <Facts.Occurrences />
           </Facts>
         </section>
         <section className="taxon-view-synonyms">
