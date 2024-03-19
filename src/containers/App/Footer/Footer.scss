@@ -1,10 +1,67 @@
 @import "colors";
+@import "variables";
+
+
+$funding-logo-small: 6.25rem;
+$funding-logo-large: $funding-logo-small * 1.5;
 
 
 .footer {
   padding: 2rem;
   font-size: .875rem;
   text-align: center;
+  background-color: $gray-1;
+
+  a {
+    color: $gray-5;
+  }
+
+  .funding {
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    column-gap: 1rem;
+
+    .funding-info {
+      width: 100%;
+    }
+
+    .funding-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $funding-logo-small;
+      height: $funding-logo-small;
+
+      @media(min-width: map-get($breakpoints, "m")) {
+        width: $funding-logo-large;
+        height: $funding-logo-large;
+      }
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    @media(min-width: map-get($breakpoints, "s")) {
+      max-width: map-get($breakpoints, "l");
+      .funding-info {
+        order: 0;
+        width: calc(100% - (($funding-logo-large) * 2) - 2.5rem);
+        margin-bottom: 0;
+      }
+      .funding-logo {
+        order: -1;
+      }
+      .funding-logo + .funding-logo {
+        order: 1;
+      }
+    }
+
+  }
 
   nav ul {
     padding: 0;
@@ -16,7 +73,6 @@
 
     li a {
       padding: 0 .5rem;
-      color: $gray-5;
     }
   }
 }
