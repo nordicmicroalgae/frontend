@@ -12,6 +12,7 @@ import { getCenter } from 'ol/extent';
 const propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
+  getAttributions: PropTypes.func,
   getViewExtent: PropTypes.func,
   getViewOptions: PropTypes.func,
   getTileOptions: PropTypes.func,
@@ -22,6 +23,7 @@ const propTypes = {
 const defaultProps = {
   width: '100%',
   height: '50vh',
+  getAttributions: () => [],
   getViewOptions: () => ({
     center: fromLonLat([8, 60]),
     zoom: 4,
@@ -42,6 +44,7 @@ const OccurrenceMap = ({
   externalId,
   width,
   height,
+  getAttributions,
   getViewExtent,
   getViewOptions,
   getTileOptions,
@@ -62,6 +65,7 @@ const OccurrenceMap = ({
         new TileLayer({
           source: new TileImage({
             ...getTileOptions(),
+            attributions: getAttributions(),
             url: getBaseTileUrl(),
           })
         }),

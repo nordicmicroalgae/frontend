@@ -1,4 +1,9 @@
 export const gbif = {
+  getAttributions: () => [
+    '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    '<a href="https://openmaptiles.org/">OpenMapTiles</a>',
+    'occurrence data from <a href="https://www.gbif.org/citation-guidelines">GBIF</a>.'
+  ].join(', '),
   getBaseTileUrl:
     (params = {}) => [
       'https://tile.gbif.org/3857/omt/{z}/{x}/{y}@1x.png',
