@@ -27,6 +27,38 @@ jobs:
                 name: frontend
                 path: dist
 
+    release:
+        if: startsWith(github.ref, 'refs/tags/')
+        needs: build
+
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: write
+
+        steps:
+            - name: Download artifact from build job
+              uses: actions/download-artifact@v4
+              with:
+                name: frontend
+                path: ./frontend
+
+            - name: Create dist archive
+              run: |
+                tar -czvf \
+                  "nordicmicroalgae-frontend-${{ github.ref_name }}-dist.tar.gz" \
+                  frontend
+
+            - name: Create GitHub release
+              env:
+                GITHUB_TOKEN: ${{ github.token }}
+              run: |
+                gh release create \
+                  "${{ github.ref_name }}" \
+                  "nordicmicroalgae-frontend-${{ github.ref_name }}-dist.tar.gz" \
+                  --repo "${{ github.repository }}" \
+                  --notes ""
+
     staging:
         if: github.ref == 'refs/heads/next'
         needs: build
