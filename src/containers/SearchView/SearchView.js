@@ -57,7 +57,7 @@ const SearchView = ({ onClose, limit }) => {
           results,
           term,
           {
-            keys: ['authority', 'scientificName'],
+            keys: ['scientificName', 'authority',],
             threshold: matchSorter.rankings.CONTAINS,
             baseSort: baseSortFn,
           },
