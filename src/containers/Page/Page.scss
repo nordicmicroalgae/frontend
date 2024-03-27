@@ -14,5 +14,11 @@
     font-size: 1.2rem;
     margin: 0 auto;
     max-width: map-get($breakpoints, "m");
+
+    p > img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
   }
 }
