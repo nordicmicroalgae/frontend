@@ -4,7 +4,6 @@ export { default as Cone } from './Cone';
 export { default as ConePlusHalfSphere } from './ConePlusHalfSphere';
 export { default as Cylinder } from './Cylinder';
 export { default as Ellipsoid } from './Ellipsoid';
-export { default as Parallelepiped } from './Parallelepiped';
 export { default as Sphere } from './Sphere';
 export { default as Trapezoid } from './Trapezoid';
 export { default as TwoCones } from './TwoCones';

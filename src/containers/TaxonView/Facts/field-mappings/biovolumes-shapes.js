@@ -8,7 +8,6 @@ const GeometricShapes = {
   'cone + half sphere': geometry.ConePlusHalfSphere,
   'cone+ half sphere': geometry.ConePlusHalfSphere,
   'cylinder': geometry.Cylinder,
-  'parallelepiped': geometry.Parallelepiped,
   'sphere': geometry.Sphere,
   'trapezoid': geometry.Trapezoid,
   'two truncated cones': geometry.TwoTruncatedCones,
