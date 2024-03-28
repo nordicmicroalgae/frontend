@@ -15,8 +15,8 @@ const Gallery = ({ selectors }) => {
 
   const pageQuery = useGetArticleByIdQuery(
     value
-      ? `galleries-${slugify(value)}`
-      : 'galleries-latest-images'
+      ? `gallery-${slugify(value)}`
+      : 'gallery-latest-images'
   );
 
   return (
