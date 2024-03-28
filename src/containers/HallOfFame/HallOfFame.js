@@ -25,7 +25,7 @@ const HallOfFame = () => {
             className="artist-list-item"
           >
             <Link
-              to={`/gallery/artist/${artist}/`}
+              to={`/gallery/artist/${encodeURIComponent(artist)}/`}
               className="artist-link"
             >
               <span className="artist-name">

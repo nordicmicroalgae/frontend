@@ -66,7 +66,11 @@ const GalleryView = () => {
 
   const ScopedComponent = scope ? ScopedGallery[scope] : Gallery;
 
-  const scopedQuery = { [scope ?? 'gallery']: value };
+  const scopedQuery = {
+    [scope ?? 'gallery']: value
+      ? decodeURIComponent(value)
+      : undefined
+  };
 
   return (
     <MediaView query={scopedQuery}>
