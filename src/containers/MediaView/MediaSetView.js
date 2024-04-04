@@ -26,7 +26,7 @@ const defaultProps = {
     'title',
     'createdAt',
     'photographerArtist',
-    'contributingOrganisation',
+    'institute',
   ],
 };
 
