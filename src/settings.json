@@ -18,19 +18,33 @@
         "path": "/gallery/"
       },
       {
-        "name": "IFCB",
-        "path": "/ifcb/"
+        "name": "AI²",
+        "path": "/automated-imaging/",
+        "subnavigation": [
+          {
+            "name": "Instruments",
+            "path": "/instruments/"
+          },
+          {
+            "name": "Annotated images",
+            "path": "/annotated-images/"
+          }
+        ]
       },
       {
         "name": "Tools",
         "path": "/tools/",
         "subnavigation": [
           {
-            "name": "Checklists and biovolumes",
-            "path": "/checklists-and-biovolumes/"
+            "name": "Biovolume lists",
+            "path": "/biovolume-lists/"
           },
           {
-            "name": "Plankton toolbox",
+            "name": "Nordic Microalgae Checklist",
+            "path": "/checklist/"
+          },
+          {
+            "name": "Plankton Toolbox",
             "path": "/plankton-toolbox/"
           }
         ]
