@@ -130,7 +130,14 @@ const TaxonView = () => {
         </section>
         <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
-            <Facts.ExternalLinks />
+            <Facts.ExternalLinks
+              Label={({data}) => (
+                ['PR2',]
+                  .includes(data.provider)
+                    ? `${data.provider}: ${data.externalId}`
+                    : data.provider
+              )}
+            />
           </Facts>
         </section>
         <section className="taxon-view-facts">
