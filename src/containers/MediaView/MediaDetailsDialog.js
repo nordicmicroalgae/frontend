@@ -4,16 +4,25 @@ import { useHistory } from 'react-router-dom';
 import { useMediaQuery } from './media-context';
 import MediaDetailsView from './MediaDetailsView';
 import Dialog from 'Components/Dialog';
+import buildQueryString from 'Utilities/buildQueryString';
 
 import './MediaDetailsDialog.scss';
 
 const MediaDetailsDialog= () => {
   const history = useHistory();
 
-  const { selectedMedia } = useMediaQuery();
+  const { selectedMedia, params } = useMediaQuery();
 
   const handleClose = () => {
-    history.replace({search: null})
+    history.replace({
+      search: buildQueryString(
+        Object.fromEntries(
+          Object.entries(params).filter(
+            ([key, _val]) => key != 'media',
+          )
+        )
+      ),
+    });
   };
 
   return (selectedMedia && (

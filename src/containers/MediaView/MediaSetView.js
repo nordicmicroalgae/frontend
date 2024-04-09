@@ -6,6 +6,7 @@ import { useMediaQuery } from './media-context';
 import { applyFilters, getAttributeList, getFieldKeys } from './field-utils';
 import { FormattedDate } from './FieldFilters';
 import MediaGrid from 'Components/Media/Grid';
+import buildQueryString from 'Utilities/buildQueryString';
 
 import './MediaSetView.scss';
 
@@ -37,7 +38,7 @@ const MediaSetView = ({
   itemSpacing,
   GridItemWrapper,
 }) => {
-  const { mediaset } = useMediaQuery();
+  const { mediaset, params } = useMediaQuery();
 
   return (
     <MediaGrid
@@ -60,7 +61,12 @@ const MediaSetView = ({
       )}
       ItemWrapper={({data, children}) => (
         <Link
-          to={`?media=${data.key}`}
+          to={{
+            search: buildQueryString({
+              ...params,
+              media: data.key,
+            })
+          }}
           replace={true}
         >
           {GridItemWrapper ? (

@@ -9,5 +9,33 @@
   .gallery-header {
     margin-bottom: 4rem;
     text-align: center;
+
+    .gallery-description {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .gallery-sorting-options {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: $gray-1;
+    border-radius: 4rem;
+    overflow: hidden;
+
+    .sort-link {
+      display: block;
+      padding: .25rem 1rem;
+      text-decoration: none;
+      color: $gray-5;
+      background-color: $gray-1;
+      border-radius: 4rem;
+
+      &.active {
+        color: $white;
+        background-color: $ocean-blue;
+      }
+    }
   }
 }

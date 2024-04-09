@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useGetMediaQuery } from 'Slices/media';
 import parseQueryString from 'Utilities/parseQueryString';
+import Sorters from './Sorters';
 
 
 const MediaQueryContext = createContext();
@@ -14,7 +15,19 @@ function MediaQueryProvider({ children, queryArgs }) {
 
   const params = parseQueryString(location.search);
 
-  const mediaset = query.currentData || [];
+  // Allow for any implemented client-side based sorter to take place,
+  // but only on entire sets (not server-side sliced subsets).
+  const isNotSliced =
+    [queryArgs.limit, queryArgs.offset].every(
+      qa => qa == null
+    );
+  const sortFn = isNotSliced && Sorters[params.sort];
+
+  const mediaset = query.currentData
+    ? sortFn
+      ? query.currentData.toSorted(sortFn)
+      : query.currentData
+    : [];
 
   const requestedMedia = params.media;
 
@@ -22,7 +35,7 @@ function MediaQueryProvider({ children, queryArgs }) {
     ({ slug }) => slug === requestedMedia
   );
 
-  const value = { query, mediaset, selectedMedia };
+  const value = { query, mediaset, selectedMedia, params, };
 
   return (
     <MediaQueryContext.Provider value={value}>
