@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Markdown from 'react-markdown';
 import { Link, useParams } from 'react-router-dom';
 
@@ -106,6 +106,10 @@ const ScopedGallery = {
 
 
 const GalleryView = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { scope, value } = useParams();
 
   const ScopedComponent = scope ? ScopedGallery[scope] : Gallery;

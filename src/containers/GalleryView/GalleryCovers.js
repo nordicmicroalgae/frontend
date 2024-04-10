@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import getKey from 'Utilities/getKey';
@@ -14,6 +14,10 @@ const defaultProps = {
 };
 
 const GalleryCovers = ({ coverSize }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { isFetching, isSuccess, currentData } = (
     useGetGalleriesQuery()
   );

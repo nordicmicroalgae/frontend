@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Article from 'Components/Article';
@@ -8,6 +8,10 @@ import { useGetArticleByIdQuery } from 'Slices/articles';
 
 
 const Page = ({ slug, children }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   const params = useParams();
 
   const article = useGetArticleByIdQuery(
