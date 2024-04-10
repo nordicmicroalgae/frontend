@@ -67,8 +67,17 @@ const Navigation = ({ items }) => {
         >
           <SearchIcon />
         </button>
-        <input type="checkbox" id="navigation-state-root" className="navigation-state" aria-hidden={true} ref={stateRef} />
-        <label htmlFor="navigation-state-root" className="navigation-toggle">
+        <input
+          type="checkbox"
+          id="navigation-state-root"
+          className="navigation-state"
+          aria-hidden={true}
+          ref={stateRef}
+        />
+        <label
+          htmlFor="navigation-state-root"
+          className="navigation-toggle"
+        >
           <span className="navigation-toggle-open">
             <span className="navigation-toggle-bar" />
             <span className="navigation-toggle-bar" />
@@ -87,8 +96,16 @@ const Navigation = ({ items }) => {
           <li className="subnavigation" key={key}>
           {subnavigation && subnavigation.length > 0 && (
             <>
-              <input type="checkbox" id={`navigation-state-${key}`} className="navigation-state" aria-hidden={true} />
-              <label htmlFor={`navigation-state-${key}`} className="navigation-toggle">
+              <input
+                type="checkbox"
+                id={`navigation-state-${key}`}
+                className="navigation-state"
+                aria-hidden={true}
+              />
+              <label
+                htmlFor={`navigation-state-${key}`}
+                className="navigation-toggle"
+              >
                 <span className="navigation-toggle-open">
                   <ChevronDownIcon />
                 </span>
@@ -102,9 +119,12 @@ const Navigation = ({ items }) => {
               to={path}
               isActive={(_,{ pathname }) => (
                 subnavigation && subnavigation.length > 0 ? (
+                  path == pathname ||
                   subnavigation.map(({ path }) => path).includes(pathname)
                 ) : (
-                  path === pathname
+                  path == '/'
+                    ? path == pathname
+                    : pathname.startsWith(path)
                 )
               )}
             >
