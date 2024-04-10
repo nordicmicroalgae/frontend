@@ -65,7 +65,12 @@ const MediaDetailsView = ({ expandable }) => {
         {(relatedTaxon &&
           relatedTaxonPath != location.pathname) && (
           <p className="media-related-taxon">
-            <Link to={relatedTaxonPath}>
+            <Link
+              to={{
+                pathname: relatedTaxonPath,
+                search: `media=${selectedMedia.slug}`,
+              }}
+            >
               More about 
               {' '}
               <ScientificName>
