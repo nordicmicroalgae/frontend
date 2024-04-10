@@ -1,41 +1,33 @@
-<p align="center">
-    <img src="./doc/logo.svg" width="176" height="256" alt="µ" />
-</p>
+# Nordic Microalgae: Frontend
 
-<h1 align="center">
-    nµa frontend
-</h1>
+![CI/CD status](https://github.com/nordicmicroalgae/frontend/actions/workflows/main.yml/badge.svg)
 
-Nordic Microalgae is a source of information about microalgae and related organisms in the Nordic area, i.e the Baltic Sea, the North East Atlantic and lakes, rivers and streams in the area. It is used for science, education, environmental monitoring etc. The content is mainly supplied by the users.
+This repository contains source code for the frontend used in Nordic Microalgae.
 
-The application contains a taxonomical backbone, species sheets and images supplied by registered and approved contributors. Images can be searched for in a number of ways to make it easier to find alternatives when working with species indentification.
+The frontend is a pure client-side application written in JavaScript and uses React as UI library for web-based components.
+Most of the user-interface pieces are custom, tailor-made, components intended for use in applications such as species portals.
 
-This repository contains source code for the Nordic Microalgae __user interface__.
+## Install and run locally
 
-## History
+Clone frontend repo:
 
-In 1996 the web site [Checklist of phytoplankton in the Skagerrak-Kattegat][checklist_of_phytoplankton] was launched by Bengt Karlson and Mats Kuylenstierna at Göteborg University, Sweden.
+```
+mkdir -p ~/code/nordicmicroalgae
+cd ~/code/nordicmicroalgae
+git clone https://github.com/nordicmicroalgae/frontend.git
+cd frontend
+```
 
-Most of the image content was produced using analogue video technique and the web pages were to a large extent produced using manual html-coding. Since then digital photography and digital video have become ubiquitous and technological advances in information technology can be used to share and disseminate information about marine organisms more efficiently.
-
-In 2007 the inter-regional EU project Forum Skagerrak II provided initial funding for transferring the [Checklist of phytoplankton in the Skagerrak-Kattegat][checklist_of_phytoplankton] to modern web site technology. This site was never published officially due to lack of long term funding. The name was B-NEAT (Baltic and North East Atlantic Taxa).
-
-## Codebase
-
-The __user interface__ is written in JavaScript with the React and Redux libraries.
-
-## How to run locally
-
-Install project dependencies:
+Install dependencies using yarn:
 
 ```
 yarn install
 ```
 
-Start webpack development server:
+Start the development server:
 
 ```
 yarn run start
 ```
 
-[checklist_of_phytoplankton]: http://www.smhi.se/oceanografi/oce_info_data/plankton_checklist/ssshome.htm
+See https://github.com/nordicmicroalgae/backend for instructions on how to setup the backend.
