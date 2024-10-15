@@ -111,9 +111,6 @@ const TaxonView = () => {
             <Facts.ExternalLinks
               collection="harmful algae blooms"
               titleText="Harmfulness"
-              Label={({data}) => (
-                `${data.provider} HAB`
-              )}
             />
           </Facts>
         </section>
@@ -122,22 +119,12 @@ const TaxonView = () => {
             <Facts.ExternalLinks
               collection="culture collection"
               titleText="Culture collections"
-              Label={({data}) => (
-                `${data.provider} (strain ${data.externalId})`
-              )}
             />
           </Facts>
         </section>
         <section className="taxon-view-facts">
           <Facts taxon={taxon.slug}>
-            <Facts.ExternalLinks
-              Label={({data}) => (
-                ['PR2',]
-                  .includes(data.provider)
-                    ? `${data.provider}: ${data.externalId}`
-                    : data.provider
-              )}
-            />
+            <Facts.ExternalLinks />
           </Facts>
         </section>
         <section className="taxon-view-facts">

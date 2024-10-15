@@ -12,7 +12,7 @@ import './ExternalLinks.scss';
 const defaultProps = {
   collection: 'external links',
   titleText: 'External Links',
-  Label: ({data}) => data.provider,
+  Label: ({data}) => data.label ?? data.provider,
 };
 
 
@@ -36,8 +36,8 @@ const ExternalLinks = ({ collection, titleText, Label }) => {
     (links, {provider, attributes}) => [
       ...links, 
       ...attributes.map(
-        ({externalId, externalUrl}) => ({
-          provider, externalId, externalUrl,
+        ({externalId, externalUrl, label}) => ({
+          provider, externalId, externalUrl, label
         })
       )],
     []
