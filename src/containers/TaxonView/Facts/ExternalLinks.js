@@ -41,6 +41,10 @@ const ExternalLinks = ({ collection, titleText, Label }) => {
         })
       )],
     []
+  ).toSorted(
+    (a, b) => (a.label ?? a.provider).localeCompare(
+      (b.label ?? b.provider)
+    )
   );
 
   return (
