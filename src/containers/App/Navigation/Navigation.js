@@ -1,10 +1,11 @@
-import React, { useEffect, useState ,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import SearchView from 'Containers/SearchView';
 import Logo from 'Components/Logo';
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon, UserIcon } from 'Components/Icons';
+import { SearchIcon } from 'Components/Icons';
+import { ChevronDownIcon, ChevronUpIcon, UserIcon } from 'Components/Icons';
 import getKey from 'Utilities/getKey';
 
 const propTypes = {
@@ -26,8 +27,9 @@ const Navigation = ({ items }) => {
   const location = useLocation();
 
   const [ showSearchView, setShowSearchView ] = useState(false);
-
+  const [ searchSeed, setSearchSeed ] = useState("");
   const stateRef = useRef();
+  const inlineSearchRef = useRef(null);
 
   useEffect(() => {
     if (stateRef.current) {
@@ -39,8 +41,10 @@ const Navigation = ({ items }) => {
     if (stateRef.current) {
       stateRef.current.checked = false;
     }
-    setShowSearchView(!showSearchView);
+    setShowSearchView(true);
   };
+
+  const openWithSeed = (q = "") => { setSearchSeed(q); handleClickSearch(); };
 
   const handleCloseSearchView = (_ev) => {
     setShowSearchView(false);
@@ -59,14 +63,32 @@ const Navigation = ({ items }) => {
         >
           <UserIcon />
         </a>
-        <button
-          type="button"
-          id="search-button"
-          aria-label="Search"
-          onClick={handleClickSearch}
-        >
-          <SearchIcon />
-        </button>
+        { !showSearchView && (
+          <div className='nav-search-container'>
+            <span id="search-icon">
+              <SearchIcon/>
+            </span>
+            <input
+              className="nav-search"
+              ref={inlineSearchRef}
+              type="search"
+              id="search-bar"
+              aria-label="Search"
+              placeholder="Search…"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.ctrlKey || e.metaKey || e.altKey) return;
+                if (e.key.length === 1) { e.preventDefault(); openWithSeed(e.key); }
+                  else if (e.key === 'Enter') { e.preventDefault(); openWithSeed((inlineSearchRef.current?.value || '').trim()); }
+                  else if (e.key === 'Backspace') { e.preventDefault(); openWithSeed(''); }
+              }}
+              onPaste={(e) => {
+                const text = e.clipboardData?.getData('text');
+                if (text) { e.preventDefault(); openWithSeed(text); }
+              }}
+            />
+          </div>
+        )}
         <input
           type="checkbox"
           id="navigation-state-root"
@@ -148,8 +170,12 @@ const Navigation = ({ items }) => {
         </ul>
       </nav>
       {showSearchView && (
-        <SearchView onClose={handleCloseSearchView} />
-      )}
+        <SearchView
+          onClose={handleCloseSearchView}
+          initialQuery={searchSeed}
+          key={searchSeed || 'empty'}
+        />
+    )}
     </div>
   );
 

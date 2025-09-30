@@ -27,20 +27,22 @@ function baseSortFn(a, b) {
 const propTypes = {
   onClose: PropTypes.func.isRequired,
   limit: PropTypes.number,
+  initialQuery: PropTypes.string,
 };
 
 const defaultProps = {
   limit: 50,
+  initialQuery: '',
 };
 
-const SearchView = ({ onClose, limit }) => {
+const SearchView = ({ onClose, limit, initialQuery }) => {
   const history = useHistory();
 
   const query = useCombinedNamesQuery();
 
   const inputRef = useRef();
 
-  const [ inputValue, setInputValue ] = useState('');
+  const [ inputValue, setInputValue ] = useState(initialQuery);
 
   const [ selectedIndex, setSelectedIndex ] = useState(0);
 
