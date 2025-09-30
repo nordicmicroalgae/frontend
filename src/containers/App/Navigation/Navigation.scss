@@ -28,6 +28,9 @@ body {
 
 .navigation {
   position: relative;
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
   font-size: .875rem;
   margin: 0 auto;
   max-width: map-get($breakpoints, "xl");
@@ -173,7 +176,6 @@ body {
 }
 
 .navigation {
-  #search-button,
   #navigation-admin {
     position: absolute;
     top: 0;
@@ -186,8 +188,40 @@ body {
     border: none;
     cursor: pointer;
   }
-  #search-button {
+
+  .nav-search-container{
+    position: absolute;
     right: $navigation-toggle-box;
+  }
+  
+  #search-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: -2.5rem;
+  }
+
+  #nav-search-icon {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    color: #fff;
+    pointer-events: none;
+  }
+  #search-bar {
+    width: 9rem;
+    height: 2.5rem;
+    padding-left: 2.5rem;
+    font: inherit;
+    font-size: 1rem;
+    color: $white;
+    background: #666;
+    border: none;
+    border-radius: .25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
   }
 }
 
@@ -209,7 +243,7 @@ body {
       }
       a {
         display: block;
-        padding: 18px 1rem;
+        padding: 18px 0.75rem;
         height: $navigation-height;
       }
     }
