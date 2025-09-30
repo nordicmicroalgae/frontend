@@ -46,6 +46,10 @@
           {
             "name": "Plankton Toolbox",
             "path": "/plankton-toolbox/"
+          },
+          {
+            "name": "SHARK4R",
+            "path": "/shark4r/"
           }
         ]
       },
