@@ -81,8 +81,10 @@ const Grid = ({
     ? VirtualController
     : DefaultController;
 
+  const isMissing = data.length === 0
+
   return (
-    <Controller data={data} layout={layout} gridRef={ref}>
+    <Controller data={data} layout={layout} gridRef={ref}>      
       {({ items, styleProps }) => (
         <div
           ref={ref}
@@ -115,6 +117,11 @@ const Grid = ({
                 : 'media-grid media-grid-single-row'
             }
           >
+          {isMissing && (
+            <div className="is-missing">
+              <p>No media available for this taxon.</p>
+            </div>
+          )}
             {items.map(item => (
               <div
                 className="media-grid-item"
