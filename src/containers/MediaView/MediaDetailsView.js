@@ -15,19 +15,21 @@ import './MediaDetailsView.scss';
 
 const propTypes = {
   expandable: PropTypes.bool,
+  beginEmpty: PropTypes.bool,
 };
 
 const defaultProps = {
   expandable: true,
+  beginEmpty: false,
 };
 
 
-const MediaDetailsView = ({ expandable }) => {
+const MediaDetailsView = ({ expandable, beginEmpty }) => {
   const location = useLocation();
 
   let { mediaset, selectedMedia } = useMediaQuery();
 
-  if (selectedMedia == null && mediaset.length > 0 ) {
+  if (selectedMedia == null && !beginEmpty && mediaset.length > 0 ) {
     selectedMedia = mediaset[0];
   }
 
