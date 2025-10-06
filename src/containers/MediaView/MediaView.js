@@ -12,13 +12,19 @@ const propTypes = {
     artist: PropTypes.string,
     gallery: PropTypes.string,
     limit: PropTypes.number,
-  })
-}
+  }),
+  heading: PropTypes.string,
+};
 
-const MediaView = ({ query, children }) => {
+const defaultProps = {
+  heading: null
+};
+
+const MediaView = ({ query, children, heading }) => {
   return (
     <MediaQueryProvider queryArgs={query}>
       <div className="media-view">
+        {heading && <h2>{heading}</h2>}
         {children}
       </div>
     </MediaQueryProvider>

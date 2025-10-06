@@ -63,7 +63,7 @@ const TaxonView = () => {
           not seem to currently be in our database.
         </p>
         <p>
-          If you think that this is a misstake, please help us
+          If you think that this is a mistake, please help us
           to correct that by sending an email to our administrators.
         </p>
         <p>
@@ -89,7 +89,7 @@ const TaxonView = () => {
         </h1>
         <Taxonomy taxon={params.slug} />
         <section className="taxon-view-media">
-          <MediaView query={{taxon: taxon.slug}}>
+          <MediaView query={{taxon: taxon.slug, children: "false"}}>
             <MediaView.Details />
             <MediaView.Thumbnails
               fieldList={[]}
@@ -131,6 +131,16 @@ const TaxonView = () => {
           <Facts taxon={taxon.slug}>
             <Facts.Biovolumes />
           </Facts>
+        </section>
+        <section className="taxon-view-media">
+          <MediaView query={{taxon: taxon.slug, children: "true"}} heading={"Child Taxon Media"}>
+            <MediaView.Details beginEmpty={true} />
+            <MediaView.Thumbnails
+              fieldList={[]}
+              itemSize={[120, 120 / (4 / 3)] /* aspect ratio */}
+              itemSpacing={8}
+            />
+          </MediaView>
         </section>
       </div>
     )
