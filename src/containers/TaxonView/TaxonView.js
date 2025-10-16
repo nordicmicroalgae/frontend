@@ -103,6 +103,16 @@ const TaxonView = () => {
             <Facts.Occurrences />
           </Facts>
         </section>
+        <section className="taxon-view-media">
+          <MediaView query={{taxon: taxon.slug, children: "true", priority: "true"}} heading={"Child Taxon Media"}>
+            <MediaView.Details beginEmpty={true} />
+            <MediaView.Thumbnails
+              fieldList={[]}
+              itemSize={[120, 120 / (4 / 3)] /* aspect ratio */}
+              itemSpacing={8}
+            />
+          </MediaView>
+        </section>
         <section className="taxon-view-synonyms">
           <Synonyms taxon={taxon.slug} />
         </section>
@@ -131,16 +141,6 @@ const TaxonView = () => {
           <Facts taxon={taxon.slug}>
             <Facts.Biovolumes />
           </Facts>
-        </section>
-        <section className="taxon-view-media">
-          <MediaView query={{taxon: taxon.slug, children: "true"}} heading={"Child Taxon Media"}>
-            <MediaView.Details beginEmpty={true} />
-            <MediaView.Thumbnails
-              fieldList={[]}
-              itemSize={[120, 120 / (4 / 3)] /* aspect ratio */}
-              itemSpacing={8}
-            />
-          </MediaView>
         </section>
       </div>
     )
