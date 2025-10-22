@@ -1,0 +1,38 @@
+.show-layers-toggle {
+  display: block;
+  margin: 1rem 0;
+  padding: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: .75rem;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  background: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.select-layers-toggle {
+
+  margin: 1em 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #0077cc;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.checkbox-label {
+  display: block;
+}
+
+.checkbox-list label:first-of-type {
+  font-weight: bold;
+  margin-bottom: .5rem;
+}
+
+.checkbox-list label:not(:first-of-type) {
+  font-style: italic;
+}
