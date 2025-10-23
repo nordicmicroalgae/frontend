@@ -10,14 +10,13 @@ const propTypes = {
   onChange: PropTypes.func
 };
 
-const defaultProps = {
-  theme: 'dark',
-  checked: false,
-  disabled: false,
-  labelText: ''
-};
-
-const Switch = ({ checked, labelText, theme, ...props }) => (
+const Switch = ({
+  theme = 'dark',
+  checked = false,
+  disabled = false,
+  labelText = '',
+  ...props
+}) => (
   <div className={`switch switch-${theme}`}>
     <label className="switch-label">
       <input
@@ -25,6 +24,7 @@ const Switch = ({ checked, labelText, theme, ...props }) => (
         role="switch"
         className="switch-input"
         defaultChecked={checked}
+        disabled={disabled}
         { ...props }
       />
       <div className="switch-track" />
@@ -38,7 +38,5 @@ const Switch = ({ checked, labelText, theme, ...props }) => (
 );
 
 Switch.propTypes = propTypes;
-
-Switch.defaultProps = defaultProps;
 
 export default Switch;

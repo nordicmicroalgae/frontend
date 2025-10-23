@@ -38,7 +38,7 @@ const propTypes = {
   )
 };
 
-const QuickView = ({ filters, groups, history, location, match }) => {
+const QuickView = ({ filters = settings.ui.quickView.filters, groups = settings.ui.quickView.groups, history, location, match }) => {
   let [ groupsIsExpanded, setGroupsIsExpanded ] = useState(false);
 
   let [ filtersIsExpanded, setFiltersIsExpanded ] = useState(false);
@@ -58,7 +58,7 @@ const QuickView = ({ filters, groups, history, location, match }) => {
 
   const isLoading = result.isLoading || filteredResult.isLoading;
   const isSuccess = result.isSuccess && filteredResult.isSuccess;
-  
+
   const taxa = isSuccess
     ? filteredResult.data.map(
         slug => ({
@@ -234,10 +234,6 @@ const QuickView = ({ filters, groups, history, location, match }) => {
 
 QuickView.propTypes = propTypes;
 
-QuickView.defaultProps = {
-  filters: settings.ui.quickView.filters,
-  groups: settings.ui.quickView.groups,
-};
 
 
 export default QuickView;

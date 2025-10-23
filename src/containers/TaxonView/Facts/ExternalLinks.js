@@ -9,14 +9,13 @@ import Placeholder from 'Components/Placeholder';
 import './ExternalLinks.scss';
 
 
-const defaultProps = {
-  collection: 'external links',
-  titleText: 'External Links',
-  Label: ({data}) => data.label ?? data.provider,
-};
 
 
-const ExternalLinks = ({ collection, titleText, Label }) => {
+const ExternalLinks = ({
+  collection = 'external links',
+  titleText = 'External Links',
+  Label = ({data}) => (data.label ?? data.provider),
+}) => {
   const { query } = useFactsQuery();
 
   const { isFetching, currentData } = query;
@@ -34,7 +33,7 @@ const ExternalLinks = ({ collection, titleText, Label }) => {
     externalLinksData
   ).reduce(
     (links, {provider, attributes}) => [
-      ...links, 
+      ...links,
       ...attributes.map(
         ({externalId, externalUrl, label}) => ({
           provider, externalId, externalUrl, label
@@ -94,8 +93,5 @@ const ExternalLinks = ({ collection, titleText, Label }) => {
     )
   );
 };
-
-ExternalLinks.defaultProps = defaultProps;
-
 
 export default ExternalLinks;

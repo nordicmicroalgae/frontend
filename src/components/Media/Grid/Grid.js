@@ -11,7 +11,7 @@ import Picture from 'Components/Media/Picture';
 const propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.oneOf([
+      key: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
       ]),
@@ -20,7 +20,10 @@ const propTypes = {
       attributes: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string,
-          value: PropTypes.string,
+          value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.arrayOf(PropTypes.string),
+          ]),
         })
       )
     })
@@ -30,15 +33,9 @@ const propTypes = {
   ),
   spacing: PropTypes.number,
   virtual: PropTypes.bool,
-  ItemWrapper: PropTypes.node,
+  ItemWrapper: PropTypes.elementType,
 };
 
-const defaultProps = {
-  size: [160, 200],
-  spacing: 5,
-  virtual: true,
-  ItemWrapper: ({children}) => children,
-};
 
 
 const DefaultController = ({data, children}) => {
@@ -70,10 +67,10 @@ const VirtualController = ({
 
 const Grid = ({
   data,
-  size,
-  spacing,
-  virtual,
-  ItemWrapper,
+  size = [160, 200],
+  spacing = 5,
+  virtual = true,
+  ItemWrapper = ({children}) => children,
 }) => {
   const { layout, ref } = useGridLayout({ data, size, spacing });
 
@@ -84,7 +81,7 @@ const Grid = ({
   const isMissing = data.length === 0
 
   return (
-    <Controller data={data} layout={layout} gridRef={ref}>      
+    <Controller data={data} layout={layout} gridRef={ref}>
       {({ items, styleProps }) => (
         <div
           ref={ref}
@@ -149,6 +146,5 @@ const Grid = ({
 
 Grid.propTypes = propTypes;
 
-Grid.defaultProps = defaultProps;
 
 export default Grid;
