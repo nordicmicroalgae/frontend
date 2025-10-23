@@ -103,16 +103,33 @@ const Occurrences = () => {
         >
           {allSelected ? 'Deselect all' : 'Select all'}
         </button>}
-        {(externalIds ?? []).map((id) => (
-          <label key={id} className='checkbox-label'>
-            <input
-              type="checkbox"
-              checked={selectedSynonyms.has(id)}
-              onChange={() => handleToggle(id)}
-            />
-            {externalIdToName.get(id) ?? id}
-          </label>
-        ))}
+        {externalIds && externalIds.length > 0 && (
+          <>
+            <label key={externalIds[0]} className='checkbox-label'>
+              <input
+                type="checkbox"
+                checked={selectedSynonyms.has(externalIds[0])}
+                onChange={() => handleToggle(externalIds[0])}
+              />
+              {externalIdToName.get(externalIds[0]) ?? externalIds[0]}
+            </label>
+            {hasSynonymLayers && (
+              <>
+                <div>Synonyms:</div>
+                {externalIds.slice(1).map(id => (
+                  <label key={id} className='checkbox-label'>
+                    <input
+                      type="checkbox"
+                      checked={selectedSynonyms.has(id)}
+                      onChange={() => handleToggle(id)}
+                    />
+                    <a href={`https://www.gbif.org/species/${id}`} target="_blank" rel="noopener noreferrer">{externalIdToName.get(id) ?? id}</a>
+                  </label>
+                ))}
+              </>
+            )}
+          </>
+        )}
       </div>
 
       )}
