@@ -9,12 +9,7 @@ const propTypes = {
   size: PropTypes.oneOf([18, 24, 36, 48])
 };
 
-const defaultProps = {
-  theme: 'dark',
-  size: 24
-};
-
-const Icon = ({ size, theme, children }) => (
+const Icon = ({ size = 24, theme = 'dark', children }) => (
   <svg
     viewBox={'0 0 18 18'}
     width={size}
@@ -28,6 +23,5 @@ const Icon = ({ size, theme, children }) => (
 
 Icon.propTypes = propTypes;
 
-Icon.defaultProps = defaultProps;
 
 export default Icon;

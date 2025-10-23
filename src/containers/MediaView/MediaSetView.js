@@ -19,21 +19,16 @@ const propTypes = {
     PropTypes.number
   ),
   itemSpacing: PropTypes.number,
-  GridItemWrapper: PropTypes.node,
+  GridItemWrapper: PropTypes.elementType,
 };
 
-const defaultProps = {
-  fieldList: [
+const MediaSetView = ({
+  fieldList = [
     'title',
     'createdAt',
     'photographerArtist',
     'institute',
   ],
-};
-
-
-const MediaSetView = ({
-  fieldList,
   itemSize,
   itemSpacing,
   GridItemWrapper,
@@ -84,6 +79,5 @@ const MediaSetView = ({
 
 MediaSetView.propTypes = propTypes;
 
-MediaSetView.defaultProps = defaultProps;
 
 export default MediaSetView;

@@ -21,16 +21,18 @@ const propTypes = {
   getOccurrenceTileUrl: PropTypes.func.isRequired,
 };
 
-const defaultProps = {
-  width: '100%',
-  height: '50vh',
-  externalIds: [],
-  getAttributions: () => [],
-  getViewOptions: () => ({
+
+const OccurrenceMap = ({
+  externalIds = [],
+  width = '100%',
+  height = '50vh',
+  getAttributions = () => [],
+  getViewExtent,
+  getViewOptions = () => ({
     center: fromLonLat([8, 60]),
     zoom: 4,
   }),
-  getTileOptions: () => ({
+  getTileOptions = () => ({
     projection: 'EPSG:3857',
     tileGrid: createXYZ({
       minZoom: 0,
@@ -40,16 +42,6 @@ const defaultProps = {
     tilePixelRatio: 1,
     wrapX: true,
   }),
-};
-
-const OccurrenceMap = ({
-  externalIds,
-  width,
-  height,
-  getAttributions,
-  getViewExtent,
-  getViewOptions,
-  getTileOptions,
   getBaseTileUrl,
   getOccurrenceTileUrl,
 }) => {
@@ -136,8 +128,5 @@ const OccurrenceMap = ({
 };
 
 OccurrenceMap.propTypes = propTypes;
-
-OccurrenceMap.defaultProps = defaultProps;
-
 
 export default OccurrenceMap;

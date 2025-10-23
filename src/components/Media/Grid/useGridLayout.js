@@ -46,10 +46,10 @@ function useGridLayout({ data, size, spacing }) {
       rowCount * (itemHeight + itemSpacing)
     );
 
-    setLayout({
-      ...layout,
+    setLayout(prev => ({
+      ...prev,
       columnCount, rowCount, gridWidth, gridHeight, itemSpacing,
-    });
+    }));
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function useGridLayout({ data, size, spacing }) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [data, size, spacing, ref]);
+  }, [totalItems, itemWidth, itemHeight, spacing]);
 
   return { layout, ref };
 }

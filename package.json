@@ -20,8 +20,9 @@
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
-    "sass": "^1.57.1",
-    "sass-loader": "^13.2.0",
+    "sass": "^1.79.0",
+    "sass-embedded": "^1.79.0",
+    "sass-loader": "^14.1.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
@@ -47,5 +48,6 @@
   },
   "resolutions": {
     "@react-three/fiber/its-fine": "~1.1.4"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

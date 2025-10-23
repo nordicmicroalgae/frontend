@@ -1,5 +1,5 @@
-@import "colors";
-
+@use "colors" as *;
+@use "sass:color";
 
 $switch-track-height: 1.625rem;
 $switch-track-width: 3.125rem;
@@ -68,15 +68,15 @@ $switch-track-color-on-light: $orange-cup-coral;
     }
 
   .switch-input[disabled] ~ .switch-track {
-    background: adjust-color($switch-track-color-off, $lightness: 30%);
+    background: color.adjust($switch-track-color-off, $lightness: 30%);
   }
 
   .switch-input:checked[disabled] ~ .switch-track {
-    background: adjust-color($switch-track-color-on-dark, $lightness: 30%);
+    background: color.adjust($switch-track-color-on-dark, $lightness: 30%);
   }
 
   .switch-input[disabled] ~ .switch-label-text {
-    color: adjust-color($switch-label-color, $lightness: 40%);
+    color: color.adjust($switch-label-color, $lightness: 40%);
   }
 
   .switch-label-text {
@@ -99,7 +99,7 @@ $switch-track-color-on-light: $orange-cup-coral;
         background: $switch-track-color-on-light;
       }
     .switch-input:checked[disabled] ~ .switch-track {
-      background: adjust-color($switch-track-color-on-light, $lightness: 30%);
+      background: color.adjust($switch-track-color-on-light, $lightness: 30%);
     }
   }
 }

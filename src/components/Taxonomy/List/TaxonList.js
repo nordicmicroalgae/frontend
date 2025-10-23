@@ -22,15 +22,10 @@ const propTypes = {
   itemHeight: PropTypes.number
 };
 
-const defaultProps = {
-  data: [],
-  itemHeight: 120
-};
-
 const TaxonList = ({
-  data,
+  data = [],
   groupBy,
-  itemHeight,
+  itemHeight = 120,
   getItemLinkProps,
   Link,
   Thumbnail,
@@ -61,7 +56,7 @@ const TaxonList = ({
                 className="taxon-list-navigation-item"
                 key={getKey('taxon-list-navigation', group)}
               >
-                <button 
+                <button
                   type="button"
                   value={group}
                   onClick={scrollIntoView}
@@ -112,7 +107,5 @@ const TaxonList = ({
 
 
 TaxonList.propTypes = propTypes;
-
-TaxonList.defaultProps = defaultProps;
 
 export default TaxonList;

@@ -18,13 +18,9 @@ const propTypes = {
   beginEmpty: PropTypes.bool,
 };
 
-const defaultProps = {
-  expandable: true,
-  beginEmpty: false,
-};
 
 
-const MediaDetailsView = ({ expandable, beginEmpty }) => {
+const MediaDetailsView = ({ expandable = true, beginEmpty = false }) => {
   const location = useLocation();
 
   let { mediaset, selectedMedia } = useMediaQuery();
@@ -73,7 +69,7 @@ const MediaDetailsView = ({ expandable, beginEmpty }) => {
                 search: `media=${selectedMedia.slug}`,
               }}
             >
-              More about 
+              More about
               {' '}
               <ScientificName>
                 {relatedTaxon.scientificName}
@@ -118,8 +114,5 @@ const MediaDetailsView = ({ expandable, beginEmpty }) => {
 };
 
 MediaDetailsView.propTypes = propTypes;
-
-MediaDetailsView.defaultProps = defaultProps;
-
 
 export default MediaDetailsView;

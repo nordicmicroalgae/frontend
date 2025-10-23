@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 import propTypes from './propTypes';
-import defaultProps from './defaultProps';
 import reduceChildren from './helpers/reduceChildren';
 import ScientificName from 'Components/ScientificName';
 import { PlusIcon, DashIcon } from 'Components/Icons';
@@ -11,15 +10,27 @@ import Tree from './Tree';
 const TreeNode = ({
   taxon,
   data,
-  path,
+  path = [],
   selected,
-  ranks,
-  level,
-  onCollapse,
-  onExpand,
-  onSelect,
-  Link,
-  getLinkProps
+  ranks = [
+    'Domain',
+    'Kingdom',
+    'Phylum',
+    'Class',
+    'Order',
+    'Family',
+    'Genus',
+    'Species',
+  ],
+  level = 1,
+  onCollapse = (_taxon) => {},
+  onExpand = (_taxon) => {},
+  onSelect = (_taxon) => {},
+  Link = 'a',
+  getLinkProps = (_taxon) => ({
+    href: '#',
+    onClick: ev => ev.preventDefault(),
+  }),
 }) => {
 
   const hasChildren = useMemo(() =>
@@ -97,7 +108,5 @@ const TreeNode = ({
 }
 
 TreeNode.propTypes = propTypes;
-
-TreeNode.defaultProps = defaultProps;
 
 export default TreeNode;
