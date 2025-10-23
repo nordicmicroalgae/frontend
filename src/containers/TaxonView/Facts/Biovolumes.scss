@@ -1,6 +1,6 @@
-@import "colors";
-@import "variables";
-
+@use "colors" as *;
+@use "variables" as *;
+@use "sass:map";
 
 .facts-biovolumes {
   position: relative;
@@ -50,7 +50,7 @@
       flex-direction: column;
       width: 50%;
 
-      @media(min-width: map-get($breakpoints, "l")) {
+      @media(min-width: map.get($breakpoints, "l")) {
         width: 33%;
       }
 
@@ -141,7 +141,7 @@
       min-width: 7.5rem;
       max-width: 7.5rem;
 
-      @media(min-width: map-get($breakpoints, "l")) {
+      @media(min-width: map.get($breakpoints, "l")) {
         width: 17.5rem;
         min-width: 17.5rem;
         max-width: 17.5rem;

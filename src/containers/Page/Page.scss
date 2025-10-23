@@ -1,6 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .page {
   @include container();
@@ -13,7 +14,7 @@
   .article-content {
     font-size: 1.2rem;
     margin: 0 auto;
-    max-width: map-get($breakpoints, "m");
+    max-width: map.get(v.$breakpoints, "m");
 
     p > img {
       display: block;

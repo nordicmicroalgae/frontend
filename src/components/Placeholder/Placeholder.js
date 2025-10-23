@@ -10,14 +10,7 @@ const propTypes = {
   repeat: PropTypes.number,
 };
 
-const defaultProps = {
-  shape: 'rectangle',
-  repeat: 1,
-  wrapper: React.Fragment,
-};
-
-
-const Placeholder = ({shape, repeat, wrapper: Wrapper}) => (
+const Placeholder = ({ shape = 'rectangle', repeat = 1, wrapper: Wrapper = React.Fragment }) => (
   <span aria-live="polite" aria-busy="true">
     {Array(repeat).fill().map((_value, index) => (
       <Wrapper key={`faux-${index}`}>
@@ -29,7 +22,6 @@ const Placeholder = ({shape, repeat, wrapper: Wrapper}) => (
   </span>
 );
 
-Placeholder.defaultProps = defaultProps;
 
 Placeholder.propTypes = propTypes;
 

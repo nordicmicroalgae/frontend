@@ -20,7 +20,7 @@ const SortOptions = [
 ];
 
 
-const Gallery = ({ selectors }) => {
+const Gallery = ({ selectors = { title: query => query.originalArgs.gallery ?? 'All images' } }) => {
   const { value } = useParams();
 
   const { query, params } = useMediaQuery();
@@ -85,16 +85,11 @@ const Gallery = ({ selectors }) => {
   );
 };
 
-Gallery.defaultProps = {
-  selectors: {
-    title: query => query.originalArgs.gallery ?? 'All images'
-  },
-};
 
 const ArtistGallery = () => (
   <Gallery
     selectors={{
-      title: query => 
+      title: query =>
         `Illustrations by ${query.originalArgs.artist}`,
     }}
   />

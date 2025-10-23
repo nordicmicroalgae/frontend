@@ -14,6 +14,6 @@ export default {
   onCollapse: PropTypes.func,
   onExpand: PropTypes.func,
   onSelect: PropTypes.func,
-  Link: PropTypes.node,
+  Link: PropTypes.elementType,
   getLinkProps: PropTypes.func,
 };

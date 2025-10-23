@@ -1,5 +1,6 @@
-@import "colors";
-@import "variables";
+@use "colors" as *;
+@use "variables" as v;
+@use "sass:map";
 
 $navigation-height: 56px;
 $logo-width: 22px;
@@ -33,7 +34,7 @@ body {
   height: 3.5rem;
   font-size: .875rem;
   margin: 0 auto;
-  max-width: map-get($breakpoints, "xl");
+  max-width: map.get(v.$breakpoints, "xl");
 
   #navigation-home {
     display: block;
@@ -193,7 +194,7 @@ body {
     position: absolute;
     right: $navigation-toggle-box;
   }
-  
+
   #search-icon {
     position: absolute;
     display: flex;
@@ -225,7 +226,7 @@ body {
   }
 }
 
-@media(min-width: map-get($breakpoints, "xl")) {
+@media(min-width: map.get(v.$breakpoints, "xl")) {
   .navigation {
     #navigation-home {
       float: left;

@@ -1,6 +1,6 @@
-@import "colors";
-@import "variables";
-
+@use "colors" as *;
+@use "variables" as *;
+@use "sass:map";
 
 $funding-logo-small: 6.25rem;
 $funding-logo-large: $funding-logo-small * 1.5;
@@ -36,7 +36,7 @@ $funding-logo-large: $funding-logo-small * 1.5;
       width: $funding-logo-small;
       height: $funding-logo-small;
 
-      @media(min-width: map-get($breakpoints, "m")) {
+      @media(min-width: map.get($breakpoints, "m")) {
         width: $funding-logo-large;
         height: $funding-logo-large;
       }
@@ -46,8 +46,8 @@ $funding-logo-large: $funding-logo-small * 1.5;
       }
     }
 
-    @media(min-width: map-get($breakpoints, "s")) {
-      max-width: map-get($breakpoints, "l");
+    @media(min-width: map.get($breakpoints, "s")) {
+      max-width: map.get($breakpoints, "l");
       .funding-info {
         order: 0;
         width: calc(100% - (($funding-logo-large) * 2) - 2.5rem);

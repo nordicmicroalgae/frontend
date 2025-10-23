@@ -9,11 +9,7 @@ const propTypes = {
   onClose: PropTypes.func,
 };
 
-const defaultProps = {
-  onClose: (ev) => {},
-};
-
-const Dialog = ({ id, title, onClose, children }) => {
+const Dialog = ({ id, title, onClose = (ev) => {}, children }) => {
 
   const ref = useRef();
 
@@ -85,7 +81,5 @@ const Dialog = ({ id, title, onClose, children }) => {
 };
 
 Dialog.propTypes = propTypes;
-
-Dialog.defaultProps = defaultProps;
 
 export default Dialog;

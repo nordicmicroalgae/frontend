@@ -5,7 +5,10 @@ import Spinner from 'Components/Spinner';
 
 const propTypes = {
   src: PropTypes.string.isRequired,
-  width: PropTypes.number,
+  width: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   title: PropTypes.string,
   caption: PropTypes.string,
   backgroundColor: PropTypes.string,
@@ -15,11 +18,6 @@ const propTypes = {
   Placeholder: PropTypes.func,
 };
 
-const defaultProps = {
-  width: 640,
-  backgroundColor: '#f0f0f0',
-  Placeholder: Spinner,
-};
 
 const Status = {
   Pending: Symbol('pending'),
@@ -30,15 +28,15 @@ const Status = {
 
 const Picture = ({
   src,
-  width,
+  width = 640,
   title,
   caption,
-  backgroundColor,
+  backgroundColor = '#f0f0f0',
   backgroundImage,
   children,
   onLoad,
   onError,
-  Placeholder,
+  Placeholder = Spinner,
 }) => {
   const [status, setStatus] = useState(Status.Pending);
 
@@ -70,7 +68,7 @@ const Picture = ({
   return (
     <div
       className="picture-container"
-      style={{width: `${width}px`}}
+      style={{width: (typeof width === 'number') ? `${width}px` : width}}
     >
       <div
         className="picture"
@@ -114,6 +112,5 @@ const Picture = ({
 
 Picture.propTypes = propTypes;
 
-Picture.defaultProps = defaultProps;
 
 export default Picture;

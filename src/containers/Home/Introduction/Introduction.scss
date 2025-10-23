@@ -1,12 +1,12 @@
-@import "colors";
-@import "variables";
-@import "mixins";
-
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .introduction {
   margin: 0 auto 2rem;
   text-align: center;
-  max-width: map-get($breakpoints, "m");
+  max-width: map.get(v.$breakpoints, "m");
 
   h2 {
     margin-bottom: 2rem;

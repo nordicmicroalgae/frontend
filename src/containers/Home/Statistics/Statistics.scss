@@ -1,7 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
-
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .statistics {
   @include container();
@@ -63,7 +63,7 @@
     grid-column: 2;
   }
 
-  @media(min-width: map-get($breakpoints, "m")) {
+  @media(min-width: map.get(v.$breakpoints, "m")) {
     dl {
       grid-template-columns: repeat(4, 1fr);
     }

@@ -1,6 +1,6 @@
-@import "colors";
-@import "variables";
-
+@use "colors" as *;
+@use "variables" as *;
+@use "sass:map";
 
 body.has-overlay {
   overflow: hidden;
@@ -65,7 +65,7 @@ body.has-overlay {
     background: $white;
   }
 
-  @media(min-width: map-get($breakpoints, "l")) {
+  @media(min-width: map.get($breakpoints, "l")) {
     margin: 1rem auto;
     max-width: 1024px;
     height: calc(100% - 2rem);

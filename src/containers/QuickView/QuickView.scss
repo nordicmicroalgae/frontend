@@ -1,6 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .quick-view {
   @include container();
@@ -24,7 +25,7 @@
       display: none;
     }
 
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       display: none;
 
       &[aria-expanded] ~ * .quick-view-group-list {
@@ -47,7 +48,7 @@
     background: linear-gradient(#eeeeee, #f9f9f9);
     z-index: 40000;
 
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       min-height: auto;
     }
   }
@@ -55,7 +56,7 @@
   .quick-view-group-list {
     margin: 0 auto;
     padding: 48px 0 0;
-    max-width: map-get($breakpoints, "xl");
+    max-width: map.get(v.$breakpoints, "xl");
     list-style: none;
 
     .quick-view-group-item {
@@ -73,7 +74,7 @@
       }
     }
 
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       padding-top: 0;
 
       .quick-view-group-item {
@@ -115,7 +116,7 @@
       display: none;
     }
 
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       display: none;
 
       &[aria-expanded] ~ .quick-view-filters {
@@ -134,7 +135,7 @@
     border-bottom: 1px solid $gray-2;
     z-index: 60000;
 
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       position: static;
       float: right;
       width: 25%;
@@ -153,7 +154,7 @@
       font-weight: normal;
       line-height: 1;
 
-      @media(min-width: map-get($breakpoints, "xl")) {
+      @media(min-width: map.get(v.$breakpoints, "xl")) {
         display: none;
       }
     }
@@ -162,7 +163,7 @@
       margin: 0 0 1rem;
       border: none;
 
-      @media(min-width: map-get($breakpoints, "xl")) {
+      @media(min-width: map.get(v.$breakpoints, "xl")) {
         background: linear-gradient(#eeeeee, #f9f9f9);
       }
 
@@ -197,7 +198,7 @@
   }
 
   .quick-view-results {
-    @media(min-width: map-get($breakpoints, "xl")) {
+    @media(min-width: map.get(v.$breakpoints, "xl")) {
       float: left;
       width: 75%;
     }
@@ -213,13 +214,13 @@
     // TODO: This should be solved somehow in <GroupedTaxonList />
     .taxon-list-navigation {
       top: calc(56px + 48px + 2em);
-      @media(min-width: map-get($breakpoints, "xl")) {
+      @media(min-width: map.get(v.$breakpoints, "xl")) {
         top: calc(56px + 36px + 2em);
       }
     }
     .taxon-list-group-title {
       top: calc(56px + 48px);
-      @media(min-width: map-get($breakpoints, "xl")) {
+      @media(min-width: map.get(v.$breakpoints, "xl")) {
         top: calc(56px + 36px);
       }
     }
