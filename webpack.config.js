@@ -15,6 +15,11 @@ module.exports = {
     publicPath: '/',
     clean: true,
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   resolve: {
     alias: {
       Components: path.resolve(__dirname, 'src', 'components'),
@@ -72,6 +77,10 @@ module.exports = {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
       {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
         test: /\.s[ac]ss$/,
         use: [
           "style-loader",
@@ -79,8 +88,10 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
+              api: 'modern-compiler',
+              implementation: require('sass-embedded'),
               sassOptions: {
-                includePaths: [path.resolve(__dirname, 'src/styles/partials')]
+                loadPaths: [path.resolve(__dirname, 'src/styles/partials')]
               }
             }
           }

@@ -13,27 +13,21 @@ const propTypes = {
     thumbnail: PropTypes.string
   }),
   getItemLinkProps: PropTypes.func,
-  Link: PropTypes.node,
-  Thumbnail: PropTypes.node,
-};
-
-const defaultProps = {
-  Link: 'a',
-  getItemLinkProps: _data => ({
-    href: '#',
-    onClick: e => e.preventDefault()
-  }),
-  Thumbnail: ({data}) => (
-    <Picture src={data.thumbnail} width={160} />
-  ),
+  Link: PropTypes.elementType,
+  Thumbnail: PropTypes.elementType,
 };
 
 const TaxonListItem = ({
   data,
   virtual,
-  getItemLinkProps,
-  Link,
-  Thumbnail,
+  getItemLinkProps = (_data) => ({
+    href: '#',
+    onClick: e => e.preventDefault()
+  }),
+  Link = 'a',
+  Thumbnail = ({data}) => (
+    <Picture src={data.thumbnail} width={160} />
+  ),
 }) => (
   <li
     className="taxon-list-item"
@@ -72,7 +66,5 @@ const TaxonListItem = ({
 );
 
 TaxonListItem.propTypes = propTypes;
-
-TaxonListItem.defaultProps = defaultProps;
 
 export default TaxonListItem;

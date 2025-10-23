@@ -9,9 +9,6 @@ const RehypeTrimWords = options =>
   tree => trimWords(tree, options);
 
 
-const defaultProps = {
-  Heading: 'h1',
-};
 
 const Article = ({
   title,
@@ -20,7 +17,7 @@ const Article = ({
   postedBy,
   postedOn,
   children,
-  Heading
+  Heading = 'h1'
 }) => (
   <article className="article">
     <header className="article-header">
@@ -61,6 +58,5 @@ const Article = ({
   </article>
 );
 
-Article.defaultProps = defaultProps;
 
 export default Article;

@@ -1,6 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .taxonomy-tree {
   margin: 0;
@@ -78,13 +79,13 @@
 
 }
 
-@media(max-width: calc(map-get($breakpoints, "xl") + 5rem)) {
+@media(max-width: calc(map.get(v.$breakpoints, "xl") + 5rem)) {
   .taxonomy-tree-node-rank {
     @include visually-hidden();
   }
 }
 
-@media(min-width: map-get($breakpoints, "xl")) {
+@media(min-width: map.get(v.$breakpoints, "xl")) {
   .taxonomy-tree {
     font-size: .875rem;
     margin-left: 7rem;

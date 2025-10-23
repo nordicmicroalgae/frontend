@@ -1,6 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 
 body.has-overlay {
@@ -37,7 +38,7 @@ body.has-overlay {
       display: flex;
       width: 100%;
       height: 2.5rem;
-      max-width: map-get($breakpoints, "xl");
+      max-width: map.get(v.$breakpoints, "xl");
 
       #search-label {
         position: relative;
@@ -114,7 +115,7 @@ body.has-overlay {
       list-style: none;
       background: $black;
 
-      @media(min-width: map-get($breakpoints, "l")) {
+      @media(min-width: map.get(v.$breakpoints, "l")) {
         margin-top: 3rem;
         max-width: 800px;
         height: auto;

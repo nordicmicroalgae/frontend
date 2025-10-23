@@ -1,12 +1,13 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, lazy, Suspense } from 'react';
 
 import { useFactsQuery } from './facts-context';
 import { selectCollectionByProvider } from './facts-utils';
-import OccurrenceMap from 'Components/OccurrenceMap';
 import { gbif } from 'Components/OccurrenceMap/presets';
 import { ChevronDownIcon, ChevronUpIcon } from 'Components/Icons';
 
 import './Occurrences.scss';
+
+const OccurrenceMap = lazy(() => import('Components/OccurrenceMap'));
 
 
 const Occurrences = () => {
@@ -77,19 +78,21 @@ const Occurrences = () => {
   return (
     <div className="facts-occurrences">
       <h2>Occurrences</h2>
-      <OccurrenceMap
-        {...gbif}
-        externalIds={[...selectedSynonyms]}
-        getOccurrenceTileUrl={
-          externalId => gbif.getOccurrenceTileUrl(
-            externalId, {
-              style: numberOfOccurrences >= 30_000
-                ? 'orangeHeat.point'
-                : 'scaled.circles',
-            }
-          )
-        }
-      />
+      <Suspense fallback={<div className="occurrence-map" style={{ width: '100%', height: '50vh' }} /> }>
+        <OccurrenceMap
+          {...gbif}
+          externalIds={[...selectedSynonyms]}
+          getOccurrenceTileUrl={
+            externalId => gbif.getOccurrenceTileUrl(
+              externalId, {
+                style: numberOfOccurrences >= 30_000
+                  ? 'orangeHeat.point'
+                  : 'scaled.circles',
+              }
+            )
+          }
+        />
+      </Suspense>
 
       {(hasLayers > 0 && isExpanded) && (
       <div className="checkbox-list">

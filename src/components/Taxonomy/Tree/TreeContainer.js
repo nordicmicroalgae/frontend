@@ -16,18 +16,14 @@ const propTypes = {
   getTaxonKey: PropTypes.func.isRequired,
 };
 
-const defaultProps = {
-  initialPath: null,
-  initialSelected: null,
-  onExpand(_taxon) {},
-  onCollapse(_taxon) {},
-  onSelect(_taxon) {},
-};
 
 const TreeContainer = ({
-  initialPath,
-  initialSelected,
+  initialPath = null,
+  initialSelected = null,
   getTaxonKey,
+  onExpand = (_taxon) => {},
+  onCollapse = (_taxon) => {},
+  onSelect = (_taxon) => {},
   ...props
 }) => {
 
@@ -41,7 +37,7 @@ const TreeContainer = ({
       setPath([ ...path, taxonKey]);
     }
 
-    props.onExpand(taxon);
+    onExpand(taxon);
   };
 
   const handleClickCollapse = taxon => {
@@ -49,14 +45,14 @@ const TreeContainer = ({
     if (path.includes(taxonKey)) {
       setPath([...path.filter(n => n !== taxonKey)])
     }
-    props.onCollapse(taxon);
+    onCollapse(taxon);
   };
 
   const [ selected, setSelected ] = useState(initialSelected);
 
   const handleClickSelect = taxon => {
     setSelected(getTaxonKey(taxon));
-    props.onSelect(taxon);
+    onSelect(taxon);
   }
 
   return (
@@ -74,7 +70,5 @@ const TreeContainer = ({
 };
 
 TreeContainer.propTypes = propTypes;
-
-TreeContainer.defaultProps = defaultProps;
 
 export default TreeContainer;

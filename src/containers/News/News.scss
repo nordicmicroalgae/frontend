@@ -1,7 +1,7 @@
-@import "colors";
-@import "variables";
-@import "mixins";
-
+@use "colors" as *;
+@use "variables" as v;
+@use "mixins" as *;
+@use "sass:map";
 
 .news {
   @include container();
@@ -19,6 +19,6 @@
   }
   .news {
     margin: 0 auto;
-    max-width: map-get($breakpoints, "m");
+    max-width: map.get(v.$breakpoints, "m");
   }
 }

@@ -9,11 +9,8 @@ import Placeholder from 'Components/Placeholder';
 import './GalleryCovers.scss';
 
 
-const defaultProps = {
-  coverSize: 140,
-};
 
-const GalleryCovers = ({ coverSize }) => {
+const GalleryCovers = ({ coverSize = 140 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -81,6 +78,5 @@ const GalleryCovers = ({ coverSize }) => {
   );
 };
 
-GalleryCovers.defaultProps = defaultProps;
 
 export default GalleryCovers;

@@ -1,2 +1,2 @@
-import './OccurrenceMap.scss';
+import 'ol/ol.css';
 export { default } from './OccurrenceMap';

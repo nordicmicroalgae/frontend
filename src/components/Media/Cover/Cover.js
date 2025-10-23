@@ -19,12 +19,8 @@ const propTypes = {
   size: PropTypes.number,
 };
 
-const defaultProps = {
-  size: 200,
-};
 
-
-const Cover = ({titleText, thumbnails, size}) => {
+const Cover = ({titleText, thumbnails = [], size = 200}) => {
   return (
     <div
       className="media-cover"
@@ -62,7 +58,5 @@ const Cover = ({titleText, thumbnails, size}) => {
 };
 
 Cover.propTypes = propTypes;
-
-Cover.defaultProps = defaultProps;
 
 export default Cover;

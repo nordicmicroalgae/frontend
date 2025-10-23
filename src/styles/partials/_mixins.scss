@@ -1,4 +1,5 @@
-@import "variables";
+@use "variables" as v;
+@use "sass:map";
 
 @mixin clearfix {
   &::after {
@@ -16,7 +17,7 @@
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  max-width: map-get($breakpoints, "xl");
+  max-width: map.get(v.$breakpoints, "xl");
 }
 
 @mixin visually-hidden {

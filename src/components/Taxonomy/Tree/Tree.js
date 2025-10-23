@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 import propTypes from './propTypes';
-import defaultProps from './defaultProps';
 import compileList from './helpers/compileList';
 import TreeNode from './TreeNode';
 
@@ -9,15 +8,27 @@ import TreeNode from './TreeNode';
 const Tree = ({
   data,
   parent,
-  path,
+  path = [],
   selected,
-  ranks,
-  level,
-  onCollapse,
-  onExpand,
-  onSelect,
-  Link,
-  getLinkProps
+  ranks = [
+    'Domain',
+    'Kingdom',
+    'Phylum',
+    'Class',
+    'Order',
+    'Family',
+    'Genus',
+    'Species',
+  ],
+  level = 1,
+  onCollapse = (_taxon) => {},
+  onExpand = (_taxon) => {},
+  onSelect = (_taxon) => {},
+  Link = 'a',
+  getLinkProps = (_taxon) => ({
+    href: '#',
+    onClick: ev => ev.preventDefault(),
+  }),
 }) => {
 
   const taxa = useMemo(() =>
@@ -49,7 +60,5 @@ const Tree = ({
 
 
 Tree.propTypes = propTypes;
-
-Tree.defaultProps = defaultProps;
 
 export default Tree;
