@@ -1,3 +1,12 @@
+## 2.3.0. (November 5, 2025)
+
+- Always show the search field.
+- Add SHARK4R page.
+- Add images of subordinate taxa.
+- Show occurrences for all synonyms.
+- Fix build warnings
+- Security mitigations from dependabot.
+
 ## 2.2.0 (October 16, 2024)
 
 - Use the new `label` property in external links to render link texts
