@@ -1,3 +1,7 @@
+## 2.3.1. (December 18, 2025)
+
+- Security mitigations from dependabot.
+
 ## 2.3.0. (November 5, 2025)
 
 - Always show the search field.
