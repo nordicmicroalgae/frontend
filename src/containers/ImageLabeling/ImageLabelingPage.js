@@ -6,6 +6,7 @@ import { useGetFactsQuery } from 'Slices/facts';
 import ImageLabelingGallery from 'Components/ImageLabeling/ImageLabelingGallery';
 import ScientificName from 'Components/ScientificName';
 import Authority from 'Components/Authority';
+import './ImageLabelingPage.scss';
 
 const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
   <div style={{ marginBottom: 24 }}>
@@ -78,15 +79,25 @@ const ImageLabelingPage = ({ location, history }) => {
   
   // Initialize selectedTaxon from URL parameter
   const [selectedTaxon, setSelectedTaxon] = React.useState(taxonFromUrl);
-  
   const [selectedInstruments, setSelectedInstruments] = React.useState([]);
+  const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Scroll to top when component mounts
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Update URL when taxon selection changes
+  React.useEffect(() => {
+    if (filtersExpanded) {
+      document.body.classList.add('has-expanded-filters');
+    } else {
+      document.body.classList.remove('has-expanded-filters');
+    }
+    return () => {
+      document.body.classList.remove('has-expanded-filters');
+    };
+  }, [filtersExpanded]);
+
   React.useEffect(() => {
     const newParams = new URLSearchParams();
     if (selectedTaxon) {
@@ -220,12 +231,21 @@ const ImageLabelingPage = ({ location, history }) => {
     );
   }, [filteredImages, selectedTaxon]);
 
+  const handleTaxonSelect = (slug) => {
+    setSelectedTaxon(slug);
+    setFiltersExpanded(false);
+  };
+
   const handleInstrumentToggle = (instrument) => {
     setSelectedInstruments((prev) =>
       prev.includes(instrument)
         ? prev.filter((i) => i !== instrument)
         : [...prev, instrument]
     );
+  };
+
+  const handleToggleFilters = () => {
+    setFiltersExpanded(!filtersExpanded);
   };
 
   const isLandingPage = selectedTaxon === null;
@@ -248,28 +268,27 @@ const ImageLabelingPage = ({ location, history }) => {
   }, [facts]);
 
   return (
-    <div
-      className="container image-labeling-page"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '260px 1fr',
-        gap: 24,
-        alignItems: 'start',
-      }}
-    >
-      {/* Sticky sidebar */}
-      <aside
-        style={{
-          position: 'sticky',
-          top: 16,
-          height: 'calc(100vh - 32px)',
-          overflowY: 'auto',
-          borderRight: '1px solid #e0e0e0',
-          paddingRight: 12,
-          paddingLeft: 12,
-        }}
+    <div className="container image-labeling-page">
+      <button
+        type="button"
+        className="filters-toggle"
+        onClick={handleToggleFilters}
+        aria-controls="filters-navigation"
+        aria-expanded={filtersExpanded}
       >
-        <SidebarTaxonList taxa={taxaList} selected={selectedTaxon} onSelect={setSelectedTaxon} totalCount={totalCount} />
+        <span className="filters-toggle-bar" />
+        <span className="filters-toggle-bar" />
+        <span className="filters-toggle-bar" />
+      </button>
+
+      <aside id="filters-navigation" className="image-labeling-filters">
+        <h2 className="image-labeling-filters-heading">Filters</h2>
+        <SidebarTaxonList 
+          taxa={taxaList} 
+          selected={selectedTaxon} 
+          onSelect={handleTaxonSelect} 
+          totalCount={totalCount} 
+        />
         
         <InstrumentFilter 
           instruments={instrumentsMap} 
@@ -278,8 +297,7 @@ const ImageLabelingPage = ({ location, history }) => {
         />
       </aside>
 
-      {/* Main content */}
-      <main style={{ minWidth: 0 }}>
+      <main className="image-labeling-main">
         {isLandingPage ? (
           <header>
             <h1>Image labeling guide</h1>
@@ -346,7 +364,7 @@ const ImageLabelingPage = ({ location, history }) => {
             <ImageLabelingGallery 
               images={isLandingPage ? firstImagePerTaxon : filteredImages}
               isLandingPage={isLandingPage}
-              onTaxonClick={isLandingPage ? setSelectedTaxon : null}
+              onTaxonClick={isLandingPage ? handleTaxonSelect : null}
             />
           )}
         </section>
