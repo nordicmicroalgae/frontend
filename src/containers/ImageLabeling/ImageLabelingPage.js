@@ -308,19 +308,21 @@ const ImageLabelingPage = ({ location, history }) => {
       </button>
 
       <aside id="filters-navigation" className="image-labeling-filters">
-        <h2 className="image-labeling-filters-heading">Filters</h2>
-        <SidebarTaxonList 
-          taxa={taxaList} 
-          selected={selectedTaxon} 
-          onSelect={handleTaxonSelect} 
-          totalCount={totalCount} 
-        />
-        
-        <InstrumentFilter 
-          instruments={instrumentsMap} 
-          selected={selectedInstruments} 
-          onToggle={handleInstrumentToggle} 
-        />
+        <div className="filters-content">
+          <h2 className="image-labeling-filters-heading">Filters</h2>
+          <SidebarTaxonList 
+            taxa={taxaList} 
+            selected={selectedTaxon} 
+            onSelect={handleTaxonSelect} 
+            totalCount={totalCount} 
+          />
+          
+          <InstrumentFilter 
+            instruments={instrumentsMap} 
+            selected={selectedInstruments} 
+            onToggle={handleInstrumentToggle} 
+          />
+        </div>
       </aside>
 
       <main className="image-labeling-main">
