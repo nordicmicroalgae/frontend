@@ -15,7 +15,7 @@ import HallOfFame from 'Containers/HallOfFame';
 import QuickView from 'Containers/QuickView';
 import TaxonView from 'Containers/TaxonView';
 import settings from '../../settings.json';
-
+import ImageLabelingPage from 'Containers/ImageLabeling/ImageLabelingPage';
 
 const App = () => (
   <Router>
@@ -31,6 +31,7 @@ const App = () => (
           <Route path="/hall-of-fame/" component={HallOfFame} />
           <Route path="/quick-view/:group?/" component={QuickView} />
           <Route path="/taxon/:slug?/" component={TaxonView} />
+          <Route path="/image-labeling/" component={ImageLabelingPage} exact />
           <Route path="/news/" component={NewsArchive} />
           <Route path="/:slug?/" component={Page} />
         </Switch>

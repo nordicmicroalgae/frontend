@@ -10,6 +10,7 @@ import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
 import Synonyms from './Synonyms';
+import ImageLabelingPreview from './ImageLabelingPreview';
 
 
 const TaxonView = () => {
@@ -112,6 +113,9 @@ const TaxonView = () => {
               itemSpacing={8}
             />
           </MediaView>
+        </section>
+        <section className="taxon-view-image-labeling">
+          <ImageLabelingPreview taxonSlug={taxon.slug} />
         </section>
         <section className="taxon-view-synonyms">
           <Synonyms taxon={taxon.slug} />

@@ -1,0 +1,266 @@
+import React from 'react';
+import './ImageLabelingGallery.scss';
+
+/**
+ * Gallery for ImageLabeling images with two modes:
+ * - Landing page: Shows one image per taxon with taxon name below
+ * - Taxon page: Shows all images for selected taxon in clickable grid
+ */
+export default function ImageLabelingGallery({ images = [], isLandingPage = false, onTaxonClick = null }) {
+  
+  function getThumbUrl(item) {
+    return (
+      (item.renditions && (item.renditions.s?.url || item.renditions.o?.url)) ||
+      item.file_url ||
+      (item.file && item.file.url) ||
+      null
+    );
+  }
+
+  function getMediumUrl(item) {
+    return (
+      (item.renditions && (item.renditions.m?.url || item.renditions.o?.url)) ||
+      item.file_url ||
+      (item.file && item.file.url) ||
+      null
+    );
+  }
+
+  function getLargeUrl(item) {
+    return (
+      (item.renditions && (item.renditions.l?.url || item.renditions.m?.url || item.renditions.o?.url)) ||
+      item.file_url ||
+      (item.file && item.file.url) ||
+      null
+    );
+  }
+
+  function getTaxonName(item) {
+    const taxonObj = item.relatedTaxon || item.taxon;
+    if (!taxonObj) return null;
+    
+    if (typeof taxonObj === 'object') {
+      return taxonObj.scientificName || taxonObj.name || taxonObj.text || taxonObj.slug;
+    }
+    return taxonObj;
+  }
+
+  const [active, setActive] = React.useState(null);
+
+  // Prevent body scroll when lightbox is open
+  React.useEffect(() => {
+    if (active) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [active]);
+
+  if (isLandingPage) {
+    // Landing page view: one image per taxon with taxon name
+    return (
+      <div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 160px)', gap: 16 }}>
+          {images.map((img) => {
+            const thumb = getThumbUrl(img);
+            return (
+              <div
+                key={img.taxonSlug || img.id}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                }}
+              >
+                <button
+                  onClick={() => onTaxonClick && onTaxonClick(img.taxonSlug)}
+                  style={{
+                    display: 'block',
+                    padding: 0,
+                    border: '1px solid #ddd',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    lineHeight: 0,
+                  }}
+                >
+                  {thumb ? (
+                    <img 
+                      src={thumb} 
+                      alt={img.taxonName || img.slug} 
+                      style={{ 
+                        width: 160, 
+                        height: 120, 
+                        objectFit: 'contain', 
+                        display: 'block',
+                        backgroundColor: '#f5f5f5'
+                      }} 
+                    />
+                  ) : (
+                    <div style={{ 
+                      width: 160, 
+                      height: 120, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      backgroundColor: '#f5f5f5'
+                    }}>
+                      ?
+                    </div>
+                  )}
+                </button>
+                <button
+                  onClick={() => onTaxonClick && onTaxonClick(img.taxonSlug)}
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    textAlign: 'center',
+                    fontSize: '14px',
+                    fontStyle: 'italic',
+                    color: '#666',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                  onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                >
+                  {img.taxonName || 'Unknown taxon'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Taxon page view: full-size images in masonry-style grid
+  return (
+    <div>
+      <div className="taxon-images-grid">
+        {images.map((img) => {
+          const mediumUrl = getMediumUrl(img);
+          return (
+            <div
+              key={img.id || img.slug || img.file_url}
+              className="taxon-image-item"
+            >
+              <button
+                onClick={() => setActive(img)}
+                className="taxon-image-button"
+              >
+                {mediumUrl ? (
+                  <img 
+                    src={mediumUrl} 
+                    alt={img.title || img.slug}
+                    className="taxon-image"
+                  />
+                ) : (
+                  <div className="taxon-image-placeholder">
+                    ?
+                  </div>
+                )}
+              </button>
+              <div className="taxon-image-title">
+                {img.attributes?.title || img.title || 'Untitled'}
+              </div>
+              {img.attributes?.institute && (
+                <div className="taxon-image-institute">
+                  {img.attributes.institute}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {active && (
+        <div
+          className="image-labeling-lightbox"
+          onClick={(e) => {
+            // Only close if clicking the backdrop, not the content
+            if (e.target.className === 'image-labeling-lightbox') {
+              setActive(null);
+            }
+          }}
+        >
+          <div className="lightbox-content">
+            <button 
+              className="lightbox-close"
+              onClick={() => setActive(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            
+            {getTaxonName(active) && (
+              <div className="lightbox-taxon-name">
+                <em>{getTaxonName(active)}</em>
+              </div>
+            )}
+            
+            <div className="lightbox-image-container">
+              <img
+                src={getLargeUrl(active)}
+                alt={active.attributes?.title || active.title || active.slug}
+              />
+            </div>
+
+            {active.attributes?.caption && (
+              <div className="lightbox-caption">
+                {active.attributes.caption}
+              </div>
+            )}
+
+            <div className="lightbox-metadata">
+              {active.attributes?.title && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Title:</span>
+                  <span className="metadata-value">{active.attributes.title}</span>
+                </div>
+              )}
+              
+              {active.attributes?.imagingInstrument && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Imaging instrument:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.imagingInstrument) 
+                      ? active.attributes.imagingInstrument.join(', ')
+                      : active.attributes.imagingInstrument}
+                  </span>
+                </div>
+              )}
+              
+              {active.attributes?.contributor && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Contributor:</span>
+                  <span className="metadata-value">{active.attributes.contributor}</span>
+                </div>
+              )}
+              
+              {active.attributes?.institute && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Institute:</span>
+                  <span className="metadata-value">{active.attributes.institute}</span>
+                </div>
+              )}
+              
+              {active.attributes?.trainingDataset && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Training dataset DOI:</span>
+                  <span className="metadata-value">{active.attributes.trainingDataset}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

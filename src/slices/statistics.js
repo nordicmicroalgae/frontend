@@ -17,6 +17,9 @@ export const Queries = {
       type: 'image',
     },
   },
+  imageLabelingImages: {
+    url: 'media/image_labeling',
+  },
   contributors: {
     url: 'contributors',
   },

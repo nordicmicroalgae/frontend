@@ -54,7 +54,7 @@
     margin-bottom: 1rem;
   }
 
-
+  // Mobile: 2 columns
   dl > :nth-of-type(2n + 1) {
     grid-column: 1;
   }
@@ -65,13 +65,14 @@
 
   @media(min-width: map.get(v.$breakpoints, "m")) {
     dl {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
+      grid-auto-flow: row;
     }
-    dl > :nth-of-type(2n + 3) {
-      grid-column: 3;
-    }
-    dl > :nth-of-type(2n + 4) {
-      grid-column: 4;
+    
+    // Reset mobile layout and let grid auto-flow handle it
+    dl > :nth-of-type(2n + 1),
+    dl > :nth-of-type(2n + 2) {
+      grid-column: auto;
     }
   }
 }
