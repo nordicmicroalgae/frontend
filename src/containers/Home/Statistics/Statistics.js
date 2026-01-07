@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 import { useGetStatisticsQuery } from 'Slices/statistics';
 import Placeholder from 'Components/Placeholder';
 import getKey from 'Utilities/getKey';
@@ -12,6 +11,7 @@ const Fields = new Map([
   ['species', 'Species'],
   ['taxa', 'Taxa'],
   ['images', 'Images'],
+  ['imageLabelingImages', 'Image Labeling'],
   ['contributors', 'Contributors'],
 ]);
 
@@ -19,6 +19,7 @@ const Links = new Map([
   ['species', '/quick-view/'],
   ['taxa', '/taxon/'],
   ['images', '/gallery/'],
+  ['imageLabelingImages', '/image-labeling/'],
   ['contributors', '/hall-of-fame/'],
 ]);
 
@@ -49,7 +50,7 @@ const Statistics = () => {
             to={Links.get(key)}
             key={getKey('statistics', key)}>
             <dt>
-              {Graphic[label] && Graphic[label]()}
+              {Graphic[label.replace(' ', '')] && Graphic[label.replace(' ', '')]()}
               {label}
             </dt>
             <dd>{currentData[key].toLocaleString()}</dd>

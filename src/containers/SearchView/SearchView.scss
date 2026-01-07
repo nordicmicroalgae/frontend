@@ -72,6 +72,15 @@ body.has-overlay {
         &::placeholder {
           color: $gray-1;
         }
+        
+        // Hide browser's default search clear button
+        &::-webkit-search-cancel-button {
+          -webkit-appearance: none;
+          appearance: none;
+        }
+        &::-ms-clear {
+          display: none;
+        }
       }
 
       #search-clear {
