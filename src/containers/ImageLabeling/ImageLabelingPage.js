@@ -40,9 +40,13 @@ const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontStyle: 'italic' }}>
-              {t.name || t.slug}
-            </span>
+            {t.slug === '__no_taxon__' ? (
+              <span>{t.name || 'Unknown taxon'}</span>
+            ) : (
+              <span style={{ fontStyle: 'italic' }}>
+                {t.name || t.slug}
+              </span>
+            )}
             {' '}({t.count || 0})
           </button>
         </li>
@@ -113,7 +117,10 @@ const ImageLabelingPage = ({ location, history }) => {
       limit: 1000,
       fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file'],
     };
-    if (selectedTaxon) p.taxon = selectedTaxon;
+    // Don't send __no_taxon__ to the API - we'll filter client-side instead
+    if (selectedTaxon && selectedTaxon !== '__no_taxon__') {
+      p.taxon = selectedTaxon;
+    }
     return p;
   }, [selectedTaxon]);
 
@@ -174,32 +181,47 @@ const ImageLabelingPage = ({ location, history }) => {
         }
       } else {
         slug = '__no_taxon__';
-        name = 'No taxon';
+        name = 'Unknown taxon';
       }
 
       const entry = map.get(slug) || { slug, name, count: 0 };
       entry.count += 1;
       map.set(slug, entry);
     });
-    return Array.from(map.values()).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    
+    // Sort alphabetically, but always put __no_taxon__ at the end
+    return Array.from(map.values()).sort((a, b) => {
+      if (a.slug === '__no_taxon__') return 1;
+      if (b.slug === '__no_taxon__') return -1;
+      return String(a.name).localeCompare(String(b.name));
+    });
   }, [filteredAllImages]);
 
-  const taxaList = taxaMap.filter((t) => t.slug !== '__no_taxon__');
+  // Include all taxa, including __no_taxon__
+  const taxaList = taxaMap;
   const totalCount = filteredAllImages.length;
 
   // Filter images by selected instruments (for display)
   const filteredImages = React.useMemo(() => {
-    if (selectedInstruments.length === 0) {
-      return images;
+    let result = images;
+    
+    // Filter by taxon if __no_taxon__ is selected
+    if (selectedTaxon === '__no_taxon__') {
+      result = result.filter((img) => !img.relatedTaxon && !img.taxon);
     }
     
-    return images.filter((img) => {
+    // Filter by instruments
+    if (selectedInstruments.length === 0) {
+      return result;
+    }
+    
+    return result.filter((img) => {
       const instruments = img.attributes?.imagingInstrument || [];
       const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
       
       return instrumentArray.some((inst) => selectedInstruments.includes(inst));
     });
-  }, [images, selectedInstruments]);
+  }, [images, selectedTaxon, selectedInstruments]);
 
   // Get first image per taxon for landing page
   const firstImagePerTaxon = React.useMemo(() => {
@@ -219,6 +241,10 @@ const ImageLabelingPage = ({ location, history }) => {
           slug = taxonObj;
           name = taxonObj;
         }
+      } else {
+        // Handle images without taxon
+        slug = '__no_taxon__';
+        name = 'Unknown taxon';
       }
       
       if (slug && !taxonImages.has(slug)) {
