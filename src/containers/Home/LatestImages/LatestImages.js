@@ -6,7 +6,10 @@ import MediaView from 'Containers/MediaView';
 const LatestImages = () => (
   <section className="latest-illustrations">
     <h2>Latest added illustrations</h2>
-    <MediaView query={{limit: 4}}>
+    <MediaView query={{
+      limit: 4,
+      exclude_galleries: 'Citizen science'
+    }}>
       <MediaView.Thumbnails />
       <MediaView.DetailsDialog />
     </MediaView>
