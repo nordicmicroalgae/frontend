@@ -6,7 +6,7 @@ import './ImageLabelingPreview.scss';
 const ImageLabelingPreview = ({ taxonSlug }) => {
   const { data: images = [], isLoading } = useGetImageLabelingImagesQuery({
     taxon: taxonSlug,
-    limit: 5,
+    limit: 6,
     fields: ['slug', 'renditions', 'attributes'],
   });
 
