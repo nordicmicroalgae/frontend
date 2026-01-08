@@ -76,6 +76,27 @@ const InstrumentFilter = ({ instruments, selected, onToggle }) => (
   </div>
 );
 
+const InstituteFilter = ({ institutes, selected, onToggle }) => (
+  <div style={{ marginBottom: 24 }}>
+    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Institutes</h4>
+    <ul style={{ listStyle: 'none', padding: 0 }}>
+      {institutes.map((inst) => (
+        <li key={inst.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
+          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={selected.includes(inst.name)}
+              onChange={() => onToggle(inst.name)}
+              style={{ marginRight: 8 }}
+            />
+            <span>{inst.name} ({inst.count})</span>
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const ImageLabelingPage = ({ location, history }) => {
   // Parse query parameter from URL
   const queryParams = new URLSearchParams(location.search);
@@ -84,6 +105,7 @@ const ImageLabelingPage = ({ location, history }) => {
   // Initialize selectedTaxon from URL parameter
   const [selectedTaxon, setSelectedTaxon] = React.useState(taxonFromUrl);
   const [selectedInstruments, setSelectedInstruments] = React.useState([]);
+  const [selectedInstitutes, setSelectedInstitutes] = React.useState([]);
   const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Scroll to top when component mounts
@@ -150,19 +172,44 @@ const ImageLabelingPage = ({ location, history }) => {
     return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [allImages]);
 
-  // Filter all images by selected instruments (for calculating taxon counts)
+  // Extract unique institutes with counts (from all images)
+  const institutesMap = React.useMemo(() => {
+    const map = new Map();
+    allImages.forEach((img) => {
+      const institute = img.attributes?.institute;
+      
+      if (institute) {
+        const entry = map.get(institute) || { name: institute, count: 0 };
+        entry.count += 1;
+        map.set(institute, entry);
+      }
+    });
+    return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [allImages]);
+
+  // Filter all images by selected instruments and institutes (for calculating taxon counts)
   const filteredAllImages = React.useMemo(() => {
-    if (selectedInstruments.length === 0) {
-      return allImages;
+    let result = allImages;
+    
+    // Filter by instruments
+    if (selectedInstruments.length > 0) {
+      result = result.filter((img) => {
+        const instruments = img.attributes?.imagingInstrument || [];
+        const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
+        return instrumentArray.some((inst) => selectedInstruments.includes(inst));
+      });
     }
     
-    return allImages.filter((img) => {
-      const instruments = img.attributes?.imagingInstrument || [];
-      const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-      
-      return instrumentArray.some((inst) => selectedInstruments.includes(inst));
-    });
-  }, [allImages, selectedInstruments]);
+    // Filter by institutes
+    if (selectedInstitutes.length > 0) {
+      result = result.filter((img) => {
+        const institute = img.attributes?.institute;
+        return institute && selectedInstitutes.includes(institute);
+      });
+    }
+    
+    return result;
+  }, [allImages, selectedInstruments, selectedInstitutes]);
 
   // Build taxon map from filtered images
   const taxaMap = React.useMemo(() => {
@@ -201,7 +248,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const taxaList = taxaMap;
   const totalCount = filteredAllImages.length;
 
-  // Filter images by selected instruments (for display)
+  // Filter images by selected instruments and institutes (for display)
   const filteredImages = React.useMemo(() => {
     let result = images;
     
@@ -211,17 +258,24 @@ const ImageLabelingPage = ({ location, history }) => {
     }
     
     // Filter by instruments
-    if (selectedInstruments.length === 0) {
-      return result;
+    if (selectedInstruments.length > 0) {
+      result = result.filter((img) => {
+        const instruments = img.attributes?.imagingInstrument || [];
+        const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
+        return instrumentArray.some((inst) => selectedInstruments.includes(inst));
+      });
     }
     
-    return result.filter((img) => {
-      const instruments = img.attributes?.imagingInstrument || [];
-      const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-      
-      return instrumentArray.some((inst) => selectedInstruments.includes(inst));
-    });
-  }, [images, selectedTaxon, selectedInstruments]);
+    // Filter by institutes
+    if (selectedInstitutes.length > 0) {
+      result = result.filter((img) => {
+        const institute = img.attributes?.institute;
+        return institute && selectedInstitutes.includes(institute);
+      });
+    }
+    
+    return result;
+  }, [images, selectedTaxon, selectedInstruments, selectedInstitutes]);
 
   // Get first image per taxon for landing page
   const firstImagePerTaxon = React.useMemo(() => {
@@ -267,6 +321,14 @@ const ImageLabelingPage = ({ location, history }) => {
       prev.includes(instrument)
         ? prev.filter((i) => i !== instrument)
         : [...prev, instrument]
+    );
+  };
+
+  const handleInstituteToggle = (institute) => {
+    setSelectedInstitutes((prev) =>
+      prev.includes(institute)
+        ? prev.filter((i) => i !== institute)
+        : [...prev, institute]
     );
   };
 
@@ -321,6 +383,12 @@ const ImageLabelingPage = ({ location, history }) => {
             instruments={instrumentsMap} 
             selected={selectedInstruments} 
             onToggle={handleInstrumentToggle} 
+          />
+          
+          <InstituteFilter 
+            institutes={institutesMap} 
+            selected={selectedInstitutes} 
+            onToggle={handleInstituteToggle} 
           />
         </div>
       </aside>
