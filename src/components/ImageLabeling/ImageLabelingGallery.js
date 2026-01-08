@@ -61,6 +61,23 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
     };
   }, [active]);
 
+  // Close lightbox with ESC key
+  React.useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && active) {
+        setActive(null);
+      }
+    };
+
+    if (active) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [active]);
+
   if (isLandingPage) {
     // Landing page view: one image per taxon with taxon name
     return (
