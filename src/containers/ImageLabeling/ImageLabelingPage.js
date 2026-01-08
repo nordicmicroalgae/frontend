@@ -98,11 +98,8 @@ const InstituteFilter = ({ institutes, selected, onToggle }) => (
 );
 
 const ImageLabelingPage = ({ location, history }) => {
-  // Parse query parameter from URL
-  const queryParams = new URLSearchParams(location.search);
-  const taxonFromUrl = queryParams.get('taxon');
-  
-  // Initialize selectedTaxon from URL parameter
+  // Always initialize from URL
+  const taxonFromUrl = new URLSearchParams(location.search).get('taxon');
   const [selectedTaxon, setSelectedTaxon] = React.useState(taxonFromUrl);
   const [selectedInstruments, setSelectedInstruments] = React.useState([]);
   const [selectedInstitutes, setSelectedInstitutes] = React.useState([]);
@@ -124,15 +121,13 @@ const ImageLabelingPage = ({ location, history }) => {
     };
   }, [filtersExpanded]);
 
+  // ONLY sync FROM URL TO STATE (one direction only)
   React.useEffect(() => {
-    const newParams = new URLSearchParams();
-    if (selectedTaxon) {
-      newParams.set('taxon', selectedTaxon);
-      history.push({ search: newParams.toString() });
-    } else {
-      history.push({ search: '' });
+    const urlTaxon = new URLSearchParams(location.search).get('taxon');
+    if (urlTaxon !== selectedTaxon) {
+      setSelectedTaxon(urlTaxon);
     }
-  }, [selectedTaxon, history]);
+  }, [location.search]);
 
   const params = React.useMemo(() => {
     const p = {
@@ -314,6 +309,15 @@ const ImageLabelingPage = ({ location, history }) => {
   const handleTaxonSelect = (slug) => {
     setSelectedTaxon(slug);
     setFiltersExpanded(false);
+    
+    // Update URL immediately in the handler
+    const newParams = new URLSearchParams();
+    if (slug) {
+      newParams.set('taxon', slug);
+      history.push({ search: newParams.toString() });
+    } else {
+      history.push({ search: '' });
+    }
   };
 
   const handleInstrumentToggle = (instrument) => {
