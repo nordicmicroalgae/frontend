@@ -6,6 +6,7 @@ import { useGetFactsQuery } from 'Slices/facts';
 import ImageLabelingGallery from 'Components/ImageLabeling/ImageLabelingGallery';
 import ScientificName from 'Components/ScientificName';
 import Authority from 'Components/Authority';
+import './ImageLabelingPage.scss';
 
 const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
   <div style={{ marginBottom: 24 }}>
@@ -39,9 +40,13 @@ const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontStyle: 'italic' }}>
-              {t.name || t.slug}
-            </span>
+            {t.slug === '__no_taxon__' ? (
+              <span>{t.name || 'Unknown taxon'}</span>
+            ) : (
+              <span style={{ fontStyle: 'italic' }}>
+                {t.name || t.slug}
+              </span>
+            )}
             {' '}({t.count || 0})
           </button>
         </li>
@@ -71,38 +76,68 @@ const InstrumentFilter = ({ instruments, selected, onToggle }) => (
   </div>
 );
 
+const InstituteFilter = ({ institutes, selected, onToggle }) => (
+  <div style={{ marginBottom: 24 }}>
+    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Institutes</h4>
+    <ul style={{ listStyle: 'none', padding: 0 }}>
+      {institutes.map((inst) => (
+        <li key={inst.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
+          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={selected.includes(inst.name)}
+              onChange={() => onToggle(inst.name)}
+              style={{ marginRight: 8 }}
+            />
+            <span>{inst.name} ({inst.count})</span>
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const ImageLabelingPage = ({ location, history }) => {
-  // Parse query parameter from URL
-  const queryParams = new URLSearchParams(location.search);
-  const taxonFromUrl = queryParams.get('taxon');
-  
-  // Initialize selectedTaxon from URL parameter
+  // Always initialize from URL
+  const taxonFromUrl = new URLSearchParams(location.search).get('taxon');
   const [selectedTaxon, setSelectedTaxon] = React.useState(taxonFromUrl);
-  
   const [selectedInstruments, setSelectedInstruments] = React.useState([]);
+  const [selectedInstitutes, setSelectedInstitutes] = React.useState([]);
+  const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Scroll to top when component mounts
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Update URL when taxon selection changes
   React.useEffect(() => {
-    const newParams = new URLSearchParams();
-    if (selectedTaxon) {
-      newParams.set('taxon', selectedTaxon);
-      history.push({ search: newParams.toString() });
+    if (filtersExpanded) {
+      document.body.classList.add('has-expanded-filters');
     } else {
-      history.push({ search: '' });
+      document.body.classList.remove('has-expanded-filters');
     }
-  }, [selectedTaxon, history]);
+    return () => {
+      document.body.classList.remove('has-expanded-filters');
+    };
+  }, [filtersExpanded]);
+
+  // ONLY sync FROM URL TO STATE (one direction only)
+  React.useEffect(() => {
+    const urlTaxon = new URLSearchParams(location.search).get('taxon');
+    if (urlTaxon !== selectedTaxon) {
+      setSelectedTaxon(urlTaxon);
+    }
+  }, [location.search]);
 
   const params = React.useMemo(() => {
     const p = {
       limit: 1000,
       fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file'],
     };
-    if (selectedTaxon) p.taxon = selectedTaxon;
+    // Don't send __no_taxon__ to the API - we'll filter client-side instead
+    if (selectedTaxon && selectedTaxon !== '__no_taxon__') {
+      p.taxon = selectedTaxon;
+    }
     return p;
   }, [selectedTaxon]);
 
@@ -132,19 +167,44 @@ const ImageLabelingPage = ({ location, history }) => {
     return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [allImages]);
 
-  // Filter all images by selected instruments (for calculating taxon counts)
+  // Extract unique institutes with counts (from all images)
+  const institutesMap = React.useMemo(() => {
+    const map = new Map();
+    allImages.forEach((img) => {
+      const institute = img.attributes?.institute;
+      
+      if (institute) {
+        const entry = map.get(institute) || { name: institute, count: 0 };
+        entry.count += 1;
+        map.set(institute, entry);
+      }
+    });
+    return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [allImages]);
+
+  // Filter all images by selected instruments and institutes (for calculating taxon counts)
   const filteredAllImages = React.useMemo(() => {
-    if (selectedInstruments.length === 0) {
-      return allImages;
+    let result = allImages;
+    
+    // Filter by instruments
+    if (selectedInstruments.length > 0) {
+      result = result.filter((img) => {
+        const instruments = img.attributes?.imagingInstrument || [];
+        const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
+        return instrumentArray.some((inst) => selectedInstruments.includes(inst));
+      });
     }
     
-    return allImages.filter((img) => {
-      const instruments = img.attributes?.imagingInstrument || [];
-      const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-      
-      return instrumentArray.some((inst) => selectedInstruments.includes(inst));
-    });
-  }, [allImages, selectedInstruments]);
+    // Filter by institutes
+    if (selectedInstitutes.length > 0) {
+      result = result.filter((img) => {
+        const institute = img.attributes?.institute;
+        return institute && selectedInstitutes.includes(institute);
+      });
+    }
+    
+    return result;
+  }, [allImages, selectedInstruments, selectedInstitutes]);
 
   // Build taxon map from filtered images
   const taxaMap = React.useMemo(() => {
@@ -163,32 +223,54 @@ const ImageLabelingPage = ({ location, history }) => {
         }
       } else {
         slug = '__no_taxon__';
-        name = 'No taxon';
+        name = 'Unknown taxon';
       }
 
       const entry = map.get(slug) || { slug, name, count: 0 };
       entry.count += 1;
       map.set(slug, entry);
     });
-    return Array.from(map.values()).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+    
+    // Sort alphabetically, but always put __no_taxon__ at the end
+    return Array.from(map.values()).sort((a, b) => {
+      if (a.slug === '__no_taxon__') return 1;
+      if (b.slug === '__no_taxon__') return -1;
+      return String(a.name).localeCompare(String(b.name));
+    });
   }, [filteredAllImages]);
 
-  const taxaList = taxaMap.filter((t) => t.slug !== '__no_taxon__');
+  // Include all taxa, including __no_taxon__
+  const taxaList = taxaMap;
   const totalCount = filteredAllImages.length;
 
-  // Filter images by selected instruments (for display)
+  // Filter images by selected instruments and institutes (for display)
   const filteredImages = React.useMemo(() => {
-    if (selectedInstruments.length === 0) {
-      return images;
+    let result = images;
+    
+    // Filter by taxon if __no_taxon__ is selected
+    if (selectedTaxon === '__no_taxon__') {
+      result = result.filter((img) => !img.relatedTaxon && !img.taxon);
     }
     
-    return images.filter((img) => {
-      const instruments = img.attributes?.imagingInstrument || [];
-      const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-      
-      return instrumentArray.some((inst) => selectedInstruments.includes(inst));
-    });
-  }, [images, selectedInstruments]);
+    // Filter by instruments
+    if (selectedInstruments.length > 0) {
+      result = result.filter((img) => {
+        const instruments = img.attributes?.imagingInstrument || [];
+        const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
+        return instrumentArray.some((inst) => selectedInstruments.includes(inst));
+      });
+    }
+    
+    // Filter by institutes
+    if (selectedInstitutes.length > 0) {
+      result = result.filter((img) => {
+        const institute = img.attributes?.institute;
+        return institute && selectedInstitutes.includes(institute);
+      });
+    }
+    
+    return result;
+  }, [images, selectedTaxon, selectedInstruments, selectedInstitutes]);
 
   // Get first image per taxon for landing page
   const firstImagePerTaxon = React.useMemo(() => {
@@ -208,6 +290,10 @@ const ImageLabelingPage = ({ location, history }) => {
           slug = taxonObj;
           name = taxonObj;
         }
+      } else {
+        // Handle images without taxon
+        slug = '__no_taxon__';
+        name = 'Unknown taxon';
       }
       
       if (slug && !taxonImages.has(slug)) {
@@ -220,12 +306,38 @@ const ImageLabelingPage = ({ location, history }) => {
     );
   }, [filteredImages, selectedTaxon]);
 
+  const handleTaxonSelect = (slug) => {
+    setSelectedTaxon(slug);
+    setFiltersExpanded(false);
+    
+    // Update URL immediately in the handler
+    const newParams = new URLSearchParams();
+    if (slug) {
+      newParams.set('taxon', slug);
+      history.push({ search: newParams.toString() });
+    } else {
+      history.push({ search: '' });
+    }
+  };
+
   const handleInstrumentToggle = (instrument) => {
     setSelectedInstruments((prev) =>
       prev.includes(instrument)
         ? prev.filter((i) => i !== instrument)
         : [...prev, instrument]
     );
+  };
+
+  const handleInstituteToggle = (institute) => {
+    setSelectedInstitutes((prev) =>
+      prev.includes(institute)
+        ? prev.filter((i) => i !== institute)
+        : [...prev, institute]
+    );
+  };
+
+  const handleToggleFilters = () => {
+    setFiltersExpanded(!filtersExpanded);
   };
 
   const isLandingPage = selectedTaxon === null;
@@ -248,38 +360,44 @@ const ImageLabelingPage = ({ location, history }) => {
   }, [facts]);
 
   return (
-    <div
-      className="container image-labeling-page"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '260px 1fr',
-        gap: 24,
-        alignItems: 'start',
-      }}
-    >
-      {/* Sticky sidebar */}
-      <aside
-        style={{
-          position: 'sticky',
-          top: 16,
-          height: 'calc(100vh - 32px)',
-          overflowY: 'auto',
-          borderRight: '1px solid #e0e0e0',
-          paddingRight: 12,
-          paddingLeft: 12,
-        }}
+    <div className="container image-labeling-page">
+      <button
+        type="button"
+        className="filters-toggle"
+        onClick={handleToggleFilters}
+        aria-controls="filters-navigation"
+        aria-expanded={filtersExpanded}
       >
-        <SidebarTaxonList taxa={taxaList} selected={selectedTaxon} onSelect={setSelectedTaxon} totalCount={totalCount} />
-        
-        <InstrumentFilter 
-          instruments={instrumentsMap} 
-          selected={selectedInstruments} 
-          onToggle={handleInstrumentToggle} 
-        />
+        <span className="filters-toggle-bar" />
+        <span className="filters-toggle-bar" />
+        <span className="filters-toggle-bar" />
+      </button>
+
+      <aside id="filters-navigation" className="image-labeling-filters">
+        <div className="filters-content">
+          <h2 className="image-labeling-filters-heading">Filters</h2>
+          <SidebarTaxonList 
+            taxa={taxaList} 
+            selected={selectedTaxon} 
+            onSelect={handleTaxonSelect} 
+            totalCount={totalCount} 
+          />
+          
+          <InstrumentFilter 
+            instruments={instrumentsMap} 
+            selected={selectedInstruments} 
+            onToggle={handleInstrumentToggle} 
+          />
+          
+          <InstituteFilter 
+            institutes={institutesMap} 
+            selected={selectedInstitutes} 
+            onToggle={handleInstituteToggle} 
+          />
+        </div>
       </aside>
 
-      {/* Main content */}
-      <main style={{ minWidth: 0 }}>
+      <main className="image-labeling-main">
         {isLandingPage ? (
           <header>
             <h1>Image labeling guide</h1>
@@ -346,7 +464,7 @@ const ImageLabelingPage = ({ location, history }) => {
             <ImageLabelingGallery 
               images={isLandingPage ? firstImagePerTaxon : filteredImages}
               isLandingPage={isLandingPage}
-              onTaxonClick={isLandingPage ? setSelectedTaxon : null}
+              onTaxonClick={isLandingPage ? handleTaxonSelect : null}
             />
           )}
         </section>
