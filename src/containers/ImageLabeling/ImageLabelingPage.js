@@ -106,9 +106,9 @@ const ImageLabelingPage = ({ location, history }) => {
   const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Scroll to top when component mounts
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+React.useEffect(() => {
+  window.scrollTo(0, 0);
+}, [selectedTaxon]);
 
   React.useEffect(() => {
     if (filtersExpanded) {
