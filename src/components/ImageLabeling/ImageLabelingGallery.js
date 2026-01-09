@@ -276,7 +276,28 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
               {active.attributes?.trainingDataset && (
                 <div className="metadata-row">
                   <span className="metadata-label">Training dataset DOI:</span>
-                  <span className="metadata-value">{active.attributes.trainingDataset}</span>
+                  <span className="metadata-value">
+                    {active.attributes.trainingDataset.startsWith('http://') || 
+                    active.attributes.trainingDataset.startsWith('https://') ||
+                    active.attributes.trainingDataset.startsWith('doi:') ? ( <a
+                      
+                        href={
+                          active.attributes.trainingDataset.startsWith('doi:')
+                            ? `https://doi.org/${active.attributes.trainingDataset.slice(4)}`
+                            : active.attributes.trainingDataset
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#0066cc', textDecoration: 'none' }}
+                        onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                        onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                      >
+                        {active.attributes.trainingDataset}
+                      </a>
+                    ) : (
+                      active.attributes.trainingDataset
+                    )}
+                  </span>
                 </div>
               )}
             </div>
