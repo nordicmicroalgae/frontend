@@ -403,7 +403,18 @@ const ImageLabelingPage = ({ location, history }) => {
           <header>
             <h1>Image labeling guide</h1>
             <p>
-              Select a taxon from the sidebar to view images and learn about standardized identification and labeling techniques for automated imaging instruments in Nordic waters.
+              Select a taxon from the sidebar to view images and learn about standardized identification and labeling techniques for automated imaging instruments in Nordic waters
+            </p>
+            <p style={{ marginTop: '12px' }}>
+              If you notice an incorrectly labeled image, please contact the contributor directly or email{' '}
+              <a href="mailto:nordicmicroalgae@smhi.se" style={{ color: '#0066cc' }}>
+                nordicmicroalgae@smhi.se
+              </a>
+              . To contribute your own images, visit our{' '}
+              <Link to="/how-to-contribute/" style={{ color: '#0066cc' }}>
+                contribution guidelines
+              </Link>
+              .
             </p>
           </header>
         ) : selectedTaxon === '__no_taxon__' ? (
@@ -432,7 +443,6 @@ const ImageLabelingPage = ({ location, history }) => {
               <div style={{ marginBottom: 12 }}>
                 <Link
                   to={`/taxon/${relatedTaxon.slug}/`}
-                  target="_blank"
                   rel="noopener noreferrer"
                   style={{
                     fontSize: '14px',
@@ -443,13 +453,24 @@ const ImageLabelingPage = ({ location, history }) => {
                     gap: '4px',
                   }}
                 >
-                  More about this taxon ↗
+                  More about this taxon →
                 </Link>
               </div>
             
               {!factsFetching && aphiaId && (
                 <div style={{ fontSize: '14px', color: '#666', marginBottom: 12 }}>
-                  <strong>AphiaID:</strong> {aphiaId}
+                  <strong>AphiaID:</strong>{' '}<a
+                  
+                    href={`https://www.marinespecies.org/aphia.php?p=taxdetails&id=${aphiaId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      textDecoration: 'none',
+                      color: '#0066cc',
+                    }}
+                  >
+                    {aphiaId}
+                  </a>
                 </div>
               )}
 
