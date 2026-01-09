@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { useGetImageLabelingImagesQuery } from 'Slices/labeling';
+import { useGetImageLabelingImagesQuery, useGetImageLabelingSummaryQuery } from 'Slices/labeling';
 import { useGetFactsQuery } from 'Slices/facts';
 
 import ImageLabelingGallery from 'Components/ImageLabeling/ImageLabelingGallery';
@@ -24,7 +24,7 @@ const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
             cursor: 'pointer',
           }}
         >
-          All ({totalCount})
+          All taxa ({taxa.length})
         </button>
       </li>
       {taxa.map((t) => (
@@ -106,9 +106,9 @@ const ImageLabelingPage = ({ location, history }) => {
   const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   // Scroll to top when component mounts
-React.useEffect(() => {
-  window.scrollTo(0, 0);
-}, [selectedTaxon]);
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedTaxon]);
 
   React.useEffect(() => {
     if (filtersExpanded) {
@@ -143,105 +143,31 @@ React.useEffect(() => {
 
   const { data: images = [], isLoading, error, isFetching } = useGetImageLabelingImagesQuery(params);
 
-  // Fetch all images without filter to get the total count
-  const { data: allImages = [] } = useGetImageLabelingImagesQuery({
-    limit: 1000,
-    fields: ['slug', 'related_taxon', 'taxon', 'attributes'],
-  });
+  // Fetch summary data for filters
+  const { data: summary, isLoading: summaryLoading } = useGetImageLabelingSummaryQuery();
 
-  // Extract unique imaging instruments with counts (from all images)
+  // Extract data from summary
   const instrumentsMap = React.useMemo(() => {
-    const map = new Map();
-    allImages.forEach((img) => {
-      const instruments = img.attributes?.imagingInstrument || [];
-      const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-      
-      instrumentArray.forEach((inst) => {
-        if (inst) {
-          const entry = map.get(inst) || { name: inst, count: 0 };
-          entry.count += 1;
-          map.set(inst, entry);
-        }
-      });
-    });
-    return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
-  }, [allImages]);
+    return summary?.instruments || [];
+  }, [summary]);
 
-  // Extract unique institutes with counts (from all images)
   const institutesMap = React.useMemo(() => {
-    const map = new Map();
-    allImages.forEach((img) => {
-      const institute = img.attributes?.institute;
-      
-      if (institute) {
-        const entry = map.get(institute) || { name: institute, count: 0 };
-        entry.count += 1;
-        map.set(institute, entry);
-      }
-    });
-    return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
-  }, [allImages]);
+    return summary?.institutes || [];
+  }, [summary]);
 
-  // Filter all images by selected instruments and institutes (for calculating taxon counts)
-  const filteredAllImages = React.useMemo(() => {
-    let result = allImages;
-    
-    // Filter by instruments
-    if (selectedInstruments.length > 0) {
-      result = result.filter((img) => {
-        const instruments = img.attributes?.imagingInstrument || [];
-        const instrumentArray = Array.isArray(instruments) ? instruments : [instruments];
-        return instrumentArray.some((inst) => selectedInstruments.includes(inst));
-      });
-    }
-    
-    // Filter by institutes
-    if (selectedInstitutes.length > 0) {
-      result = result.filter((img) => {
-        const institute = img.attributes?.institute;
-        return institute && selectedInstitutes.includes(institute);
-      });
-    }
-    
-    return result;
-  }, [allImages, selectedInstruments, selectedInstitutes]);
-
-  // Build taxon map from filtered images
   const taxaMap = React.useMemo(() => {
-    const map = new Map();
-    filteredAllImages.forEach((img) => {
-      const taxonObj = img.relatedTaxon || img.taxon || null;
-      let slug = null;
-      let name = null;
-      if (taxonObj) {
-        if (typeof taxonObj === 'object') {
-          slug = taxonObj.id || taxonObj.slug || String(taxonObj);
-          name = taxonObj.text || taxonObj.name || taxonObj.scientificName || taxonObj.slug || slug;
-        } else {
-          slug = taxonObj;
-          name = taxonObj;
-        }
-      } else {
-        slug = '__no_taxon__';
-        name = 'Unknown taxon';
-      }
-
-      const entry = map.get(slug) || { slug, name, count: 0 };
-      entry.count += 1;
-      map.set(slug, entry);
-    });
+    if (!summary?.taxa) return [];
     
-    // Sort alphabetically, but always put __no_taxon__ at the end
-    return Array.from(map.values()).sort((a, b) => {
+    // Create a mutable copy before sorting
+    return [...summary.taxa].sort((a, b) => {
       if (a.slug === '__no_taxon__') return 1;
       if (b.slug === '__no_taxon__') return -1;
       return String(a.name).localeCompare(String(b.name));
     });
-  }, [filteredAllImages]);
+  }, [summary]);
 
-  // Include all taxa, including __no_taxon__
   const taxaList = taxaMap;
-  const totalCount = filteredAllImages.length;
+  const totalCount = summary?.total_count || 0;
 
   // Filter images by selected instruments and institutes (for display)
   const filteredImages = React.useMemo(() => {
