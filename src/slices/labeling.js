@@ -21,6 +21,12 @@ export const extendedApiSlice = baseApi.injectEndpoints({
         transformResponseKeys(responseData).imageLabelingImages || transformResponseKeys(responseData).media || [],
     }),
     
+    // Get first images of each taxon
+    getImageLabelingFirstPerTaxon: builder.query({
+      query: () => 'media/image_labeling/first_per_taxon',
+      transformResponse: responseData => responseData.images || [],
+    }),
+
     // Get aggregated summary data for filters
     getImageLabelingSummary: builder.query({
       query: () => 'media/image_labeling/summary',
@@ -32,4 +38,5 @@ export const extendedApiSlice = baseApi.injectEndpoints({
 export const { 
   useGetImageLabelingImagesQuery,
   useGetImageLabelingSummaryQuery,
+  useGetImageLabelingFirstPerTaxonQuery,
 } = extendedApiSlice;
