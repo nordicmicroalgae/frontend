@@ -82,7 +82,12 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
     // Landing page view: one image per taxon with taxon name
     return (
       <div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 160px)', gap: 16 }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, 160px)', 
+          gap: 16,
+          justifyContent: 'center'  // ADD THIS LINE
+        }}>
           {images.map((img) => {
             const thumb = getThumbUrl(img);
             return (
