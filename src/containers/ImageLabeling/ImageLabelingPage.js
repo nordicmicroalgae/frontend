@@ -142,7 +142,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const { data: allImages = [] } = useGetImageLabelingImagesQuery(
     {
       limit: 1000,
-      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file'],
+      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority'],
     },
     { skip: !hasActiveFilters }
   );
@@ -151,7 +151,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const params = React.useMemo(() => {
     const p = {
       limit: 1000,
-      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file'],
+      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority'],
     };
     if (selectedTaxon && selectedTaxon !== '__no_taxon__') {
       p.taxon = selectedTaxon;
@@ -297,13 +297,34 @@ const ImageLabelingPage = ({ location, history }) => {
         }
       }
       
-      if (!taxonImages.has(slug)) {
+      // Only keep the image with the lowest priority for each taxon
+      const existing = taxonImages.get(slug);
+      
+      // If no existing image, or current image has lower priority, use current image
+      if (!existing) {
+        taxonImages.set(slug, {
+          ...img,
+          taxonSlug: slug,
+          taxonName: name,
+        });
+      } else if (img.priority != null && existing.priority != null) {
+        // Both have priorities - compare them
+        if (img.priority < existing.priority) {
+          taxonImages.set(slug, {
+            ...img,
+            taxonSlug: slug,
+            taxonName: name,
+          });
+        }
+      } else if (img.priority != null && existing.priority == null) {
+        // Current has priority, existing doesn't - prefer current
         taxonImages.set(slug, {
           ...img,
           taxonSlug: slug,
           taxonName: name,
         });
       }
+      // else: existing has priority and current doesn't, keep existing
     });
     
     // Sort alphabetically, with Unknown taxon at the end
