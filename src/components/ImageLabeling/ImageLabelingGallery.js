@@ -243,7 +243,7 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
             <div className="lightbox-metadata">
               {active.attributes?.title && (
                 <div className="metadata-row">
-                  <span className="metadata-label">Title:</span>
+                  <span className="metadata-label">Class name:</span>
                   <span className="metadata-value">{active.attributes.title}</span>
                 </div>
               )}
@@ -258,7 +258,7 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
                   </span>
                 </div>
               )}
-              
+
               {active.attributes?.contributor && (
                 <div className="metadata-row">
                   <span className="metadata-label">Contributor:</span>
@@ -297,6 +297,83 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
                     ) : (
                       active.attributes.trainingDataset
                     )}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.geographicArea && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Geographic area:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.geographicArea) 
+                      ? active.attributes.geographicArea.join(', ')
+                      : active.attributes.geographicArea}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.location && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Location:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.location) 
+                      ? active.attributes.location.join(', ')
+                      : active.attributes.location}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.latitudeDegree && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Latitude:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.latitudeDegree) 
+                      ? active.attributes.latitudeDegree.join(', ')
+                      : active.attributes.latitudeDegree}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.longitudeDegree && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Longitude:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.longitudeDegree) 
+                      ? active.attributes.longitudeDegree.join(', ')
+                      : active.attributes.longitudeDegree}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.samplingDate && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Sampling date:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.samplingDate) 
+                      ? active.attributes.samplingDate.join(', ')
+                      : active.attributes.samplingDate}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.copyrightHolder && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Copyright holder:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.copyrightHolder) 
+                      ? active.attributes.copyrightHolder.join(', ')
+                      : active.attributes.copyrightHolder}
+                  </span>
+                </div>
+              )}
+
+              {active.attributes?.license && (
+                <div className="metadata-row">
+                  <span className="metadata-label">License:</span>
+                  <span className="metadata-value">
+                    {Array.isArray(active.attributes.license) 
+                      ? active.attributes.license.join(', ')
+                      : active.attributes.license}
                   </span>
                 </div>
               )}
