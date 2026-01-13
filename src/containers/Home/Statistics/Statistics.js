@@ -10,8 +10,9 @@ import * as Graphic from './Graphic';
 const Fields = new Map([
   ['species', 'Species'],
   ['taxa', 'Taxa'],
-  ['images', 'Images'],
+  ['images', 'Expert Images'],
   ['imageLabelingImages', 'Image Labeling'],
+  ['citizenScienceImages', 'Citizen Science'],
   ['contributors', 'Contributors'],
 ]);
 
@@ -20,6 +21,7 @@ const Links = new Map([
   ['taxa', '/taxon/'],
   ['images', '/gallery/'],
   ['imageLabelingImages', '/image-labeling/'],
+  ['citizenScienceImages', '/gallery/Citizen%20science/'],
   ['contributors', '/hall-of-fame/'],
 ]);
 

@@ -65,14 +65,19 @@
 
   @media(min-width: map.get(v.$breakpoints, "m")) {
     dl {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);  // 3 columns on tablet
       grid-auto-flow: row;
     }
     
-    // Reset mobile layout and let grid auto-flow handle it
     dl > :nth-of-type(2n + 1),
     dl > :nth-of-type(2n + 2) {
       grid-column: auto;
+    }
+  }
+
+  @media(min-width: map.get(v.$breakpoints, "l")) {
+    dl {
+      grid-template-columns: repeat(6, 1fr);  // 6 columns on desktop
     }
   }
 }
