@@ -89,7 +89,32 @@ const InstituteFilter = ({ institutes, selected, onToggle }) => (
               onChange={() => onToggle(inst.name)}
               style={{ marginRight: 8 }}
             />
-            <span>{inst.name} ({inst.count})</span>
+            <span>
+              {inst.name === '__not_specified__' ? 'Not specified' : inst.name} ({inst.count})
+            </span>
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const GeographicAreaFilter = ({ areas, selected, onToggle }) => (
+  <div style={{ marginBottom: 24 }}>
+    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Geographic areas</h4>
+    <ul style={{ listStyle: 'none', padding: 0 }}>
+      {areas.map((area) => (
+        <li key={area.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
+          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={selected.includes(area.name)}
+              onChange={() => onToggle(area.name)}
+              style={{ marginRight: 8 }}
+            />
+            <span>
+              {area.name === '__not_specified__' ? 'Not specified' : area.name} ({area.count})
+            </span>
           </label>
         </li>
       ))}
@@ -102,6 +127,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const [selectedTaxon, setSelectedTaxon] = React.useState(taxonFromUrl);
   const [selectedInstruments, setSelectedInstruments] = React.useState([]);
   const [selectedInstitutes, setSelectedInstitutes] = React.useState([]);
+  const [selectedGeographicAreas, setSelectedGeographicAreas] = React.useState([]);
   const [filtersExpanded, setFiltersExpanded] = React.useState(false);
 
   React.useEffect(() => {
@@ -127,7 +153,7 @@ const ImageLabelingPage = ({ location, history }) => {
   }, [location.search]);
 
   const isLandingPage = selectedTaxon === null;
-  const hasActiveFilters = selectedInstruments.length > 0 || selectedInstitutes.length > 0;
+  const hasActiveFilters = selectedInstruments.length > 0 || selectedInstitutes.length > 0 || selectedGeographicAreas.length > 0;
 
   // Fetch summary for unfiltered state
   const { data: summary } = useGetImageLabelingSummaryQuery();
@@ -182,12 +208,32 @@ const ImageLabelingPage = ({ location, history }) => {
       result = result.filter((img) => {
         const institutes = img.attributes?.institute || [];
         const instituteArray = Array.isArray(institutes) ? institutes : [institutes];
+        
+        // Check if "__not_specified__" is selected and image has no institute
+        if (selectedInstitutes.includes('__not_specified__') && (!img.attributes?.institute || instituteArray.length === 0)) {
+          return true;
+        }
+        
         return instituteArray.some((inst) => selectedInstitutes.includes(inst));
       });
     }
     
+    if (selectedGeographicAreas.length > 0) {
+      result = result.filter((img) => {
+        const area = img.attributes?.geographicArea;
+        
+        // Check if "__not_specified__" is selected and image has no area
+        if (selectedGeographicAreas.includes('__not_specified__') && !area) {
+          return true;
+        }
+        
+        return area && selectedGeographicAreas.includes(area);
+      });
+    }
+    
     return result;
-  }, [allImages, selectedInstruments, selectedInstitutes, hasActiveFilters]);
+  }, [allImages, selectedInstruments, selectedInstitutes, selectedGeographicAreas, hasActiveFilters]);
+
 
   // Build taxon list from filtered images when filters active
   const filteredTaxaMap = React.useMemo(() => {
@@ -240,6 +286,7 @@ const ImageLabelingPage = ({ location, history }) => {
 
   const instrumentsMap = summary?.instruments || [];
   const institutesMap = summary?.institutes || [];
+  const geographicAreasMap = summary?.geographic_areas || [];
 
   // Filter taxon page images
   const filteredImages = React.useMemo(() => {
@@ -261,12 +308,32 @@ const ImageLabelingPage = ({ location, history }) => {
       result = result.filter((img) => {
         const institutes = img.attributes?.institute || [];
         const instituteArray = Array.isArray(institutes) ? institutes : [institutes];
+        
+        // Check if "__not_specified__" is selected and image has no institute
+        if (selectedInstitutes.includes('__not_specified__') && (!img.attributes?.institute || instituteArray.length === 0)) {
+          return true;
+        }
+        
         return instituteArray.some((inst) => selectedInstitutes.includes(inst));
       });
     }
     
+    if (selectedGeographicAreas.length > 0) {
+      result = result.filter((img) => {
+        const area = img.attributes?.geographicArea;
+        
+        // Check if "__not_specified__" is selected and image has no area
+        if (selectedGeographicAreas.includes('__not_specified__') && !area) {
+          return true;
+        }
+        
+        return area && selectedGeographicAreas.includes(area);
+      });
+    }
+    
     return result;
-  }, [images, selectedTaxon, selectedInstruments, selectedInstitutes]);
+  }, [images, selectedTaxon, selectedInstruments, selectedInstitutes, selectedGeographicAreas]);
+
 
   // Get first image per taxon for landing page
   const firstImagePerTaxon = React.useMemo(() => {
@@ -360,12 +427,18 @@ const ImageLabelingPage = ({ location, history }) => {
     );
   };
 
+  const handleGeographicAreaToggle = (area) => {
+    setSelectedGeographicAreas((prev) =>
+      prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area]
+    );
+  };
+
   const handleToggleFilters = () => {
     setFiltersExpanded(!filtersExpanded);
   };
 
   const showLoading = isLandingPage ? landingLoading : (isLoading || isFetching);
-  const relatedTaxon = !isLandingPage && filteredImages.length > 0 ? filteredImages[0].relatedTaxon : null;
+  const relatedTaxon = !isLandingPage && images.length > 0 ? images[0].relatedTaxon : null;
 
   const { data: facts, isFetching: factsFetching } = useGetFactsQuery(relatedTaxon?.slug, {
     skip: !relatedTaxon?.slug,
@@ -415,6 +488,12 @@ const ImageLabelingPage = ({ location, history }) => {
             institutes={institutesMap} 
             selected={selectedInstitutes} 
             onToggle={handleInstituteToggle} 
+          />
+
+          <GeographicAreaFilter 
+            areas={geographicAreasMap} 
+            selected={selectedGeographicAreas} 
+            onToggle={handleGeographicAreaToggle} 
           />
         </div>
       </aside>
