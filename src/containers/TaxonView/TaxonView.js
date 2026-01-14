@@ -10,7 +10,7 @@ import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
 import Synonyms from './Synonyms';
-import ImageLabelingPreview from './ImageLabelingPreview';
+import ImageLabelingPreview from './ImageLabeling/ImageLabelingPreview';
 
 
 const TaxonView = () => {
