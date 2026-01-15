@@ -69,6 +69,7 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
   }, [imageLabelingTaxa]);
 
   // Use all taxa entities, but add image counts to scientificName where applicable
+  // Only create new objects for taxa that actually have counts
   const entitiesWithCounts = useMemo(() => {
     if (!query.data?.entities) {
       return null;
@@ -76,22 +77,35 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
 
     const entities = query.data.entities;
     
-    // If no image counts yet, just return the original entities
+    // If no image counts, return original entities directly (no copy)
     if (imageLabelingCounts.size === 0) {
       return entities;
     }
 
-    // Build new entities object with counts appended to scientificName
-    const withCounts = {};
-    Object.keys(entities).forEach(slug => {
-      const taxon = entities[slug];
-      const imageCount = imageLabelingCounts.get(slug) || 0;
-      withCounts[slug] = {
-        ...taxon,
-        scientificName: imageCount > 0 
-          ? `${taxon.scientificName} (${imageCount})`
-          : taxon.scientificName,
-      };
+    // Check if any taxa with counts actually exist in entities
+    let hasModifications = false;
+    for (const [slug, count] of imageLabelingCounts) {
+      if (count > 0 && entities[slug]) {
+        hasModifications = true;
+        break;
+      }
+    }
+    
+    // If no modifications needed, return original
+    if (!hasModifications) {
+      return entities;
+    }
+
+    // Only create shallow copy and modify taxa that have counts
+    const withCounts = { ...entities };
+    
+    imageLabelingCounts.forEach((count, slug) => {
+      if (count > 0 && entities[slug]) {
+        withCounts[slug] = {
+          ...entities[slug],
+          scientificName: `${entities[slug].scientificName} (${count})`,
+        };
+      }
     });
 
     return withCounts;
@@ -134,7 +148,9 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
       </button>
       <aside id="filters-navigation" className="image-labeling-filters">
         <div className="filters-content">
-          <h2 className="image-labeling-filters-heading">Taxa</h2>
+          <h2 className="image-labeling-filters-heading">Image Labeling Guide</h2>
+          
+          <h3 className="image-labeling-filters-subheading">Taxonomy</h3>
           
           <div className="taxonomy-all-taxa">
             <button
