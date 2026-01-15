@@ -17,6 +17,15 @@
       margin: 0 0 1rem;
     }
 
+    .image-labeling-filters-heading-link {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .image-labeling-filters-subheading {
       font-size: 0.875rem;
       text-transform: uppercase;
@@ -248,7 +257,7 @@
   // Override container padding on desktop to align content with sidebar
   @media (min-width: map.get(v.$breakpoints, "xl")) {
     &.container {
-      padding-left: 38rem;
+      padding-left: 28rem;
       padding-right: 1rem;
     }
 
@@ -383,12 +392,12 @@
   // Desktop layout with taxonomy sidebar
   @media (min-width: map.get(v.$breakpoints, "xl")) {
     position: relative;
-    padding-left: 38rem;
+    padding-left: 28rem;
 
     .image-labeling-filters {
       float: left;
-      margin-left: -37rem;
-      width: 36rem;
+      margin-left: -27rem;
+      width: 26rem;
     }
   }
 }
