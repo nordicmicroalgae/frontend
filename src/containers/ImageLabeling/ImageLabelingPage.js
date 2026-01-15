@@ -1,72 +1,28 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useGetImageLabelingImagesQuery, useGetImageLabelingSummaryQuery, useGetImageLabelingFirstPerTaxonQuery } from 'Slices/labeling';
 import { useGetFactsQuery } from 'Slices/facts';
+import { selectById } from 'Slices/taxa';
 
 import ImageLabelingGallery from 'Components/ImageLabeling/ImageLabelingGallery';
+import ImageLabelingTaxonomy from './ImageLabelingTaxonomy';
 import ScientificName from 'Components/ScientificName';
 import Authority from 'Components/Authority';
 import './ImageLabelingPage.scss';
 
-const SidebarTaxonList = ({ taxa, selected, onSelect, totalCount }) => (
-  <div style={{ marginBottom: 24 }}>
-    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Available taxa</h4>
-    <ul style={{ listStyle: 'none', padding: 0 }}>
-      <li key="all">
-        <button
-          onClick={() => onSelect(null)}
-          style={{
-            background: selected == null ? '#efefef' : 'transparent',
-            border: 'none',
-            padding: '6px 8px 6px 12px',
-            width: '100%',
-            textAlign: 'left',
-            cursor: 'pointer',
-          }}
-        >
-          All taxa ({taxa.length})
-        </button>
-      </li>
-      {taxa.map((t) => (
-        <li key={t.slug}>
-          <button
-            onClick={() => onSelect(t.slug)}
-            style={{
-              background: selected === t.slug ? '#efefef' : 'transparent',
-              border: 'none',
-              padding: '6px 8px 6px 12px',
-              width: '100%',
-              textAlign: 'left',
-              cursor: 'pointer',
-            }}
-          >
-            {t.slug === '__no_taxon__' ? (
-              <span>{t.name || 'Unknown taxon'}</span>
-            ) : (
-              <span style={{ fontStyle: 'italic' }}>
-                {t.name || t.slug}
-              </span>
-            )}
-            {' '}({t.count || 0})
-          </button>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
 const InstrumentFilter = ({ instruments, selected, onToggle }) => (
-  <div style={{ marginBottom: 24 }}>
-    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Imaging instruments</h4>
-    <ul style={{ listStyle: 'none', padding: 0 }}>
+  <div className="filter-section">
+    <h4 className="filter-section-heading">Imaging instruments</h4>
+    <ul className="filter-list">
       {instruments.map((inst) => (
-        <li key={inst.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
-          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <li key={inst.name} className="filter-item">
+          <label className="filter-label">
             <input
               type="checkbox"
               checked={selected.includes(inst.name)}
               onChange={() => onToggle(inst.name)}
-              style={{ marginRight: 8 }}
+              className="filter-checkbox"
             />
             <span>{inst.name} ({inst.count})</span>
           </label>
@@ -77,17 +33,17 @@ const InstrumentFilter = ({ instruments, selected, onToggle }) => (
 );
 
 const InstituteFilter = ({ institutes, selected, onToggle }) => (
-  <div style={{ marginBottom: 24 }}>
-    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Institutes</h4>
-    <ul style={{ listStyle: 'none', padding: 0 }}>
+  <div className="filter-section">
+    <h4 className="filter-section-heading">Institutes</h4>
+    <ul className="filter-list">
       {institutes.map((inst) => (
-        <li key={inst.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
-          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <li key={inst.name} className="filter-item">
+          <label className="filter-label">
             <input
               type="checkbox"
               checked={selected.includes(inst.name)}
               onChange={() => onToggle(inst.name)}
-              style={{ marginRight: 8 }}
+              className="filter-checkbox"
             />
             <span>
               {inst.name === '__not_specified__' ? 'Not specified' : inst.name} ({inst.count})
@@ -100,17 +56,17 @@ const InstituteFilter = ({ institutes, selected, onToggle }) => (
 );
 
 const GeographicAreaFilter = ({ areas, selected, onToggle }) => (
-  <div style={{ marginBottom: 24 }}>
-    <h4 style={{ paddingLeft: 12, marginBottom: 8 }}>Geographic areas</h4>
-    <ul style={{ listStyle: 'none', padding: 0 }}>
+  <div className="filter-section">
+    <h4 className="filter-section-heading">Geographic areas</h4>
+    <ul className="filter-list">
       {areas.map((area) => (
-        <li key={area.name} style={{ paddingLeft: 12, marginBottom: 4 }}>
-          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <li key={area.name} className="filter-item">
+          <label className="filter-label">
             <input
               type="checkbox"
               checked={selected.includes(area.name)}
               onChange={() => onToggle(area.name)}
-              style={{ marginRight: 8 }}
+              className="filter-checkbox"
             />
             <span>
               {area.name === '__not_specified__' ? 'Not specified' : area.name} ({area.count})
@@ -136,12 +92,12 @@ const ImageLabelingPage = ({ location, history }) => {
 
   React.useEffect(() => {
     if (filtersExpanded) {
-      document.body.classList.add('has-expanded-filters');
+      document.body.classList.add('has-expanded-attribute-filters');
     } else {
-      document.body.classList.remove('has-expanded-filters');
+      document.body.classList.remove('has-expanded-attribute-filters');
     }
     return () => {
-      document.body.classList.remove('has-expanded-filters');
+      document.body.classList.remove('has-expanded-attribute-filters');
     };
   }, [filtersExpanded]);
 
@@ -209,7 +165,6 @@ const ImageLabelingPage = ({ location, history }) => {
         const institutes = img.attributes?.institute || [];
         const instituteArray = Array.isArray(institutes) ? institutes : [institutes];
         
-        // Check if "__not_specified__" is selected and image has no institute
         if (selectedInstitutes.includes('__not_specified__') && (!img.attributes?.institute || instituteArray.length === 0)) {
           return true;
         }
@@ -222,7 +177,6 @@ const ImageLabelingPage = ({ location, history }) => {
       result = result.filter((img) => {
         const area = img.attributes?.geographicArea;
         
-        // Check if "__not_specified__" is selected and image has no area
         if (selectedGeographicAreas.includes('__not_specified__') && !area) {
           return true;
         }
@@ -276,7 +230,6 @@ const ImageLabelingPage = ({ location, history }) => {
       return filteredTaxaMap;
     }
     
-    // Create a mutable copy before sorting (Redux data is immutable)
     return [...(summary?.taxa || [])].sort((a, b) => {
       if (a.slug === '__no_taxon__') return 1;
       if (b.slug === '__no_taxon__') return -1;
@@ -309,7 +262,6 @@ const ImageLabelingPage = ({ location, history }) => {
         const institutes = img.attributes?.institute || [];
         const instituteArray = Array.isArray(institutes) ? institutes : [institutes];
         
-        // Check if "__not_specified__" is selected and image has no institute
         if (selectedInstitutes.includes('__not_specified__') && (!img.attributes?.institute || instituteArray.length === 0)) {
           return true;
         }
@@ -322,7 +274,6 @@ const ImageLabelingPage = ({ location, history }) => {
       result = result.filter((img) => {
         const area = img.attributes?.geographicArea;
         
-        // Check if "__not_specified__" is selected and image has no area
         if (selectedGeographicAreas.includes('__not_specified__') && !area) {
           return true;
         }
@@ -340,6 +291,12 @@ const ImageLabelingPage = ({ location, history }) => {
     if (!isLandingPage) return null;
     
     const sourceImages = hasActiveFilters ? filteredAllImages : landingImages;
+    
+    // Build a map of slug -> count from taxaList
+    const taxaCounts = new Map();
+    taxaList.forEach(t => {
+      taxaCounts.set(t.slug, t.count || 0);
+    });
     
     const taxonImages = new Map();
     sourceImages.forEach((img) => {
@@ -364,43 +321,40 @@ const ImageLabelingPage = ({ location, history }) => {
         }
       }
       
-      // Only keep the image with the lowest priority for each taxon
       const existing = taxonImages.get(slug);
       
-      // If no existing image, or current image has lower priority, use current image
       if (!existing) {
         taxonImages.set(slug, {
           ...img,
           taxonSlug: slug,
           taxonName: name,
+          imageCount: taxaCounts.get(slug) || 0,
         });
       } else if (img.priority != null && existing.priority != null) {
-        // Both have priorities - compare them
         if (img.priority < existing.priority) {
           taxonImages.set(slug, {
             ...img,
             taxonSlug: slug,
             taxonName: name,
+            imageCount: taxaCounts.get(slug) || 0,
           });
         }
       } else if (img.priority != null && existing.priority == null) {
-        // Current has priority, existing doesn't - prefer current
         taxonImages.set(slug, {
           ...img,
           taxonSlug: slug,
           taxonName: name,
+          imageCount: taxaCounts.get(slug) || 0,
         });
       }
-      // else: existing has priority and current doesn't, keep existing
     });
     
-    // Sort alphabetically, with Unknown taxon at the end
     return Array.from(taxonImages.values()).sort((a, b) => {
       if (a.taxonSlug === '__no_taxon__') return 1;
       if (b.taxonSlug === '__no_taxon__') return -1;
       return String(a.taxonName).localeCompare(String(b.taxonName));
     });
-  }, [isLandingPage, hasActiveFilters, filteredAllImages, landingImages]);
+  }, [isLandingPage, hasActiveFilters, filteredAllImages, landingImages, taxaList]);
 
   const handleTaxonSelect = (slug) => {
     setSelectedTaxon(slug);
@@ -437,11 +391,27 @@ const ImageLabelingPage = ({ location, history }) => {
     setFiltersExpanded(!filtersExpanded);
   };
 
-  const showLoading = isLandingPage ? landingLoading : (isLoading || isFetching);
-  const relatedTaxon = !isLandingPage && images.length > 0 ? images[0].relatedTaxon : null;
+  const handleResetFilters = () => {
+    setSelectedInstruments([]);
+    setSelectedInstitutes([]);
+    setSelectedGeographicAreas([]);
+  };
 
-  const { data: facts, isFetching: factsFetching } = useGetFactsQuery(relatedTaxon?.slug, {
-    skip: !relatedTaxon?.slug,
+  const showLoading = isLandingPage ? landingLoading : (isLoading || isFetching);
+  
+  // Get taxon data from images if available, otherwise from Redux store
+  const relatedTaxonFromImages = !isLandingPage && images.length > 0 ? images[0].relatedTaxon : null;
+  const selectedTaxonFromStore = useSelector(state => selectById(state, selectedTaxon));
+  
+  // Use image data if available, otherwise fall back to store data for taxa without images
+  const relatedTaxon = relatedTaxonFromImages || (
+    !isLandingPage && selectedTaxon && selectedTaxon !== '__no_taxon__' 
+      ? selectedTaxonFromStore 
+      : null
+  );
+
+  const { data: facts, isFetching: factsFetching } = useGetFactsQuery(relatedTaxon?.slug || selectedTaxon, {
+    skip: !relatedTaxon?.slug && !selectedTaxon,
   });
 
   const aphiaId = React.useMemo(() => {
@@ -454,49 +424,17 @@ const ImageLabelingPage = ({ location, history }) => {
 
   const displayImages = isLandingPage ? firstImagePerTaxon : filteredImages;
 
+  // Check if there are any attribute filters available
+  const hasAttributeFilters = instrumentsMap.length > 0 || institutesMap.length > 0 || geographicAreasMap.length > 0;
+
   return (
     <div className="container image-labeling-page">
-      <button
-        type="button"
-        className="filters-toggle"
-        onClick={handleToggleFilters}
-        aria-controls="filters-navigation"
-        aria-expanded={filtersExpanded}
-      >
-        <span className="filters-toggle-bar" />
-        <span className="filters-toggle-bar" />
-        <span className="filters-toggle-bar" />
-      </button>
-
-      <aside id="filters-navigation" className="image-labeling-filters">
-        <div className="filters-content">
-          <h2 className="image-labeling-filters-heading">Filters</h2>
-          <SidebarTaxonList 
-            taxa={taxaList} 
-            selected={selectedTaxon} 
-            onSelect={handleTaxonSelect} 
-            totalCount={taxaList.length}
-          />
-          
-          <InstrumentFilter 
-            instruments={instrumentsMap} 
-            selected={selectedInstruments} 
-            onToggle={handleInstrumentToggle} 
-          />
-          
-          <InstituteFilter 
-            institutes={institutesMap} 
-            selected={selectedInstitutes} 
-            onToggle={handleInstituteToggle} 
-          />
-
-          <GeographicAreaFilter 
-            areas={geographicAreasMap} 
-            selected={selectedGeographicAreas} 
-            onToggle={handleGeographicAreaToggle} 
-          />
-        </div>
-      </aside>
+      {/* Taxonomy sidebar (left) */}
+      <ImageLabelingTaxonomy
+        selectedTaxon={selectedTaxon}
+        onTaxonSelect={handleTaxonSelect}
+        imageLabelingTaxa={taxaList}
+      />
 
       <main className="image-labeling-main">
         {isLandingPage ? (
@@ -528,7 +466,7 @@ const ImageLabelingPage = ({ location, history }) => {
             </div>
           </header>
         ) : (
-          !showLoading && relatedTaxon && (
+          relatedTaxon && (
             <header style={{ marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid #e0e0e0' }}>
               <h1 style={{ fontSize: '28px', marginBottom: 8 }}>
                 <ScientificName>{relatedTaxon.scientificName}</ScientificName>
@@ -587,10 +525,78 @@ const ImageLabelingPage = ({ location, history }) => {
           )
         )}
 
+        {/* Attribute filters section (right side, collapsible on mobile) */}
+        {hasAttributeFilters && (
+          <>
+            <button
+              type="button"
+              className="attribute-filters-toggle"
+              onClick={handleToggleFilters}
+              aria-controls="attribute-filters"
+              aria-expanded={filtersExpanded}
+            >
+              <span className="attribute-filters-toggle-icon">⚙</span>
+              <span className="attribute-filters-toggle-text">Filters</span>
+              {hasActiveFilters && <span className="attribute-filters-active-count">({selectedInstruments.length + selectedInstitutes.length + selectedGeographicAreas.length})</span>}
+            </button>
+            <aside id="attribute-filters" className={`attribute-filters ${filtersExpanded ? 'is-expanded' : ''}`}>
+              <div className="attribute-filters-header">
+                <h3 className="attribute-filters-heading">Filter by attributes</h3>
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    className="attribute-filters-reset"
+                    onClick={handleResetFilters}
+                  >
+                    Reset filters
+                  </button>
+                )}
+              </div>
+              <div className="attribute-filters-content">
+                {instrumentsMap.length > 0 && (
+                  <InstrumentFilter 
+                    instruments={instrumentsMap} 
+                    selected={selectedInstruments} 
+                    onToggle={handleInstrumentToggle} 
+                  />
+                )}
+                
+                {institutesMap.length > 0 && (
+                  <InstituteFilter 
+                    institutes={institutesMap} 
+                    selected={selectedInstitutes} 
+                    onToggle={handleInstituteToggle} 
+                  />
+                )}
+
+                {geographicAreasMap.length > 0 && (
+                  <GeographicAreaFilter 
+                    areas={geographicAreasMap} 
+                    selected={selectedGeographicAreas} 
+                    onToggle={handleGeographicAreaToggle} 
+                  />
+                )}
+              </div>
+            </aside>
+          </>
+        )}
+
         <section style={{ marginTop: 16 }}>
           {showLoading && <div>Loading images…</div>}
           {error && <div style={{ color: 'crimson' }}>{String(error)}</div>}
-          {!showLoading && displayImages.length === 0 && <div>No images found matching the selected filters.</div>}
+          {!showLoading && !isLandingPage && displayImages.length === 0 && (
+            <div>
+              {hasActiveFilters 
+                ? 'No images found matching the selected filters.'
+                : images.length === 0 
+                  ? 'No images available for this taxon yet.'
+                  : 'No images found matching the selected filters.'
+              }
+            </div>
+          )}
+          {!showLoading && isLandingPage && displayImages.length === 0 && (
+            <div>No images found matching the selected filters.</div>
+          )}
 
           {!showLoading && displayImages.length > 0 && (
             <ImageLabelingGallery 

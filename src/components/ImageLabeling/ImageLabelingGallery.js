@@ -82,77 +82,38 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
     // Landing page view: one image per taxon with taxon name
     return (
       <div>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, 160px)', 
-          gap: 16,
-          justifyContent: 'center'  // ADD THIS LINE
-        }}>
+        <div className="image-labeling-landing-grid">
           {images.map((img) => {
             const thumb = getThumbUrl(img);
             return (
               <div
                 key={img.taxonSlug || img.id}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
-                }}
+                className="landing-grid-item"
               >
                 <button
                   onClick={() => onTaxonClick && onTaxonClick(img.taxonSlug)}
-                  style={{
-                    display: 'block',
-                    padding: 0,
-                    border: '1px solid #ddd',
-                    background: '#fff',
-                    cursor: 'pointer',
-                    overflow: 'hidden',
-                    lineHeight: 0,
-                  }}
+                  className="landing-grid-image-button"
                 >
                   {thumb ? (
                     <img 
                       src={thumb} 
                       alt={img.taxonName || img.slug} 
-                      style={{ 
-                        width: 160, 
-                        height: 120, 
-                        objectFit: 'contain', 
-                        display: 'block',
-                        backgroundColor: '#f5f5f5'
-                      }} 
+                      className="landing-grid-image"
                     />
                   ) : (
-                    <div style={{ 
-                      width: 160, 
-                      height: 120, 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      backgroundColor: '#f5f5f5'
-                    }}>
+                    <div className="landing-grid-placeholder">
                       ?
                     </div>
                   )}
                 </button>
                 <button
                   onClick={() => onTaxonClick && onTaxonClick(img.taxonSlug)}
-                  style={{
-                    border: 'none',
-                    background: 'none',
-                    padding: 0,
-                    cursor: 'pointer',
-                    textAlign: 'center',
-                    fontSize: '14px',
-                    fontStyle: 'italic',
-                    color: '#666',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
-                  onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+                  className="landing-grid-taxon-name"
                 >
                   {img.taxonName || 'Unknown taxon'}
+                  {img.imageCount > 0 && (
+                    <span className="landing-grid-image-count"> ({img.imageCount})</span>
+                  )}
                 </button>
               </div>
             );
