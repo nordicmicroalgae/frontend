@@ -6,21 +6,6 @@ import { useSelector } from 'react-redux';
 import Tree from 'Components/Taxonomy/Tree';
 import { useGetAllTaxaQuery, selectById } from 'Slices/taxa';
 
-const defaultRanks = [
-  'Domain',
-  'Kingdom',
-  'Phylum',
-  'Class',
-  'Order',
-  'Family',
-  'Genus',
-  'Species',
-  'Subspecies',
-  'Variety',
-  'Form',
-  'Forma',
-];
-
 const propTypes = {
   selectedTaxon: PropTypes.string,
   onTaxonSelect: PropTypes.func.isRequired,
@@ -68,63 +53,118 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
     return map;
   }, [imageLabelingTaxa]);
 
-  // Use all taxa entities, but add image counts to scientificName where applicable
-  // Only create new objects for taxa that actually have counts
-  const entitiesWithCounts = useMemo(() => {
-    if (!query.data?.entities) {
+  // Ranks that should only show if they have images
+  const conditionalRanks = new Set(['Kingdom', 'Phylum', 'Order', 'Family', 'Genus']);
+
+  // Filter to only show taxa with images and their ancestors
+  const filteredEntities = useMemo(() => {
+    if (!query.data?.entities || imageLabelingCounts.size === 0) {
       return null;
     }
 
     const entities = query.data.entities;
-    
-    // If no image counts, return original entities directly (no copy)
-    if (imageLabelingCounts.size === 0) {
-      return entities;
-    }
+    const includedSlugs = new Set();
 
-    // Check if any taxa with counts actually exist in entities
-    let hasModifications = false;
-    for (const [slug, count] of imageLabelingCounts) {
-      if (count > 0 && entities[slug]) {
-        hasModifications = true;
-        break;
-      }
-    }
-    
-    // If no modifications needed, return original
-    if (!hasModifications) {
-      return entities;
-    }
-
-    // Only create shallow copy and modify taxa that have counts
-    const withCounts = { ...entities };
-    
+    // For each taxon with images, include it and ALL its ancestors
     imageLabelingCounts.forEach((count, slug) => {
-      if (count > 0 && entities[slug]) {
-        withCounts[slug] = {
-          ...entities[slug],
-          scientificName: `${entities[slug].scientificName} (${count})`,
+      const taxon = entities[slug];
+      if (taxon) {
+        includedSlugs.add(slug);
+
+        if (taxon.classification) {
+          taxon.classification.forEach(ancestor => {
+            const ancestorSlug = typeof ancestor === 'string' ? ancestor : ancestor.slug;
+            if (ancestorSlug) {
+              includedSlugs.add(ancestorSlug);
+            }
+          });
+        }
+      }
+    });
+
+    // Helper to determine effective rank
+    const getEffectiveRank = (slug) => {
+      const taxon = entities[slug];
+      if (!taxon) return null;
+      const imageCount = imageLabelingCounts.get(slug) || 0;
+      const isConditionalRank = conditionalRanks.has(taxon.rank);
+      const hasImages = imageCount > 0;
+      return (isConditionalRank && !hasImages) ? '_SkippedRank' : taxon.rank;
+    };
+
+    // Build filtered entities
+    const filtered = {};
+    includedSlugs.forEach(slug => {
+      const taxon = entities[slug];
+      if (taxon) {
+        const imageCount = imageLabelingCounts.get(slug) || 0;
+        
+        // Filter children to only those in includedSlugs
+        // AND update their rank in the child object for reduceChildren to read
+        const filteredChildren = (taxon.children || [])
+          .filter(child => {
+            const childSlug = typeof child === 'string' ? child : child.slug;
+            return includedSlugs.has(childSlug);
+          })
+          .map(child => {
+            const childSlug = typeof child === 'string' ? child : child.slug;
+            const childObj = typeof child === 'object' ? child : { slug: childSlug };
+            return {
+              ...childObj,
+              slug: childSlug,
+              rank: getEffectiveRank(childSlug),
+            };
+          });
+
+        filtered[slug] = {
+          ...taxon,
+          rank: getEffectiveRank(slug),
+          children: filteredChildren,
+          scientificName: imageCount > 0 
+            ? `${taxon.scientificName} (${imageCount})`
+            : taxon.scientificName,
         };
       }
     });
 
-    return withCounts;
+    return filtered;
   }, [query.data?.entities, imageLabelingCounts]);
 
-  // Start with tree collapsed - empty initialPath
+  // Determine which ranks to display
+  const displayRanks = useMemo(() => {
+    const baseRanks = ['Domain', 'Class', 'Genus', 'Species', 'Subspecies', 'Variety', 'Form', 'Forma'];
+    
+    if (!query.data?.entities || imageLabelingCounts.size === 0) {
+      return baseRanks;
+    }
+
+    const entities = query.data.entities;
+    const ranksToAdd = new Set();
+    
+    // Check which conditional ranks have taxa with images
+    imageLabelingCounts.forEach((count, slug) => {
+      if (count > 0) {
+        const taxon = entities[slug];
+        if (taxon?.rank && conditionalRanks.has(taxon.rank)) {
+          ranksToAdd.add(taxon.rank);
+        }
+      }
+    });
+
+    return [...baseRanks, ...ranksToAdd];
+  }, [query.data?.entities, imageLabelingCounts]);
+
+  // Always keep tree fully expanded
   const initialPath = useMemo(() => {
-    // Only expand to show the selected taxon's path, if one is selected
-    if (selectedTaxonData?.classification) {
-      return selectedTaxonData.classification.map(c => 
-        typeof c === 'string' ? c : c.slug
-      );
+    if (filteredEntities) {
+      return Object.keys(filteredEntities);
     }
     return [];
-  }, [selectedTaxonData]);
+  }, [filteredEntities]);
 
   const selectedKey = selectedTaxonData ? getTaxonKey(selectedTaxonData) : null;
 
-  const hasTaxa = entitiesWithCounts && Object.keys(entitiesWithCounts).length > 0;
+  const hasTaxa = filteredEntities && Object.keys(filteredEntities).length > 0;
   const hasUnknownTaxon = imageLabelingTaxa?.some(t => t.slug === '__no_taxon__');
   const unknownTaxonCount = imageLabelingTaxa?.find(t => t.slug === '__no_taxon__')?.count || 0;
 
@@ -148,7 +188,11 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
       </button>
       <aside id="filters-navigation" className="image-labeling-filters">
         <div className="filters-content">
-          <h2 className="image-labeling-filters-heading">Image Labeling Guide</h2>
+          <h2 className="image-labeling-filters-heading">
+            <Link to="/image-labeling/" className="image-labeling-filters-heading-link">
+              Image Labeling Guide
+            </Link>
+          </h2>
           
           <h3 className="image-labeling-filters-subheading">Taxonomy</h3>
           
@@ -167,11 +211,11 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
           {hasTaxa && (
             <div className="image-labeling-tree-wrapper">
               <Tree
-                data={entitiesWithCounts}
+                data={filteredEntities}
                 getTaxonKey={getTaxonKey}
                 initialPath={initialPath}
                 selected={selectedKey}
-                ranks={defaultRanks}
+                ranks={displayRanks}
                 Link={Link}
                 getLinkProps={({ slug }) => ({
                   to: `/image-labeling/?taxon=${slug}`,
