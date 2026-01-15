@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useGetImageLabelingImagesQuery, useGetImageLabelingSummaryQuery, useGetImageLabelingFirstPerTaxonQuery } from 'Slices/labeling';
 import { useGetFactsQuery } from 'Slices/facts';
+import { selectById } from 'Slices/taxa';
 
 import ImageLabelingGallery from 'Components/ImageLabeling/ImageLabelingGallery';
 import ImageLabelingTaxonomy from './ImageLabelingTaxonomy';
@@ -290,6 +292,12 @@ const ImageLabelingPage = ({ location, history }) => {
     
     const sourceImages = hasActiveFilters ? filteredAllImages : landingImages;
     
+    // Build a map of slug -> count from taxaList
+    const taxaCounts = new Map();
+    taxaList.forEach(t => {
+      taxaCounts.set(t.slug, t.count || 0);
+    });
+    
     const taxonImages = new Map();
     sourceImages.forEach((img) => {
       let slug, name;
@@ -320,6 +328,7 @@ const ImageLabelingPage = ({ location, history }) => {
           ...img,
           taxonSlug: slug,
           taxonName: name,
+          imageCount: taxaCounts.get(slug) || 0,
         });
       } else if (img.priority != null && existing.priority != null) {
         if (img.priority < existing.priority) {
@@ -327,6 +336,7 @@ const ImageLabelingPage = ({ location, history }) => {
             ...img,
             taxonSlug: slug,
             taxonName: name,
+            imageCount: taxaCounts.get(slug) || 0,
           });
         }
       } else if (img.priority != null && existing.priority == null) {
@@ -334,6 +344,7 @@ const ImageLabelingPage = ({ location, history }) => {
           ...img,
           taxonSlug: slug,
           taxonName: name,
+          imageCount: taxaCounts.get(slug) || 0,
         });
       }
     });
@@ -343,7 +354,7 @@ const ImageLabelingPage = ({ location, history }) => {
       if (b.taxonSlug === '__no_taxon__') return -1;
       return String(a.taxonName).localeCompare(String(b.taxonName));
     });
-  }, [isLandingPage, hasActiveFilters, filteredAllImages, landingImages]);
+  }, [isLandingPage, hasActiveFilters, filteredAllImages, landingImages, taxaList]);
 
   const handleTaxonSelect = (slug) => {
     setSelectedTaxon(slug);
@@ -387,10 +398,20 @@ const ImageLabelingPage = ({ location, history }) => {
   };
 
   const showLoading = isLandingPage ? landingLoading : (isLoading || isFetching);
-  const relatedTaxon = !isLandingPage && images.length > 0 ? images[0].relatedTaxon : null;
+  
+  // Get taxon data from images if available, otherwise from Redux store
+  const relatedTaxonFromImages = !isLandingPage && images.length > 0 ? images[0].relatedTaxon : null;
+  const selectedTaxonFromStore = useSelector(state => selectById(state, selectedTaxon));
+  
+  // Use image data if available, otherwise fall back to store data for taxa without images
+  const relatedTaxon = relatedTaxonFromImages || (
+    !isLandingPage && selectedTaxon && selectedTaxon !== '__no_taxon__' 
+      ? selectedTaxonFromStore 
+      : null
+  );
 
-  const { data: facts, isFetching: factsFetching } = useGetFactsQuery(relatedTaxon?.slug, {
-    skip: !relatedTaxon?.slug,
+  const { data: facts, isFetching: factsFetching } = useGetFactsQuery(relatedTaxon?.slug || selectedTaxon, {
+    skip: !relatedTaxon?.slug && !selectedTaxon,
   });
 
   const aphiaId = React.useMemo(() => {
@@ -445,7 +466,7 @@ const ImageLabelingPage = ({ location, history }) => {
             </div>
           </header>
         ) : (
-          !showLoading && relatedTaxon && (
+          relatedTaxon && (
             <header style={{ marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid #e0e0e0' }}>
               <h1 style={{ fontSize: '28px', marginBottom: 8 }}>
                 <ScientificName>{relatedTaxon.scientificName}</ScientificName>
@@ -563,7 +584,19 @@ const ImageLabelingPage = ({ location, history }) => {
         <section style={{ marginTop: 16 }}>
           {showLoading && <div>Loading images…</div>}
           {error && <div style={{ color: 'crimson' }}>{String(error)}</div>}
-          {!showLoading && displayImages.length === 0 && <div>No images found matching the selected filters.</div>}
+          {!showLoading && !isLandingPage && displayImages.length === 0 && (
+            <div>
+              {hasActiveFilters 
+                ? 'No images found matching the selected filters.'
+                : images.length === 0 
+                  ? 'No images available for this taxon yet.'
+                  : 'No images found matching the selected filters.'
+              }
+            </div>
+          )}
+          {!showLoading && isLandingPage && displayImages.length === 0 && (
+            <div>No images found matching the selected filters.</div>
+          )}
 
           {!showLoading && displayImages.length > 0 && (
             <ImageLabelingGallery 

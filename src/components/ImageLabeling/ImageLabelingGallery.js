@@ -111,6 +111,9 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
                   className="landing-grid-taxon-name"
                 >
                   {img.taxonName || 'Unknown taxon'}
+                  {img.imageCount > 0 && (
+                    <span className="landing-grid-image-count"> ({img.imageCount})</span>
+                  )}
                 </button>
               </div>
             );

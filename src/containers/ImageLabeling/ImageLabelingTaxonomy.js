@@ -44,8 +44,6 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
     };
   }, [navigationIsExpanded]);
 
-  useEffect(() => setNavigationIsExpanded(selectedTaxon == null), [selectedTaxon]);
-
   const query = useGetAllTaxaQuery();
 
   const selectedTaxonData = useSelector(
@@ -70,90 +68,49 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
     return map;
   }, [imageLabelingTaxa]);
 
-  // Filter the taxa entities - only recompute when source data changes
-  const filteredEntities = useMemo(() => {
-    if (!query.data?.entities || imageLabelingCounts.size === 0) {
+  // Use all taxa entities, but add image counts to scientificName where applicable
+  const entitiesWithCounts = useMemo(() => {
+    if (!query.data?.entities) {
       return null;
     }
 
     const entities = query.data.entities;
-    const includedSlugs = new Set();
-
-    // For each taxon with images, include it, all its ancestors, and its children
-    imageLabelingCounts.forEach((count, slug) => {
-      const taxon = entities[slug];
-      if (taxon) {
-        includedSlugs.add(slug);
-
-        if (taxon.classification) {
-          taxon.classification.forEach(ancestor => {
-            const ancestorSlug = typeof ancestor === 'string' ? ancestor : ancestor.slug;
-            if (ancestorSlug) {
-              includedSlugs.add(ancestorSlug);
-            }
-          });
-        }
-
-        if (taxon.children) {
-          taxon.children.forEach(child => {
-            const childSlug = typeof child === 'string' ? child : child.slug;
-            if (childSlug && entities[childSlug]) {
-              includedSlugs.add(childSlug);
-            }
-          });
-        }
-      }
-    });
-
-    // Build filtered entities
-    const filtered = {};
-    includedSlugs.forEach(slug => {
-      const taxon = entities[slug];
-      if (taxon) {
-        const imageCount = imageLabelingCounts.get(slug) || 0;
-        filtered[slug] = {
-          ...taxon,
-          children: (taxon.children || []).filter(child => {
-            const childSlug = typeof child === 'string' ? child : child.slug;
-            return includedSlugs.has(childSlug);
-          }),
-          scientificName: imageCount > 0 
-            ? `${taxon.scientificName} (${imageCount})`
-            : taxon.scientificName,
-        };
-      }
-    });
-
-    return filtered;
-  }, [query.data?.entities, imageLabelingCounts]);
-
-  // Compute paths to expand (ancestors of taxa with images)
-  const initialPath = useMemo(() => {
-    if (!query.data?.entities || imageLabelingCounts.size === 0) {
-      return [];
+    
+    // If no image counts yet, just return the original entities
+    if (imageLabelingCounts.size === 0) {
+      return entities;
     }
-    
-    const entities = query.data.entities;
-    const expandPaths = new Set();
-    
-    imageLabelingCounts.forEach((count, slug) => {
+
+    // Build new entities object with counts appended to scientificName
+    const withCounts = {};
+    Object.keys(entities).forEach(slug => {
       const taxon = entities[slug];
-      if (taxon?.classification) {
-        taxon.classification.forEach(ancestor => {
-          const ancestorSlug = typeof ancestor === 'string' ? ancestor : ancestor.slug;
-          if (ancestorSlug) {
-            expandPaths.add(ancestorSlug);
-          }
-        });
-      }
+      const imageCount = imageLabelingCounts.get(slug) || 0;
+      withCounts[slug] = {
+        ...taxon,
+        scientificName: imageCount > 0 
+          ? `${taxon.scientificName} (${imageCount})`
+          : taxon.scientificName,
+      };
     });
-    
-    return Array.from(expandPaths);
+
+    return withCounts;
   }, [query.data?.entities, imageLabelingCounts]);
+
+  // Start with tree collapsed - empty initialPath
+  const initialPath = useMemo(() => {
+    // Only expand to show the selected taxon's path, if one is selected
+    if (selectedTaxonData?.classification) {
+      return selectedTaxonData.classification.map(c => 
+        typeof c === 'string' ? c : c.slug
+      );
+    }
+    return [];
+  }, [selectedTaxonData]);
 
   const selectedKey = selectedTaxonData ? getTaxonKey(selectedTaxonData) : null;
 
-  const hasTaxa = filteredEntities && Object.keys(filteredEntities).length > 0;
+  const hasTaxa = entitiesWithCounts && Object.keys(entitiesWithCounts).length > 0;
   const hasUnknownTaxon = imageLabelingTaxa?.some(t => t.slug === '__no_taxon__');
   const unknownTaxonCount = imageLabelingTaxa?.find(t => t.slug === '__no_taxon__')?.count || 0;
 
@@ -194,7 +151,7 @@ const ImageLabelingTaxonomy = ({ selectedTaxon, onTaxonSelect, imageLabelingTaxa
           {hasTaxa && (
             <div className="image-labeling-tree-wrapper">
               <Tree
-                data={filteredEntities}
+                data={entitiesWithCounts}
                 getTaxonKey={getTaxonKey}
                 initialPath={initialPath}
                 selected={selectedKey}
