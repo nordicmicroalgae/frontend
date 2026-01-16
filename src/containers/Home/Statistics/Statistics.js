@@ -19,7 +19,7 @@ const Fields = new Map([
 const Links = new Map([
   ['species', '/quick-view/'],
   ['taxa', '/taxon/'],
-  ['images', '/gallery/'],
+  ['images', '/gallery/all/'],
   ['imageLabelingImages', '/image-labeling/'],
   ['citizenScienceImages', '/gallery/Citizen%20science/'],
   ['contributors', '/hall-of-fame/'],
