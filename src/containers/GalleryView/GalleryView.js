@@ -112,7 +112,9 @@ const GalleryView = () => {
   const scopedQuery = {
     [scope ?? 'gallery']: value
       ? decodeURIComponent(value)
-      : undefined
+      : undefined,
+    // Exclude Citizen Science from "All images" view
+    exclude_galleries: (!scope && !value) ? 'Citizen science' : undefined,
   };
 
   return (
