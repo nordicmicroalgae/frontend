@@ -31,12 +31,19 @@ export const extendedApiSlice = baseApi.injectEndpoints({
     getImageLabelingSummary: builder.query({
       query: () => 'media/image_labeling/summary',
     }),
+
+    // Get taxa grouped by plankton groups with class names (titles)
+    getImageLabelingGroupedByPlankton: builder.query({
+      query: () => 'media/image_labeling/grouped_by_plankton',
+      transformResponse: responseData => responseData.groups || [],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { 
+export const {
   useGetImageLabelingImagesQuery,
   useGetImageLabelingSummaryQuery,
   useGetImageLabelingFirstPerTaxonQuery,
+  useGetImageLabelingGroupedByPlanktonQuery,
 } = extendedApiSlice;

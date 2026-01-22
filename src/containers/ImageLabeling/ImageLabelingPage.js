@@ -135,7 +135,7 @@ const ImageLabelingPage = ({ location, history }) => {
       limit: 1000,
       fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority'],
     };
-    if (selectedTaxon && selectedTaxon !== '__no_taxon__') {
+    if (selectedTaxon && selectedTaxon !== 'unknown') {
       p.taxon = selectedTaxon;
     }
     return p;
@@ -208,7 +208,7 @@ const ImageLabelingPage = ({ location, history }) => {
           name = taxonObj;
         }
       } else {
-        slug = '__no_taxon__';
+        slug = 'unknown';
         name = 'Unknown taxon';
       }
 
@@ -218,8 +218,8 @@ const ImageLabelingPage = ({ location, history }) => {
     });
     
     return Array.from(map.values()).sort((a, b) => {
-      if (a.slug === '__no_taxon__') return 1;
-      if (b.slug === '__no_taxon__') return -1;
+      if (a.slug === 'unknown') return 1;
+      if (b.slug === 'unknown') return -1;
       return String(a.name).localeCompare(String(b.name));
     });
   }, [filteredAllImages, hasActiveFilters]);
@@ -231,8 +231,8 @@ const ImageLabelingPage = ({ location, history }) => {
     }
     
     return [...(summary?.taxa || [])].sort((a, b) => {
-      if (a.slug === '__no_taxon__') return 1;
-      if (b.slug === '__no_taxon__') return -1;
+      if (a.slug === 'unknown') return 1;
+      if (b.slug === 'unknown') return -1;
       return String(a.name).localeCompare(String(b.name));
     });
   }, [hasActiveFilters, filteredTaxaMap, summary]);
@@ -245,7 +245,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const filteredImages = React.useMemo(() => {
     let result = images;
     
-    if (selectedTaxon === '__no_taxon__') {
+    if (selectedTaxon === 'unknown') {
       result = result.filter((img) => !img.relatedTaxon && !img.taxon);
     }
     
@@ -316,7 +316,7 @@ const ImageLabelingPage = ({ location, history }) => {
             name = taxonObj;
           }
         } else {
-          slug = '__no_taxon__';
+          slug = 'unknown';
           name = 'Unknown taxon';
         }
       }
@@ -350,8 +350,8 @@ const ImageLabelingPage = ({ location, history }) => {
     });
     
     return Array.from(taxonImages.values()).sort((a, b) => {
-      if (a.taxonSlug === '__no_taxon__') return 1;
-      if (b.taxonSlug === '__no_taxon__') return -1;
+      if (a.taxonSlug === 'unknown') return 1;
+      if (b.taxonSlug === 'unknown') return -1;
       return String(a.taxonName).localeCompare(String(b.taxonName));
     });
   }, [isLandingPage, hasActiveFilters, filteredAllImages, landingImages, taxaList]);
@@ -405,7 +405,7 @@ const ImageLabelingPage = ({ location, history }) => {
   
   // Use image data if available, otherwise fall back to store data for taxa without images
   const relatedTaxon = relatedTaxonFromImages || (
-    !isLandingPage && selectedTaxon && selectedTaxon !== '__no_taxon__' 
+    !isLandingPage && selectedTaxon && selectedTaxon !== 'unknown' 
       ? selectedTaxonFromStore 
       : null
   );
@@ -455,7 +455,7 @@ const ImageLabelingPage = ({ location, history }) => {
               .
             </p>
           </header>
-        ) : selectedTaxon === '__no_taxon__' ? (
+        ) : selectedTaxon === 'unknown' ? (
           <header style={{ marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid #e0e0e0' }}>
             <h1 style={{ fontSize: '28px', marginBottom: 8 }}>
               Unknown taxon
