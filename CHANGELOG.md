@@ -1,4 +1,4 @@
-## 2.4.0 (February 12, 2026)
+## 2.4.0 (February 16, 2026)
 
 - Add image labeling guide with landing page, taxon pages, and gallery.
 - Add taxonomy sidebar with plankton group hierarchy and expand/collapse controls.
