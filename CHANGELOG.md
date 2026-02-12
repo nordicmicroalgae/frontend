@@ -1,3 +1,13 @@
+## 2.4.0 (February 12, 2026)
+
+- Add image labeling guide with landing page, taxon pages, and gallery.
+- Add taxonomy sidebar with plankton group hierarchy and expand/collapse controls.
+- Add attribute filters for imaging instruments, institutes, and geographic areas.
+- Exclude citizen science images from the "All images" gallery on taxon sheets.
+- Exclude image labeling images from certain galleries on taxon sheets.
+- Update landing page text with guide description and harmonization goals.
+- Bump dependencies.
+
 ## 2.3.1. (December 18, 2025)
 
 - Security mitigations from dependabot.
