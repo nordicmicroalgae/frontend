@@ -439,16 +439,18 @@ const ImageLabelingPage = ({ location, history }) => {
       <main className="image-labeling-main">
         {isLandingPage ? (
           <header>
-            <h1>Image labeling guide</h1>
             <p>
-              Select a taxon from the sidebar to view images and learn about standardized identification and labeling techniques for automated imaging instruments in Nordic waters
+              Welcome to the Image Labeling Guide of Nordic Microalgae. Select a taxon from the sidebar to explore example images and recommended identification and labeling practices for automated imaging instruments used in Nordic waters.
             </p>
             <p style={{ marginTop: '12px' }}>
-              If you notice an incorrectly labeled image, please contact the contributor directly or email{' '}
+              By sharing and comparing labeling approaches across laboratories and monitoring programs, we aim to harmonize image annotation in the Nordic region and strengthen the quality, consistency, and transferability of image classifiers used for marine monitoring.
+            </p>
+            <p style={{ marginTop: '12px' }}>
+              Found a mislabeled image? Contact the contributor or email{' '}
               <a href="mailto:nordicmicroalgae@smhi.se" style={{ color: '#0066cc' }}>
                 nordicmicroalgae@smhi.se
               </a>
-              . To contribute your own images, visit our{' '}
+              . To contribute images, see our{' '}
               <Link to="/how-to-contribute/" style={{ color: '#0066cc' }}>
                 contribution guidelines
               </Link>

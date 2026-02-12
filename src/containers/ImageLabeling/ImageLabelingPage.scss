@@ -12,8 +12,10 @@
     }
 
     .image-labeling-filters-heading {
-      font-size: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.025em;
       margin: 0 0 1rem;
     }
 
@@ -349,6 +351,8 @@
     }
 
     header {
+      padding-top: 1.5rem;
+
       h1 {
         font-size: 1.75rem;
         margin-bottom: 0.75rem;
