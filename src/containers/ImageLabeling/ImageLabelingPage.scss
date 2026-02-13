@@ -165,14 +165,14 @@
     }
 
     .plankton-taxon-item {
-      margin-bottom: 0.125rem;
+      margin-bottom: 0;
     }
 
     .plankton-taxon-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.375rem 0.5rem;
+      padding: 0.1875rem 0.5rem;
       border-radius: 0.25rem;
 
       &:hover {
