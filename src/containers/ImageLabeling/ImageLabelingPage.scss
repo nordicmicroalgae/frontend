@@ -1,0 +1,545 @@
+@use "colors" as *;
+@use "variables" as v;
+@use "sass:map";
+
+.image-labeling-page {
+  position: relative;
+
+  // Taxonomy sidebar (left)
+  .image-labeling-filters {
+    .filters-content {
+      padding: 1rem;
+    }
+
+    .image-labeling-filters-heading {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      margin: 0 0 1rem;
+    }
+
+    .image-labeling-filters-heading-link {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .image-labeling-filters-subheading {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      margin: 0 0 0.5rem;
+      color: #666;
+    }
+
+    .taxonomy-expand-collapse {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .taxonomy-expand-collapse-button {
+      flex: 1;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      color: #666;
+      background: transparent;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: #333;
+      }
+    }
+
+    .taxonomy-all-taxa {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .taxonomy-all-taxa-button,
+    .taxonomy-unknown-button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      border-radius: 0.25rem;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      &.is-selected {
+        background: #efefef;
+        font-weight: 500;
+      }
+    }
+
+    .taxonomy-unknown-taxon {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .taxonomy-loading,
+    .taxonomy-empty {
+      padding: 1rem 0.75rem;
+      color: #666;
+      font-size: 0.875rem;
+    }
+
+    // Tree wrapper - removes the negative margin from the original taxonomy
+    .image-labeling-tree-wrapper {
+      .taxonomy-tree-container {
+        margin-left: 0;
+      }
+    }
+
+    // Plankton groups tree styles
+    .plankton-groups-tree {
+      margin-top: 0.5rem;
+    }
+
+    .plankton-groups-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .plankton-group-item {
+      margin-bottom: 0.25rem;
+    }
+
+    .plankton-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: #f5f5f5;
+      border-radius: 0.25rem;
+    }
+
+    .plankton-group-name {
+      font-weight: 500;
+      font-size: 0.875rem;
+      color: #333;
+    }
+
+    .plankton-group-toggle,
+    .plankton-taxon-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+
+      &:hover {
+        color: #000;
+      }
+
+      svg {
+        width: 0.75rem;
+        height: 0.75rem;
+      }
+    }
+
+    .plankton-taxa-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.25rem 0 0.5rem 1rem;
+    }
+
+    .plankton-taxon-item {
+      margin-bottom: 0;
+    }
+
+    .plankton-taxon-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 0.25rem;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.03);
+      }
+    }
+
+    .plankton-taxon-link {
+      flex: 1;
+      font-size: 0.8125rem;
+      color: #444;
+      text-decoration: none;
+
+      &:hover {
+        color: #0066cc;
+      }
+
+      &.is-selected {
+        font-weight: 500;
+        color: #000;
+      }
+    }
+
+    .plankton-titles-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.125rem 0 0.375rem 1.5rem;
+    }
+
+    .plankton-title-item {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      color: #666;
+      border-left: 2px solid #e0e0e0;
+      margin-bottom: 0.125rem;
+    }
+  }
+
+  // Filters toggle button (for taxonomy sidebar on mobile)
+  .filters-toggle {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+    border: none;
+
+    .filters-toggle-bar {
+      display: block;
+      width: 1rem;
+      height: 0.125rem;
+    }
+
+    &[aria-expanded="false"] {
+      position: fixed;
+      left: 1rem;
+      bottom: 1rem;
+      padding: 0.25rem;
+      z-index: 90000;
+      background: $black;
+      border-radius: 50%;
+
+      .filters-toggle-bar {
+        margin: 0.125rem auto;
+        background: $white;
+
+        &:nth-child(1) {
+          width: 1rem;
+        }
+        &:nth-child(2) {
+          width: 0.75rem;
+        }
+        &:nth-child(3) {
+          width: 0.5rem;
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          margin: 0 0 0 -0.25rem;
+          width: 0.125rem;
+          height: 0.125rem;
+          background: inherit;
+        }
+      }
+
+      ~ #filters-navigation {
+        display: none;
+      }
+    }
+
+    &[aria-expanded="true"] {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 120000;
+      background: $white;
+      border-bottom: 0.0625rem solid #ccc;
+
+      .filters-toggle-bar {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.125rem;
+        background: $black;
+
+        &:nth-child(1) {
+          transform: rotate(45deg);
+        }
+        &:nth-child(2) {
+          transform: rotate(-45deg);
+        }
+        &:nth-child(3) {
+          display: none;
+        }
+      }
+
+      ~ #filters-navigation {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100000;
+        overflow-y: auto;
+        padding-top: 3.5rem;
+        background: $white;
+
+        .image-labeling-filters-heading {
+          position: fixed;
+          top: 0;
+          left: 3.5rem;
+          right: 0;
+          z-index: 120000;
+          margin: 0;
+          padding: calc(1.25rem - 0.0625rem) 1rem 1.25rem;
+          font-size: 1rem;
+          line-height: 1;
+          background: $white;
+          border-bottom: 0.0625rem solid #ccc;
+        }
+      }
+    }
+
+    @media (min-width: map.get(v.$breakpoints, "xl")) {
+      display: none;
+
+      &[aria-expanded] ~ #filters-navigation {
+        display: block;
+        position: static;
+        z-index: unset;
+        overflow-y: visible;
+        padding-top: 0;
+
+        .image-labeling-filters-heading {
+          position: static;
+          z-index: unset;
+          margin: 0.5rem 0 1rem;
+          padding: 0;
+          border-bottom: none;
+          background: none;
+        }
+      }
+    }
+  }
+
+  // Main content area
+  .image-labeling-main {
+    position: relative;
+    padding: 0 1rem;
+
+    @media (min-width: map.get(v.$breakpoints, "xl")) {
+      padding: 0;
+    }
+
+    header {
+      padding-top: 1.5rem;
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        color: #333;
+        line-height: 1.6;
+      }
+    }
+
+    // Fix image gallery alignment - remove any left spacing
+    > section {
+      margin-left: 0;
+      padding-left: 0;
+
+      // Target the gallery grid/container
+      > div {
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+
+    // Ensure gallery items align to the left on desktop
+    .image-labeling-gallery {
+      margin-left: 0;
+      padding-left: 0;
+      
+      @media (min-width: map.get(v.$breakpoints, "xl")) {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  // Override container padding on desktop to align content with sidebar
+  @media (min-width: map.get(v.$breakpoints, "xl")) {
+    &.container {
+      padding-left: 28rem;
+      padding-right: 1rem;
+    }
+
+    .image-labeling-main {
+      padding-left: 0;
+      margin-left: 0;
+    }
+  }
+
+  // Attribute filters (instrument, institute, geographic area)
+  .attribute-filters-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+
+    .attribute-filters-toggle-icon {
+      font-size: 1rem;
+    }
+  }
+
+  .attribute-filters {
+    display: none;
+    padding: 1rem;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+
+    &.is-expanded {
+      display: block;
+    }
+
+    .attribute-filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .attribute-filters-heading {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      margin: 0;
+      color: #666;
+    }
+
+    .attribute-filters-reset {
+      background: none;
+      border: none;
+      color: #0066cc;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      padding: 0;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .attribute-filters-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      @media (min-width: map.get(v.$breakpoints, "xl")) {
+        flex-direction: row;
+        gap: 2rem;
+      }
+    }
+  }
+
+  .attribute-filters-toggle {
+    .attribute-filters-active-count {
+      margin-left: 0.25rem;
+      color: #0066cc;
+    }
+  }
+
+  .filter-section {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (min-width: map.get(v.$breakpoints, "xl")) {
+      margin-bottom: 0;
+      flex: 1;
+    }
+  }
+
+  .filter-section-heading {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    color: #333;
+  }
+
+  .filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .filter-item {
+    margin-bottom: 0.25rem;
+  }
+
+  .filter-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.8125rem;
+    color: #444;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .filter-checkbox {
+    margin-right: 0.5rem;
+  }
+
+  // Desktop layout with taxonomy sidebar
+  @media (min-width: map.get(v.$breakpoints, "xl")) {
+    position: relative;
+    padding-left: 28rem;
+
+    .image-labeling-filters {
+      float: left;
+      margin-left: -27rem;
+      width: 26rem;
+    }
+  }
+}
+
+// Body class for expanded taxonomy
+body.has-expanded-filters {
+  overflow: hidden;
+
+  @media (min-width: map.get(v.$breakpoints, "xl")) {
+    overflow: visible;
+  }
+}

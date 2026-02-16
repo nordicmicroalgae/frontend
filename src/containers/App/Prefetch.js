@@ -9,10 +9,8 @@ const Prefetch = ({children}) => {
   const prefetchSynonyms = usePrefetchSynonyms();
 
   prefetchTaxa();
-  console.log('prefetching taxa');
 
   prefetchSynonyms();
-  console.log('prefetching synonyms');
 
   return children;
 };

@@ -25,9 +25,13 @@
             "name": "Instruments",
             "path": "/instruments/"
           },
-          {
-            "name": "Annotated images",
+                    {
+            "name": "Training datasets",
             "path": "/annotated-images/"
+          },
+                    {
+            "name": "Image labeling guide",
+            "path": "/image-labeling/"
           }
         ]
       },

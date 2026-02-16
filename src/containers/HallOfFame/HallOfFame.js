@@ -12,6 +12,11 @@ const HallOfFame = () => {
 
   const query = useGetArtistsQuery();
 
+  // Filter out contributors with null/undefined artist names
+  const validArtists = (query.data || []).filter(
+    ({artist}) => artist != null && artist !== ''
+  );
+
   return (
     <div className="hall-of-fame">
       <h1>Hall of fame</h1>
@@ -23,7 +28,7 @@ const HallOfFame = () => {
         </span>
       </span>
       <ol className="artist-list">
-        {(query.data || []).map(({artist, numberOfContributions}) => (
+        {validArtists.map(({artist, numberOfContributions}) => (
           <li
             key={getKey('artist', artist)}
             className="artist-list-item"

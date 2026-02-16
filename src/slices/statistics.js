@@ -15,6 +15,17 @@ export const Queries = {
     url: 'media',
     params: {
       type: 'image',
+      exclude_galleries: 'Citizen science',
+    },
+  },
+  imageLabelingImages: {
+    url: 'media/image_labeling',
+  },
+  citizenScienceImages: {
+    url: 'media',
+    params: {
+      type: 'image',
+      gallery: 'Citizen science',
     },
   },
   contributors: {

@@ -25,6 +25,7 @@ export const extendedApiSlice = baseApi.injectEndpoints({
               gallery,
               limit: 4,
               fields: ['slug', 'renditions'],
+              exclude_galleries: gallery === undefined ? 'Citizen science' : undefined,
             },
           }).then(({ data: { media } }) => (
             { gallery, media }

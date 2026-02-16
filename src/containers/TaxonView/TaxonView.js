@@ -10,6 +10,7 @@ import Taxonomy from './Taxonomy';
 import MediaView from 'Containers/MediaView';
 import Facts from './Facts';
 import Synonyms from './Synonyms';
+import ImageLabelingPreview from './ImageLabeling/ImageLabelingPreview';
 
 
 const TaxonView = () => {
@@ -89,7 +90,7 @@ const TaxonView = () => {
         </h1>
         <Taxonomy taxon={params.slug} />
         <section className="taxon-view-media">
-          <MediaView query={{taxon: taxon.slug, children: "false"}}>
+          <MediaView query={{taxon: taxon.slug, children: "false", exclude_galleries: "Citizen science"}}>
             <MediaView.Details />
             <MediaView.Thumbnails
               fieldList={[]}
@@ -105,6 +106,19 @@ const TaxonView = () => {
         </section>
         <section className="taxon-view-media">
           <MediaView query={{taxon: taxon.slug, children: "true", priority: "true"}} heading={"Child Taxon Media"}>
+            <MediaView.Details beginEmpty={true} />
+            <MediaView.Thumbnails
+              fieldList={[]}
+              itemSize={[120, 120 / (4 / 3)] /* aspect ratio */}
+              itemSpacing={8}
+            />
+          </MediaView>
+        </section>
+        <section className="taxon-view-image-labeling">
+          <ImageLabelingPreview taxonSlug={taxon.slug} />
+        </section>
+        <section className="taxon-view-citizen-science">
+          <MediaView query={{taxon: taxon.slug, children: "false", gallery: "Citizen science"}} heading={"Citizen Science"}>
             <MediaView.Details beginEmpty={true} />
             <MediaView.Thumbnails
               fieldList={[]}
