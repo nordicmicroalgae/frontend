@@ -124,7 +124,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const { data: allImages = [] } = useGetImageLabelingImagesQuery(
     {
       limit: 1000,
-      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority'],
+      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority', 'created_at'],
     },
     { skip: !hasActiveFilters }
   );
@@ -133,7 +133,7 @@ const ImageLabelingPage = ({ location, history }) => {
   const params = React.useMemo(() => {
     const p = {
       limit: 1000,
-      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority'],
+      fields: ['slug', 'renditions', 'related_taxon', 'taxon', 'attributes', 'file', 'priority', 'created_at'],
     };
     if (selectedTaxon && selectedTaxon !== 'unknown') {
       p.taxon = selectedTaxon;

@@ -310,9 +310,18 @@ export default function ImageLabelingGallery({ images = [], isLandingPage = fals
                 <div className="metadata-row">
                   <span className="metadata-label">Sampling date:</span>
                   <span className="metadata-value">
-                    {Array.isArray(active.attributes.samplingDate) 
+                    {Array.isArray(active.attributes.samplingDate)
                       ? active.attributes.samplingDate.join(', ')
                       : active.attributes.samplingDate}
+                  </span>
+                </div>
+              )}
+
+              {active.createdAt && (
+                <div className="metadata-row">
+                  <span className="metadata-label">Upload date:</span>
+                  <span className="metadata-value">
+                    {active.createdAt.split('T')[0]}
                   </span>
                 </div>
               )}
