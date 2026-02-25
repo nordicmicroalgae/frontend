@@ -57,6 +57,11 @@ const MediaDetailsView = ({ expandable = true, beginEmpty = false }) => {
           {' '}
           {selectedMedia.attributes.photographerArtist}
         </p>
+        {selectedMedia.attributes.license && (
+          <p className="media-details-license">
+            License: {selectedMedia.attributes.license}
+          </p>
+        )}
         <p className="media-details-caption">
           {selectedMedia.attributes.caption}
         </p>

@@ -1,3 +1,7 @@
+## 2.4.1 (February 25, 2026)
+
+- Always show license information below image.
+
 ## 2.4.0 (February 16, 2026)
 
 - Add image labeling guide with landing page, taxon pages, and gallery.
