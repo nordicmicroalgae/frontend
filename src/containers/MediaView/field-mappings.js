@@ -14,7 +14,6 @@ const mappings = new Map([
   ['latitudeDegree', 'Latitude degree'],
   ['latitudeMinute', 'Latitude minute'],
   ['longitudeDegree', 'Longitude degree'],
-  ['licence', 'License'],
   ['technique', 'Technique'],
   ['preservation', 'Preservation'],
   ['contrastEnhancement', 'Contrast enhancement'],
