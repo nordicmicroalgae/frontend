@@ -5,6 +5,18 @@ import Article from 'Components/Article';
 import NotFound from 'Components/Error/NotFound';
 import Placeholder from 'Components/Placeholder';
 import { useGetArticleByIdQuery } from 'Slices/articles';
+import { useGetVersionQuery } from 'Slices/version';
+
+/* global __APP_VERSION__ */
+
+const replaceTemplatePlaceholders = (text, backendVersion) => {
+  if (!text) return text;
+
+  return text
+    .replace('YYYY-MM-DD', new Date().toISOString().slice(0, 10))
+    .replace('BACKEND_VERSION', backendVersion ?? '')
+    .replace('FRONTEND_VERSION', __APP_VERSION__);
+};
 
 
 const Page = ({ slug, children }) => {
@@ -18,8 +30,15 @@ const Page = ({ slug, children }) => {
     slug ?? params.slug
   );
 
+  const backendVersion = useGetVersionQuery();
+
   const { title, content, author, date, layout } = (
     article.currentData ?? {}
+  );
+
+  const processedContent = replaceTemplatePlaceholders(
+    content,
+    backendVersion.currentData?.version
   );
 
   const layoutName = `${layout ?? 'page'}-layout`;
@@ -41,7 +60,7 @@ const Page = ({ slug, children }) => {
           title={title}
           postedBy={author}
           postedOn={date}
-          body={content}
+          body={processedContent}
         >
           {children}
         </Article>
