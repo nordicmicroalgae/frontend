@@ -5,6 +5,7 @@ import getKey from 'Utilities/getKey';
 import { useGetGalleriesQuery } from 'Slices/media';
 import Cover from 'Components/Media/Cover';
 import Placeholder from 'Components/Placeholder';
+import { getTopLevelGalleries } from './gallery-tree';
 
 import './GalleryCovers.scss';
 
@@ -18,6 +19,10 @@ const GalleryCovers = ({ coverSize = 140 }) => {
   const { isFetching, isSuccess, currentData } = (
     useGetGalleriesQuery()
   );
+
+  const topLevel = isSuccess
+    ? getTopLevelGalleries(currentData)
+    : [];
 
   return (
     isFetching ? (
@@ -51,14 +56,17 @@ const GalleryCovers = ({ coverSize = 140 }) => {
             '--cover-size': coverSize,
           }}
         >
-          {currentData.map(({ gallery, media }) => (
+          {topLevel.map(({ gallery, media, hasChildren }) => (
             <li
               className="gallery-list-item"
               key={getKey('gallery-item', gallery ?? 'all')}
             >
               <Link to={`/gallery/${gallery ?? 'all'}/`}>
                 <Cover
-                  titleText={gallery ?? 'All images'}
+                  titleText={
+                    (gallery ?? 'All images')
+                    + (hasChildren ? ' \u25B8' : '')
+                  }
                   thumbnails={media.map(
                     ({ slug, renditions }) => ({
                       key: slug,
