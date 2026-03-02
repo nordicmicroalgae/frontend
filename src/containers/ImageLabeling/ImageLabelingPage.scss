@@ -362,6 +362,95 @@
         color: #333;
         line-height: 1.6;
       }
+
+      p + p {
+        margin-top: 0.75rem;
+      }
+    }
+
+    .landing-header-contact {
+      color: #0066cc;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    // Taxon header (specific taxon selected)
+    .image-labeling-taxon-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .taxon-header-title {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .taxon-header-link {
+      margin-bottom: 0.75rem;
+
+      a {
+        font-size: 0.875rem;
+        text-decoration: none;
+        color: #0066cc;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .taxon-header-aphia {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0.75rem;
+
+      a {
+        text-decoration: none;
+        color: #0066cc;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .taxon-header-description {
+      font-size: 0.875rem;
+      color: #333;
+      margin-top: 0.75rem;
+    }
+
+    .taxon-header-no-description {
+      font-style: italic;
+      color: #999;
+    }
+
+    // Unknown taxon header
+    .unknown-taxon-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .unknown-taxon-subtitle {
+      font-size: 0.875rem;
+      color: #333;
+      margin-top: 0.75rem;
+    }
+
+    .image-labeling-status {
+      margin-top: 1rem;
+    }
+
+    .image-labeling-error {
+      color: crimson;
     }
 
     // Fix image gallery alignment - remove any left spacing

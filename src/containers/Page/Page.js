@@ -13,9 +13,9 @@ const replaceTemplatePlaceholders = (text, backendVersion) => {
   if (!text) return text;
 
   return text
-    .replace('YYYY-MM-DD', new Date().toISOString().slice(0, 10))
-    .replace('BACKEND_VERSION', backendVersion ?? '')
-    .replace('FRONTEND_VERSION', __APP_VERSION__);
+    .replaceAll('{{YYYY-MM-DD}}', new Date().toISOString().slice(0, 10))
+    .replaceAll('{{BACKEND_VERSION}}', backendVersion ?? '')
+    .replaceAll('{{FRONTEND_VERSION}}', __APP_VERSION__);
 };
 
 

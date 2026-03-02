@@ -48,8 +48,8 @@ const SubgalleryCovers = ({ parentGallery, coverSize = 140 }) => {
                 thumbnails={media.map(
                   ({ slug, renditions }) => ({
                     key: slug,
-                    thumbnailUrl: renditions.s.url,
-                    previewUrl: renditions.p.url,
+                    thumbnailUrl: renditions.s?.url,
+                    previewUrl: renditions.p?.url,
                   })
                 )}
                 size={coverSize}

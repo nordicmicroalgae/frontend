@@ -64,7 +64,7 @@ const Dialog = ({ id, title, onClose = (ev) => {}, children }) => {
           <button
             type="button"
             className="dialog-close"
-            arial-label="Close"
+            aria-label="Close"
             onClick={onClose}
           >
             <span aria-hidden="true">
