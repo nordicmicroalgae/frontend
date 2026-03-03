@@ -151,11 +151,13 @@ const GalleryView = () => {
     // But actually with optional scope, one segment fills value. Let's handle both.
     scopedQuery = {
       gallery: decodeURIComponent(scope),
+      include_subgalleries: false,
     };
   } else if (value) {
     // Top-level gallery: e.g. /gallery/Baltic%20Proper/
     scopedQuery = {
       gallery: decodeURIComponent(value),
+      include_subgalleries: false,
     };
   } else {
     // "All images": /gallery/all/
