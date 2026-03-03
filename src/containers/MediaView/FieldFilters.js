@@ -2,13 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
+const galleryPath = (galleryName) => {
+  const slashIndex = galleryName.indexOf('/');
+
+  if (slashIndex === -1) {
+    return `/gallery/${encodeURIComponent(galleryName)}/`;
+  }
+
+  const parent = galleryName.substring(0, slashIndex);
+  const child = galleryName.substring(slashIndex + 1);
+
+  return `/gallery/${encodeURIComponent(parent)}/${encodeURIComponent(child)}/`;
+};
+
+
 export const GalleryLink = ({ field, value }) => (
   field == 'photographerArtist' ? (
     <Link to={`/gallery/artist/${value}/`}>
       {value}
     </Link>
   ) : (
-    <Link to={`/gallery/${value}/`}>
+    <Link to={galleryPath(value)}>
       {value}
     </Link>
   )

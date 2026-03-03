@@ -8,7 +8,10 @@ import { useGetArticleByIdQuery } from 'Slices/articles';
 import MediaView, { useMediaQuery } from 'Containers/MediaView';
 import Sorters from 'Containers/MediaView/Sorters';
 import Frame from 'Components/Media/Frame';
+import SubgalleryCovers from './SubgalleryCovers';
 
+
+const KnownScopes = new Set(['artist']);
 
 const AvailableSorters = Object.keys(Sorters);
 
@@ -21,13 +24,26 @@ const SortOptions = [
 
 
 const Gallery = ({ selectors = { title: query => query.originalArgs.gallery ?? 'All images' } }) => {
-  const { value } = useParams();
+  const { scope, value } = useParams();
 
   const { query, params } = useMediaQuery();
 
+  // Determine the gallery name for article lookup and subgallery detection
+  const galleryName = (scope && !KnownScopes.has(scope))
+    ? (value
+        ? `${decodeURIComponent(scope)}/${decodeURIComponent(value)}`
+        : decodeURIComponent(scope))
+    : (value ? decodeURIComponent(value) : undefined);
+
+  const parentGallery = (scope && !KnownScopes.has(scope) && !value)
+    ? decodeURIComponent(scope)
+    : (!scope && value)
+      ? decodeURIComponent(value)
+      : undefined;
+
   const pageQuery = useGetArticleByIdQuery(
-    value
-      ? `gallery-${slugify(value)}`
+    galleryName
+      ? `gallery-${slugify(galleryName)}`
       : 'gallery-latest-images'
   );
 
@@ -52,6 +68,9 @@ const Gallery = ({ selectors = { title: query => query.originalArgs.gallery ?? '
                   {pageQuery.currentData?.content}
                 </Markdown>
               </div>
+            )}
+            {parentGallery && (
+              <SubgalleryCovers parentGallery={parentGallery} />
             )}
             <div className="gallery-options">
               <ul className="gallery-sorting-options">
@@ -107,15 +126,43 @@ const GalleryView = () => {
 
   const { scope, value } = useParams();
 
-  const ScopedComponent = scope ? ScopedGallery[scope] : Gallery;
+  // Determine if scope is a known scope (like "artist") or a parent gallery name
+  const isKnownScope = scope && KnownScopes.has(scope);
 
-  const scopedQuery = {
-    [scope ?? 'gallery']: value
-      ? decodeURIComponent(value)
-      : undefined,
-    // Exclude Citizen Science from "All images" view
-    exclude_galleries: (!scope && !value) ? 'Citizen science' : undefined,
-  };
+  const ScopedComponent = isKnownScope ? ScopedGallery[scope] : Gallery;
+
+  let scopedQuery;
+
+  if (isKnownScope) {
+    // Known scope: e.g. /gallery/artist/SomeName/
+    scopedQuery = {
+      [scope]: value ? decodeURIComponent(value) : undefined,
+    };
+  } else if (scope && value) {
+    // Subgallery: e.g. /gallery/Baltic%20Proper/Cyanobacteria/
+    const parentGallery = decodeURIComponent(scope);
+    const subGallery = decodeURIComponent(value);
+    scopedQuery = {
+      gallery: `${parentGallery}/${subGallery}`,
+    };
+  } else if (scope) {
+    // Top-level gallery via scope param: e.g. /gallery/Baltic%20Proper/
+    // React Router with /:scope?/:value/ fills scope first when only one segment
+    // But actually with optional scope, one segment fills value. Let's handle both.
+    scopedQuery = {
+      gallery: decodeURIComponent(scope),
+    };
+  } else if (value) {
+    // Top-level gallery: e.g. /gallery/Baltic%20Proper/
+    scopedQuery = {
+      gallery: decodeURIComponent(value),
+    };
+  } else {
+    // "All images": /gallery/all/
+    scopedQuery = {
+      exclude_galleries: 'Citizen science',
+    };
+  }
 
   return (
     <MediaView query={scopedQuery}>
