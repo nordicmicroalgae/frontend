@@ -10,6 +10,7 @@ const propTypes = {
     PropTypes.string,
   ]),
   title: PropTypes.string,
+  alt: PropTypes.string,
   caption: PropTypes.string,
   backgroundColor: PropTypes.string,
   backgroundImage: PropTypes.string,
@@ -30,6 +31,7 @@ const Picture = ({
   src,
   width = 640,
   title,
+  alt,
   caption,
   backgroundColor = '#f0f0f0',
   backgroundImage,
@@ -88,7 +90,7 @@ const Picture = ({
               <p>Image not available</p>
             ) :
             status == Status.Success ? (
-              <img src={src} />
+              <img src={src} alt={alt ?? title ?? caption ?? ''} />
             ) : (
               null
             )

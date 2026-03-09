@@ -1,7 +1,9 @@
 const path = require('path');
 const process = require('process');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const packageJson = require('./package.json');
 
 function getenv(name, defaultValue) {
   return process.env[name] || defaultValue;
@@ -41,6 +43,9 @@ module.exports = {
         path.resolve(__dirname, 'src', 'icon-512.png'),
         path.resolve(__dirname, 'src', 'manifest.webmanifest'),
       ],
+    }),
+    new webpack.DefinePlugin({
+      __APP_VERSION__: JSON.stringify(packageJson.version),
     }),
     new HtmlWebpackPlugin({
       title: 'nµa frontend',

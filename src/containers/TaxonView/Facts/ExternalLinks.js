@@ -9,6 +9,14 @@ import Placeholder from 'Components/Placeholder';
 import './ExternalLinks.scss';
 
 
+const isSafeUrl = (url) => {
+  try {
+    const parsed = new URL(url);
+    return ['http:', 'https:'].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+};
 
 
 const ExternalLinks = ({
@@ -81,10 +89,17 @@ const ExternalLinks = ({
                   'external-link', data.provider, data.externalId
                 )}
               >
-                <a href={data.externalUrl}>
-                  <ExternalLinkIcon />
-                  <Label data={data} />
-                </a>
+                {isSafeUrl(data.externalUrl) ? (
+                  <a href={data.externalUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLinkIcon />
+                    <Label data={data} />
+                  </a>
+                ) : (
+                  <span>
+                    <ExternalLinkIcon />
+                    <Label data={data} />
+                  </span>
+                )}
               </li>
             )
           )}
