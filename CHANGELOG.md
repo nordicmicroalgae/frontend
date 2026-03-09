@@ -1,3 +1,10 @@
+## 2.4.2 (March 9, 2026)
+
+- Add subgallery navigation (tree + covers) and exclude subgalleries from the main gallery view.
+- Refactor the image labeling experience with new pages, filters, and metadata lightbox views.
+- Make Terms of Use text dynamic.
+- Bump dependencies.
+
 ## 2.4.1 (February 25, 2026)
 
 - Always show license information below image.
