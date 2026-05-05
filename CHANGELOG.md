@@ -1,3 +1,8 @@
+## 2.4.3 (May 5, 2026)
+
+- Security patch from dependabot.
+- Update GitHub actions to run on Node.js 24
+
 ## 2.4.2 (March 9, 2026)
 
 - Add subgallery navigation (tree + covers) and exclude subgalleries from the main gallery view.

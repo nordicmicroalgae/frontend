@@ -1,6 +1,6 @@
 {
   "name": "@nordicmicroalgae/frontend",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "private": true,
   "description": "",
   "main": "index.js",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.7.2",
-    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.29.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
     "babel-loader": "^9.2.1",
@@ -32,7 +32,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-three/fiber": "^8.10.0",
     "@reduxjs/toolkit": "^1.9.1",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "match-sorter": "^6.3.1",
     "ol": "^9.0.0",
     "react": "^18.2.0",
@@ -48,7 +48,7 @@
     }
   },
   "resolutions": {
-    "lodash": "4.17.23",
+    "lodash": "4.18.1",
     "@react-three/fiber/its-fine": "~1.1.4",
     "qs": "^6.14.2"
   },
