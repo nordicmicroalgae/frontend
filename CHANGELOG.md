@@ -1,3 +1,7 @@
+## 2.4.4. (June 9, 2026)
+
+- Security mitigations from dependabot.
+
 ## 2.4.3 (May 5, 2026)
 
 - Security patch from dependabot.
